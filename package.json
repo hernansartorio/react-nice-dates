@@ -1,0 +1,33 @@
+{
+  "name": "react-nice-dates",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "prop-types": "^15",
+    "react": "^16",
+    "react-dom": "^16"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src"
+  },
+  "devDependencies": {
+    "@neutrinojs/react-components": "^9.0.0",
+    "@neutrinojs/standardjs": "^9.0.0",
+    "@neutrinojs/style-loader": "^9.0.0",
+    "autoprefixer": "^9.7.3",
+    "eslint": "^6",
+    "neutrino": "^9.0.0",
+    "node-sass": "^4.13.0",
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15",
+    "react": "^16",
+    "react-dom": "^16",
+    "sass-loader": "^8.0.0",
+    "webpack": "^4",
+    "webpack-cli": "^3",
+    "webpack-dev-server": "^3"
+  }
+}
