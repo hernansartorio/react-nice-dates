@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700');
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
+  font-family: 'IBM Plex Sans', sans-serif;
+  margin: 0;
+  padding: 0 30px;
+}
+
+.container {
+  max-width: 532px;
+  margin: 300px auto;
+}

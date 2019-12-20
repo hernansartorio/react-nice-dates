@@ -29,5 +29,9 @@
     "webpack": "^4",
     "webpack-cli": "^3",
     "webpack-dev-server": "^3"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "date-fns": "^2.8.1"
   }
 }

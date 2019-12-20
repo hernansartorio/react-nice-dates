@@ -1,11 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
-import './style.scss'
+import Calendar from './components/Calendar'
+import './styles.scss'
+import './nice-dates.scss'
 
 function App() {
   return (
-    <div>
-      Hello world
+    <div className='container'>
+      <Calendar />
     </div>
   )
 }
