@@ -5,11 +5,11 @@ import classNames from 'classnames'
 
 import { getDate, format } from 'date-fns'
 
-export default function CalendarDay({ date, isOdd, isToday, isSelected, isStart, isEnd, isDisabled }) {
+export default function CalendarDay({ date, isOutside, isToday, isSelected, isStart, isEnd, isDisabled }) {
   const dayOfMonth = getDate(date)
 
   const dateClass = classNames('nice-dates-day', {
-    '-odd': isOdd,
+    '-outside': isOutside,
     '-today': isToday,
     '-selected': isSelected,
     '-start': isStart,
@@ -28,8 +28,8 @@ export default function CalendarDay({ date, isOdd, isToday, isSelected, isStart,
 }
 
 CalendarDay.propTypes = {
-  date: instanceOf(Date),
-  isOdd: bool,
+  date: instanceOf(Date).isRequired,
+  isOutside: bool,
   isToday: bool,
   isSelected: bool,
   isStart: bool,

@@ -4,33 +4,31 @@ import { enGB as locale } from 'date-fns/locale'
 
 import { addMonths, getYear, startOfMonth, subMonths, format } from 'date-fns'
 
-const today = new Date()
-
-export default function CalendarNavigation({ currentDate, onChange }) {
+export default function CalendarNavigation({ currentMonth, onChange }) {
   const handlePrevious = event => {
-    onChange(startOfMonth(subMonths(currentDate, 1)))
+    onChange(startOfMonth(subMonths(currentMonth, 1)))
     event.preventDefault()
   }
 
   const handleNext = event => {
-    onChange(startOfMonth(addMonths(currentDate, 1)))
+    onChange(startOfMonth(addMonths(currentMonth, 1)))
     event.preventDefault()
   }
 
   return (
     <div className='nice-dates-navigation'>
-      <a className='nice-dates-navigation_previous' onClick={handlePrevious} />
+      <a className='nice-dates-navigation_previous' onClick={handlePrevious} onTouchEnd={handlePrevious} />
 
       <span className='nice-dates-navigation_current'>
-        {format(currentDate, getYear(currentDate) === getYear(today) ? 'MMMM' : 'MMMM yyyy', { locale })}
+        {format(currentMonth, getYear(currentMonth) === getYear(new Date()) ? 'MMMM' : 'MMMM yyyy', { locale })}
       </span>
 
-      <a className='nice-dates-navigation_next' onClick={handleNext} />
+      <a className='nice-dates-navigation_next' onClick={handleNext} onTouchEnd={handleNext} />
     </div>
   )
 }
 
 CalendarNavigation.propTypes = {
-  currentDate: instanceOf(Date),
-  onChange: func
+  currentMonth: instanceOf(Date).isRequired,
+  onChange: func.isRequired
 }

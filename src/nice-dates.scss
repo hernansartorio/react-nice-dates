@@ -119,6 +119,7 @@ $font-size-big: 16px;
       transition-property: transform;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       will-change: transform;
+      backface-visibility: hidden;
 
       &.-dragging {
         transition: none;
@@ -178,7 +179,7 @@ $font-size-big: 16px;
       }
     }
 
-    &.-odd {
+    &.-outside {
       color: $color-gray;
     }
 

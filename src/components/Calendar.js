@@ -5,16 +5,18 @@ import CalendarGrid from './CalendarGrid'
 
 import { startOfMonth } from 'date-fns'
 
-const today = new Date()
-
 export default function Calendar() {
-  const [currentMonthStartDate, setCurrentMonthStartDate] = useState(startOfMonth(today))
+  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()))
+
+  const handleCurrentMonthChange = month => {
+    setCurrentMonth(month)
+  }
 
   return (
     <div>
-      <CalendarNavigation currentDate={currentMonthStartDate} onChange={setCurrentMonthStartDate} />
+      <CalendarNavigation currentMonth={currentMonth} onChange={setCurrentMonth} />
       <CalendarWeekHeader />
-      <CalendarGrid currentDate={currentMonthStartDate} />
+      <CalendarGrid currentMonth={currentMonth} onChange={handleCurrentMonthChange} />
     </div>
   )
 }
