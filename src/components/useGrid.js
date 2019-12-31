@@ -186,8 +186,17 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
   })
 
   useEffect(() => {
-    const containerElement = containerElementRef.current
-    dispatch({ type: 'setCellHeight', value: containerElement.firstChild.offsetHeight })
+    const handleResize = () => {
+      const cellElement = containerElementRef.current.firstChild
+      dispatch({ type: 'setCellHeight', value: cellElement.offsetHeight })
+    }
+
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   return {
