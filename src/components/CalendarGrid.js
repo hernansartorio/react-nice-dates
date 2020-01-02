@@ -7,17 +7,17 @@ import CalendarDay from './CalendarDay'
 
 export default function CalendarGrid({ currentMonth, onChange, transitionDuration }) {
   const grid = useGrid({ currentMonth, onChange, transitionDuration })
-  const { startDate, endDate, containerElementRef, offset, origin, transition } = grid
+  const { startDate, endDate, cellHeight, containerElementRef, offset, origin, transition, wideRatio } = grid
 
   return (
-    <div className='nice-dates-grid'>
+    <div className='nice-dates-grid' style={{ height: cellHeight * 6 }}>
       <div
         className='nice-dates-grid_container'
         ref={containerElementRef}
         style={{
-          transform: `translate3d(0, ${offset}px, 0)`,
-          top: origin === 'top' ? 0 : 'auto',
           bottom: origin === 'bottom' ? 0 : 'auto',
+          top: origin === 'top' ? 0 : 'auto',
+          transform: `translate3d(0, ${offset}px, 0)`,
           transitionDuration: `${transitionDuration}ms`,
           transitionProperty: transition ? 'transform' : 'none'
         }}
@@ -30,8 +30,10 @@ export default function CalendarGrid({ currentMonth, onChange, transitionDuratio
             <CalendarDay
               key={format(date, 'yyyy-MM-dd', { locale })}
               date={date}
+              height={cellHeight}
               isOutside={!isSameMonth(date, currentMonth)}
               isToday={isToday(date)}
+              isWide={wideRatio}
             />
           )
         })}

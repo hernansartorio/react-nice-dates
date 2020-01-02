@@ -27,7 +27,8 @@ function createInitialState(currentMonth) {
     lastCurrentMonth: currentMonth,
     offset: 0,
     origin: 'top',
-    transition: false
+    transition: false,
+    wideRatio: false
   }
 }
 
@@ -41,8 +42,14 @@ function reducer(state, action) {
       return { ...state, startDate: action.startDate, endDate: action.endDate }
     case 'setCellHeight':
       return { ...state, cellHeight: action.value }
+    case 'setWideRatio':
+      return { ...state, wideRatio: action.value }
     case 'reset':
-      return { ...createInitialState(action.currentMonth), cellHeight: state.cellHeight }
+      return {
+        ...createInitialState(action.currentMonth),
+        cellHeight: state.cellHeight,
+        wideRatio: state.wideRatio
+      }
     case 'transitionToCurrentMonth': {
       const { currentMonth } = action
       const { lastCurrentMonth, startDate, endDate, cellHeight } = state
@@ -86,7 +93,7 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
   const containerElementRef = useRef()
   const initialDragPositionRef = useRef(0)
   const [state, dispatch] = useReducer(reducer, createInitialState(currentMonth))
-  const { startDate, endDate, cellHeight, lastCurrentMonth, offset, origin, transition } = state
+  const { startDate, endDate, cellHeight, lastCurrentMonth, offset, origin, transition, wideRatio } = state
 
   useLayoutEffect(() => {
     const notDragging = !initialDragPositionRef.current
@@ -187,8 +194,21 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
 
   useEffect(() => {
     const handleResize = () => {
-      const cellElement = containerElementRef.current.firstChild
-      dispatch({ type: 'setCellHeight', value: cellElement.offsetHeight })
+      const containerElement = containerElementRef.current
+      const containerWidth = containerElement.offsetWidth
+      const cellWidth = containerWidth / 7
+      let newCellHeight = 1
+      let wide = false
+
+      if (cellWidth > 60) {
+        newCellHeight += Math.round(cellWidth * 0.75)
+        wide = true
+      } else {
+        newCellHeight += Math.round(cellWidth)
+      }
+
+      dispatch({ type: 'setWideRatio', value: wide })
+      dispatch({ type: 'setCellHeight', value: newCellHeight })
     }
 
     window.addEventListener('resize', handleResize)
@@ -202,9 +222,11 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
   return {
     startDate,
     endDate,
+    cellHeight,
     containerElementRef,
     offset,
     origin,
-    transition
+    transition,
+    wideRatio
   }
 }

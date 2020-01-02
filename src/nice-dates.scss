@@ -8,16 +8,7 @@ $font-size-small: 12px;
 $font-size: 14px;
 $font-size-big: 16px;
 
-@mixin cell {
-  height: 0;
-  padding-bottom: 14.285714285714286% * .75;
-  position: relative;
-  width: 14.285714285714286%;
-
-  @media screen and (max-width: 480px) {
-    padding-bottom: 14.285714285714286%;
-  }
-}
+$cell-width: calc(100% / 7);
 
 @mixin cell_content {
   bottom: 0;
@@ -46,8 +37,11 @@ $font-size-big: 16px;
     }
 
     &_previous, &_next {
-      @include cell;
       cursor: pointer;
+      height: 0;
+      padding-bottom: $cell-width;
+      position: relative;
+      width: $cell-width;
 
       &:before {
         border-right: 2px solid $color-gray;
@@ -66,7 +60,7 @@ $font-size-big: 16px;
         width: 14px;
       }
 
-      &:hover:before{
+      &:hover:before {
         border-color: $color-accent;
       }
 
@@ -94,21 +88,15 @@ $font-size-big: 16px;
       font-size: $font-size;
       line-height: 1;
       text-align: center;
-      width: 14.285714285714286%;
+      width: $cell-width;
     }
   }
 
   &-grid {
     box-sizing: content-box;
-    height: 6px;
     overflow: hidden;
-    padding-bottom: 14.285714285714286% * .75 * 6;
     position: relative;
     user-select: none;
-
-    @media screen and (max-width: 480px) {
-      padding-bottom: 14.285714285714286% * 6;
-    }
 
     &_container {
       display: flex;
@@ -128,11 +116,13 @@ $font-size-big: 16px;
   }
 
   &-day {
-    @include cell;
     border-top: 1px solid transparent;
+    box-sizing: border-box;
     cursor: pointer;
     font-size: $font-size;
+    position: relative;
     text-align: center;
+    width: $cell-width;
 
     &_date {
       @include cell_content;
@@ -165,17 +155,18 @@ $font-size-big: 16px;
 
     &:before, &:after {
       @include cell_content;
+      box-sizing: border-box;
       border-radius: 99px;
       border: 2px solid $color-accent;
       content: '';
       display: block;
-      left: 12.5%;
       opacity: 0;
-      right: 12.5%;
+    }
 
-      @media screen and (max-width: 480px) {
-        left: 0;
-        right: 0;
+    &.-wide {
+      &:before, &:after {
+        left: 12.5%;
+        right: 12.5%;
       }
     }
 
