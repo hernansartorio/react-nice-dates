@@ -1,22 +1,14 @@
-$color-accent: #399aaa;
 $color-gray-dark: #333;
 $color-gray: #999;
 $color-gray-light: #ccc;
 $color-gray-lighter: #f0f0f0;
+$color-accent: $color-gray-dark;
 
 $font-size-small: 12px;
 $font-size: 14px;
 $font-size-big: 16px;
 
 $cell-width: calc(100% / 7);
-
-@mixin cell_content {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
 
 .nice-dates {
   padding-top: 18px;
@@ -99,18 +91,32 @@ $cell-width: calc(100% / 7);
     user-select: none;
 
     &_container {
+      backface-visibility: hidden;
       display: flex;
       flex-wrap: wrap;
       left: 0;
       position: absolute;
       right: 0;
-      transition-property: transform;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-property: none;
       will-change: transform;
-      backface-visibility: hidden;
 
-      &.-dragging {
-        transition: none;
+      &.-moving .nice-dates-day_date {
+        transition: 300ms color;
+      }
+
+      &.-origin-bottom {
+        top: auto;
+        bottom: 0;
+      }
+
+      &.-origin-top {
+        top: 0;
+        bottom: auto;
+      }
+
+      &.-transition {
+        transition-property: transform;
       }
     }
   }
@@ -123,44 +129,122 @@ $cell-width: calc(100% / 7);
     position: relative;
     text-align: center;
     width: $cell-width;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 
     &_date {
-      @include cell_content;
-      align-items: center;
-      display: flex;
-      justify-content: center;
       transition: 150ms color;
       will-change: color;
-      z-index: 1;
+      z-index: 3;
     }
 
     &_month {
       color: $color-gray;
       font-size: $font-size-small;
       line-height: 1;
+      position: absolute;
+      top: 10%;
+      left: 0;
+      right: 0;
+      z-index: 3;
+    }
+
+    &:before, &:after {
+      border-radius: 999px;
+      bottom: 0;
+      box-sizing: border-box;
+      content: '';
+      display: block;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &:before {
+      background-color: $color-accent;
+      z-index: 1;
+    }
+
+    &:after {
+      border: 2px solid $color-accent;
+      transition: 150ms opacity;
+      z-index: 2;
     }
 
     &:not(.-disabled):hover {
-      color: $color-gray-dark;
-
       &:after {
         opacity: 1;
       }
     }
 
-    &:after {
-      transition: 150ms opacity;
-      will-change: opacity;
+    @media (hover: none) {
+      &:after {
+        content: none;
+      }
+
+      &.-selected * {
+        color: #fff;
+      }
     }
 
-    &:before, &:after {
-      @include cell_content;
-      box-sizing: border-box;
-      border-radius: 99px;
-      border: 2px solid $color-accent;
-      content: '';
-      display: block;
-      opacity: 0;
+    &.-selected {
+      &:before {
+        opacity: 1;
+      }
+
+      &:hover {
+        &:after {
+          background-color: #fff;
+        }
+      }
+
+      &:not(:hover), &.-disabled {
+        * {
+          color: #fff;
+        }
+      }
+
+      &.-selected-start {
+        &:before {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          right: 0;
+        }
+      }
+
+      &.-selected-end {
+        &:before {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          left: 0;
+        }
+      }
+
+      &.-selected-middle {
+        &:before {
+          border-radius: 0;
+          left: 0;
+          right: 0;
+        }
+      }
+
+      &.-selected-middle:nth-child(7n + 1):before {
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+      }
+
+      &.-selected-middle:not(.-end):nth-child(7n):before {
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+    }
+
+    &.-today {
+      font-weight: 600;
     }
 
     &.-wide {
@@ -175,69 +259,9 @@ $cell-width: calc(100% / 7);
     }
 
     &.-disabled {
-      color: $color-gray-light;
       cursor: default;
-    }
-
-    &.-selected {
-      &:hover {
-        &:after {
-          background-color: #fff;
-          z-index: 0;
-        }
-      }
-
-      &.-disabled, &:not(:hover) *  {
-        color: #fff;
-        font-weight: 500;
-
-        .nice-dates-label {
-          color: #fff;
-        }
-      }
-
-      &:before {
-        background-color: $color-accent;
-        opacity: 1;
-      }
-
-      & + .-selected:not(.-end) {
-        &:before {
-          border-radius: 0;
-          left: 0;
-          right: 0;
-        }
-      }
-
-      & + .-selected:nth-child(7n + 1):before {
-        border-top-left-radius: 2px;
-        border-bottom-left-radius: 2px;
-      }
-
-      & + .-selected:not(.-end):nth-child(7n):before {
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-      }
-
-      &.-start {
-        &:before {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-          right: 0;
-        }
-      }
-
-      &.-end {
-        &:before {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          left: 0;
-        }
-      }
-    }
-
-    &.-today {
-      font-weight: 600;
+      pointer-events: none;
+      color: $color-gray-light;
     }
   }
 }

@@ -1,42 +1,63 @@
 import React from 'react'
-import { instanceOf, func, number } from 'prop-types'
-import { eachDayOfInterval, format, isSameMonth, isToday } from 'date-fns'
+import { instanceOf, func, number, objectOf } from 'prop-types'
+import { eachDayOfInterval, format, isSameMonth } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
+import classNames from 'classnames'
 import useGrid from './useGrid'
 import CalendarDay from './CalendarDay'
 
-export default function CalendarGrid({ currentMonth, onChange, transitionDuration }) {
+export default function CalendarGrid({
+  currentMonth,
+  modifiers,
+  onChange,
+  onHoverDate,
+  onSelectDate,
+  transitionDuration
+}) {
   const grid = useGrid({ currentMonth, onChange, transitionDuration })
-  const { startDate, endDate, cellHeight, containerElementRef, offset, origin, transition, wideRatio } = grid
+  const { startDate, endDate, cellHeight, containerElementRef, isWide, offset, origin, transition } = grid
+
+  const days = eachDayOfInterval({
+    start: startDate,
+    end: endDate
+  }).map(date => {
+    const dayModifiers = {
+      outside: !isSameMonth(date, currentMonth),
+      wide: isWide
+    }
+
+    Object.keys(modifiers).map(key => {
+      dayModifiers[key] = modifiers[key](date)
+    })
+
+    return (
+      <CalendarDay
+        date={date}
+        height={cellHeight}
+        key={format(date, 'yyyy-MM-dd', { locale })}
+        modifiers={dayModifiers}
+        onHover={onHoverDate}
+        onSelect={onSelectDate}
+      />
+    )
+  })
 
   return (
     <div className='nice-dates-grid' style={{ height: cellHeight * 6 }}>
       <div
-        className='nice-dates-grid_container'
+        className={classNames('nice-dates-grid_container', {
+          '-moving': offset,
+          '-origin-bottom': origin === 'bottom',
+          '-origin-top': origin === 'top',
+          '-transition': transition
+        })}
         ref={containerElementRef}
         style={{
-          bottom: origin === 'bottom' ? 0 : 'auto',
-          top: origin === 'top' ? 0 : 'auto',
           transform: `translate3d(0, ${offset}px, 0)`,
-          transitionDuration: `${transitionDuration}ms`,
-          transitionProperty: transition ? 'transform' : 'none'
+          transitionDuration: `${transitionDuration}ms`
         }}
       >
-        {eachDayOfInterval({
-          start: startDate,
-          end: endDate
-        }).map(date => {
-          return (
-            <CalendarDay
-              key={format(date, 'yyyy-MM-dd', { locale })}
-              date={date}
-              height={cellHeight}
-              isOutside={!isSameMonth(date, currentMonth)}
-              isToday={isToday(date)}
-              isWide={wideRatio}
-            />
-          )
-        })}
+        {days}
       </div>
     </div>
   )
@@ -44,10 +65,14 @@ export default function CalendarGrid({ currentMonth, onChange, transitionDuratio
 
 CalendarGrid.propTypes = {
   currentMonth: instanceOf(Date).isRequired,
+  modifiers: objectOf(func),
   onChange: func.isRequired,
+  onHoverDate: func,
+  onSelectDate: func,
   transitionDuration: number.isRequired
 }
 
 CalendarGrid.defaultProps = {
+  modifiers: {},
   transitionDuration: 500
 }

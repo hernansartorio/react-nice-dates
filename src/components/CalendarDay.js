@@ -1,35 +1,51 @@
 import React from 'react'
-import { bool, instanceOf, number } from 'prop-types'
+import { bool, instanceOf, func, number, objectOf } from 'prop-types'
+import { getDate, format, isToday } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
 
-import { getDate, format } from 'date-fns'
+const modifiersClassNames = {
+  today: '-today',
+  outside: '-outside',
+  wide: '-wide',
+  disabled: '-disabled',
+  selected: '-selected',
+  selectedStart: '-selected-start',
+  selectedMiddle: '-selected-middle',
+  selectedEnd: '-selected-end'
+}
 
-export default function CalendarDay({
-  date,
-  height,
-  isWide,
-  isOutside,
-  isToday,
-  isSelected,
-  isStart,
-  isEnd,
-  isDisabled
-}) {
+export default function CalendarDay({ date, height, modifiers, onSelect, onHover }) {
   const dayOfMonth = getDate(date)
+  const dayClassNames = {}
+  const finalModifiers = { today: isToday(date), ...modifiers }
 
-  const dateClass = classNames('nice-dates-day', {
-    '-wide': isWide,
-    '-outside': isOutside,
-    '-today': isToday,
-    '-selected': isSelected,
-    '-start': isStart,
-    '-end': isEnd,
-    '-disabled': isDisabled
+  Object.keys(finalModifiers).forEach(name => {
+    dayClassNames[modifiersClassNames[name]] = finalModifiers[name]
   })
 
+  const handleSelect = event => {
+    onSelect(date)
+    event.preventDefault()
+  }
+
+  const handleMouseEnter = () => {
+    onHover(date)
+  }
+
+  const handleMouseLeave = () => {
+    onHover(null)
+  }
+
   return (
-    <span className={dateClass} style={{ height }}>
+    <span
+      className={classNames('nice-dates-day', dayClassNames)}
+      onClick={handleSelect}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchEnd={handleSelect}
+      style={{ height }}
+    >
       {dayOfMonth === 1 && (
         <span className='nice-dates-day_month'>{format(date, 'MMMM', { locale }).substring(0, 3)}</span>
       )}
@@ -41,11 +57,13 @@ export default function CalendarDay({
 CalendarDay.propTypes = {
   date: instanceOf(Date).isRequired,
   height: number.isRequired,
-  isWide: bool,
-  isOutside: bool,
-  isToday: bool,
-  isSelected: bool,
-  isStart: bool,
-  isEnd: bool,
-  isDisabled: bool
+  modifiers: objectOf(bool).isRequired,
+  onHover: func,
+  onSelect: func
+}
+
+CalendarDay.defaultProps = {
+  modifiers: {},
+  onHover: () => {},
+  onSelect: () => {}
 }

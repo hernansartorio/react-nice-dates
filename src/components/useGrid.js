@@ -24,11 +24,11 @@ function createInitialState(currentMonth) {
     endDate: getEndDate(currentMonth),
     startDate: getStartDate(currentMonth),
     cellHeight: 0,
+    isWide: false,
     lastCurrentMonth: currentMonth,
     offset: 0,
     origin: 'top',
-    transition: false,
-    wideRatio: false
+    transition: false
   }
 }
 
@@ -42,13 +42,13 @@ function reducer(state, action) {
       return { ...state, startDate: action.startDate, endDate: action.endDate }
     case 'setCellHeight':
       return { ...state, cellHeight: action.value }
-    case 'setWideRatio':
-      return { ...state, wideRatio: action.value }
+    case 'setIsWide':
+      return { ...state, isWide: action.value }
     case 'reset':
       return {
         ...createInitialState(action.currentMonth),
         cellHeight: state.cellHeight,
-        wideRatio: state.wideRatio
+        isWide: state.isWide
       }
     case 'transitionToCurrentMonth': {
       const { currentMonth } = action
@@ -93,12 +93,14 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
   const containerElementRef = useRef()
   const initialDragPositionRef = useRef(0)
   const [state, dispatch] = useReducer(reducer, createInitialState(currentMonth))
-  const { startDate, endDate, cellHeight, lastCurrentMonth, offset, origin, transition, wideRatio } = state
+  const { startDate, endDate, cellHeight, lastCurrentMonth, offset, origin, transition, isWide } = state
 
   useLayoutEffect(() => {
     const notDragging = !initialDragPositionRef.current
 
     if (lastCurrentMonth !== currentMonth && notDragging) {
+      const containerElement = containerElementRef.current
+      containerElement.classList.add('-transition')
       clearTimeout(timeoutRef.current)
       dispatch({ type: 'transitionToCurrentMonth', currentMonth })
 
@@ -125,8 +127,9 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
           dispatch({ type: 'setRange', startDate: newStartDate, endDate: getEndDate(addMonths(currentMonth, 1)) })
         }
 
-        containerElement.style.transitionProperty = 'none'
         containerElement.style.transform = `translate3d(0, ${computedOffset || -currentMonthPosition}px, 0)`
+        containerElement.classList.remove('-transition')
+        containerElement.classList.add('-moving')
         initialDragPositionRef.current = event.touches[0].clientY + (-computedOffset || currentMonthPosition)
       }
 
@@ -167,17 +170,21 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
 
       const handleDragEnd = event => {
         const currentMonthPosition = (rowsBetweenDates(startDate, currentMonth) - 1) * cellHeight
-        containerElement.style.transitionProperty = 'transform'
         containerElement.style.transform = `translate3d(0, ${-currentMonthPosition}px, 0)`
+        containerElement.classList.add('-transition')
+        containerElement.classList.remove('-moving')
 
         timeoutRef.current = setTimeout(() => {
           initialDragPositionRef.current = 0
           containerElement.style.transform = 'translate3d(0, 0, 0)'
-          containerElement.style.transitionProperty = 'none'
+          containerElement.classList.remove('-transition')
           dispatch({ type: 'reset', currentMonth: currentMonth })
         }, transitionDuration)
 
-        event.preventDefault()
+        if (Math.abs(initialDragPositionRef.current - currentMonthPosition - event.changedTouches[0].clientY) > 10) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
       }
 
       containerElement.addEventListener('touchstart', handleDragStart)
@@ -207,7 +214,7 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
         newCellHeight += Math.round(cellWidth)
       }
 
-      dispatch({ type: 'setWideRatio', value: wide })
+      dispatch({ type: 'setIsWide', value: wide })
       dispatch({ type: 'setCellHeight', value: newCellHeight })
     }
 
@@ -227,6 +234,6 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
     offset,
     origin,
     transition,
-    wideRatio
+    isWide
   }
 }
