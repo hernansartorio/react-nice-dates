@@ -58,6 +58,7 @@ $cell-width: calc(100% / 7);
 
       &.-disabled {
         cursor: default;
+        pointer-events: none;
 
         &:before {
           border-color: $color-gray-light;

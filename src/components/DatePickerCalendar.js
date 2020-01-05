@@ -3,7 +3,7 @@ import { instanceOf, func } from 'prop-types'
 import { isSameDay } from 'date-fns'
 import Calendar from './Calendar'
 
-export default function DatePickerCalendar({ date: selectedDate, onChange }) {
+export default function DatePickerCalendar({ date: selectedDate, minimumDate, maximumDate, onChange }) {
   const isSelected = date => isSameDay(date, selectedDate)
 
   const modifiers = {
@@ -11,10 +11,12 @@ export default function DatePickerCalendar({ date: selectedDate, onChange }) {
     disabled: isSelected
   }
 
-  return <Calendar modifiers={modifiers} onSelectDate={onChange} />
+  return <Calendar minimumDate={minimumDate} maximumDate={maximumDate} modifiers={modifiers} onSelectDate={onChange} />
 }
 
 DatePickerCalendar.propTypes = {
   date: instanceOf(Date),
+  minimumDate: instanceOf(Date),
+  maximumDate: instanceOf(Date),
   onChange: func
 }

@@ -7,6 +7,8 @@ export default function DateRangePickerCalendar({
   startDate,
   endDate,
   focus,
+  minimumDate,
+  maximumDate,
   onStartDateChange,
   onEndDateChange,
   onFocusChange
@@ -42,13 +44,23 @@ export default function DateRangePickerCalendar({
     }
   }
 
-  return <Calendar modifiers={modifiers} onSelectDate={handleChange} onHoverDate={setHoveredEndDate} />
+  return (
+    <Calendar
+      minimumDate={minimumDate}
+      maximumDate={maximumDate}
+      modifiers={modifiers}
+      onSelectDate={handleChange}
+      onHoverDate={setHoveredEndDate}
+    />
+  )
 }
 
 DateRangePickerCalendar.propTypes = {
   startDate: instanceOf(Date),
   endDate: instanceOf(Date),
   focus: oneOf(['startDate', 'endDate']),
+  minimumDate: instanceOf(Date),
+  maximumDate: instanceOf(Date),
   onStartDateChange: func,
   onEndDateChange: func,
   onFocusChange: func
