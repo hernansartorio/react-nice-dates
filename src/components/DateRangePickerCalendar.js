@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { func, instanceOf, oneOf } from 'prop-types'
+import { func, instanceOf, objectOf, oneOf, string } from 'prop-types'
 import { isSameDay, isAfter, isBefore } from 'date-fns'
+import mergeModifiers from './mergeModifiers'
 import Calendar from './Calendar'
 
 export default function DateRangePickerCalendar({
@@ -9,6 +10,8 @@ export default function DateRangePickerCalendar({
   focus,
   minimumDate,
   maximumDate,
+  modifiers: receivedModifiers,
+  modifiersClassNames,
   onStartDateChange,
   onEndDateChange,
   onFocusChange
@@ -21,13 +24,16 @@ export default function DateRangePickerCalendar({
   const isMiddleDate = date => isAfter(date, startDate) && isBefore(date, displayedEndDate)
   const isEndDate = date => isSameDay(date, displayedEndDate)
 
-  const modifiers = {
-    selected: date => isStartDate(date) || isEndDate(date) || isMiddleDate(date),
-    selectedStart: date => displayedEndDate && isStartDate(date),
-    selectedMiddle: isMiddleDate,
-    selectedEnd: date => startDate && isEndDate(date),
-    disabled: date => focus === 'endDate' && (isBefore(date, startDate) || isStartDate(date))
-  }
+  const modifiers = mergeModifiers(
+    {
+      selected: date => isStartDate(date) || isEndDate(date) || isMiddleDate(date),
+      selectedStart: date => displayedEndDate && isStartDate(date),
+      selectedMiddle: isMiddleDate,
+      selectedEnd: date => startDate && isEndDate(date),
+      disabled: date => focus === 'endDate' && (isBefore(date, startDate) || isStartDate(date))
+    },
+    receivedModifiers
+  )
 
   const handleChange = date => {
     if (focus === 'startDate') {
@@ -49,6 +55,7 @@ export default function DateRangePickerCalendar({
       minimumDate={minimumDate}
       maximumDate={maximumDate}
       modifiers={modifiers}
+      modifiersClassNames={modifiersClassNames}
       onSelectDate={handleChange}
       onHoverDate={setHoveredEndDate}
     />
@@ -61,12 +68,15 @@ DateRangePickerCalendar.propTypes = {
   focus: oneOf(['startDate', 'endDate']),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
+  modifiers: objectOf(func),
+  modifiersClassNames: objectOf(string),
   onStartDateChange: func,
   onEndDateChange: func,
   onFocusChange: func
 }
 
 DateRangePickerCalendar.defaultProps = {
+  modifiers: {},
   onStartDateChange: () => {},
   onEndDateChange: () => {},
   onFocusChange: () => {}

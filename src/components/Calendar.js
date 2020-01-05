@@ -1,18 +1,29 @@
 import React, { useState } from 'react'
-import { func, instanceOf, objectOf } from 'prop-types'
+import { func, instanceOf, objectOf, string } from 'prop-types'
 import { startOfMonth, isBefore, isAfter } from 'date-fns'
+import mergeModifiers from './mergeModifiers'
 import CalendarNavigation from './CalendarNavigation'
 import CalendarWeekHeader from './CalendarWeekHeader'
 import CalendarGrid from './CalendarGrid'
 
-export default function Calendar({ modifiers, minimumDate, maximumDate, onHoverDate, onSelectDate }) {
+export default function Calendar({
+  modifiers: receivedModifiers,
+  modifiersClassNames,
+  minimumDate,
+  maximumDate,
+  onHoverDate,
+  onSelectDate
+}) {
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()))
 
   const handleCurrentMonthChange = month => {
     setCurrentMonth(month)
   }
 
-  const isDisabled = date => isBefore(date, minimumDate) || isAfter(date, maximumDate)
+  const modifiers = mergeModifiers(
+    { disabled: date => isBefore(date, minimumDate) || isAfter(date, maximumDate) },
+    receivedModifiers
+  )
 
   return (
     <div>
@@ -27,10 +38,8 @@ export default function Calendar({ modifiers, minimumDate, maximumDate, onHoverD
 
       <CalendarGrid
         currentMonth={currentMonth}
-        modifiers={{
-          ...modifiers,
-          disabled: date => modifiers.disabled(date) || isDisabled(date)
-        }}
+        modifiers={modifiers}
+        modifiersClassNames={modifiersClassNames}
         onChange={handleCurrentMonthChange}
         onHoverDate={onHoverDate}
         onSelectDate={onSelectDate}
@@ -41,6 +50,7 @@ export default function Calendar({ modifiers, minimumDate, maximumDate, onHoverD
 
 Calendar.propTypes = {
   modifiers: objectOf(func),
+  modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   onHoverDate: func,

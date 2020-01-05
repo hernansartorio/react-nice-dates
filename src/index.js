@@ -4,7 +4,7 @@ import DatePickerCalendar from './components/DatePickerCalendar'
 import DateRangePickerCalendar from './components/DateRangePickerCalendar'
 import './styles.scss'
 import './nice-dates.scss'
-import { addMonths, subMonths } from 'date-fns'
+import { addMonths, subMonths, getDay } from 'date-fns'
 
 function App() {
   const [date, setDate] = useState()
@@ -21,6 +21,11 @@ function App() {
         onChange={setDate}
         minimumDate={subMonths(new Date(), 1)}
         maximumDate={addMonths(new Date(), 4)}
+        modifiers={{
+          highlight: date => getDay(date) === 3,
+          disabled: date => getDay(date) === 6
+        }}
+        modifiersClassNames={{ highlight: '-highlight' }}
       />
 
       <DateRangePickerCalendar
@@ -30,6 +35,11 @@ function App() {
         onStartDateChange={setStartDate}
         onEndDateChange={setEndDate}
         onFocusChange={setFocus}
+        modifiers={{
+          highlight: date => getDay(date) === 3,
+          disabled: date => getDay(date) === 6
+        }}
+        modifiersClassNames={{ highlight: '-highlight' }}
       />
 
       <DateRangePickerCalendar

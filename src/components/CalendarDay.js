@@ -1,10 +1,10 @@
 import React from 'react'
-import { bool, instanceOf, func, number, objectOf } from 'prop-types'
+import { bool, instanceOf, func, number, objectOf, string } from 'prop-types'
 import { getDate, format, isToday } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
 
-const modifiersClassNames = {
+const defaultModifiersClassNames = {
   today: '-today',
   outside: '-outside',
   wide: '-wide',
@@ -15,13 +15,21 @@ const modifiersClassNames = {
   selectedEnd: '-selected-end'
 }
 
-export default function CalendarDay({ date, height, modifiers, onSelect, onHover }) {
+export default function CalendarDay({
+  date,
+  height,
+  modifiers: receivedModifiers,
+  modifiersClassNames: receivedModifiersClassNames,
+  onSelect,
+  onHover
+}) {
   const dayOfMonth = getDate(date)
   const dayClassNames = {}
-  const finalModifiers = { today: isToday(date), ...modifiers }
+  const modifiers = { today: isToday(date), ...receivedModifiers }
+  const modifiersClassNames = { ...defaultModifiersClassNames, ...receivedModifiersClassNames }
 
-  Object.keys(finalModifiers).forEach(name => {
-    dayClassNames[modifiersClassNames[name]] = finalModifiers[name]
+  Object.keys(modifiers).forEach(name => {
+    dayClassNames[modifiersClassNames[name]] = modifiers[name]
   })
 
   const handleSelect = event => {
@@ -58,6 +66,7 @@ CalendarDay.propTypes = {
   date: instanceOf(Date).isRequired,
   height: number.isRequired,
   modifiers: objectOf(bool).isRequired,
+  modifiersClassNames: objectOf(string),
   onHover: func,
   onSelect: func
 }

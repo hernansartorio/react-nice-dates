@@ -1,14 +1,25 @@
 import React from 'react'
-import { instanceOf, func, number, objectOf } from 'prop-types'
+import { instanceOf, func, number, objectOf, string } from 'prop-types'
 import { eachDayOfInterval, format, isSameMonth } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
 import useGrid from './useGrid'
 import CalendarDay from './CalendarDay'
 
+const computeModifiers = (modifiers, date) => {
+  const computedModifiers = {}
+
+  Object.keys(modifiers).map(key => {
+    computedModifiers[key] = modifiers[key](date)
+  })
+
+  return computedModifiers
+}
+
 export default function CalendarGrid({
   currentMonth,
   modifiers,
+  modifiersClassNames,
   onChange,
   onHoverDate,
   onSelectDate,
@@ -21,21 +32,17 @@ export default function CalendarGrid({
     start: startDate,
     end: endDate
   }).map(date => {
-    const dayModifiers = {
-      outside: !isSameMonth(date, currentMonth),
-      wide: isWide
-    }
-
-    Object.keys(modifiers).map(key => {
-      dayModifiers[key] = modifiers[key](date)
-    })
-
     return (
       <CalendarDay
         date={date}
         height={cellHeight}
         key={format(date, 'yyyy-MM-dd', { locale })}
-        modifiers={dayModifiers}
+        modifiers={{
+          ...computeModifiers(modifiers, date),
+          outside: !isSameMonth(date, currentMonth),
+          wide: isWide
+        }}
+        modifiersClassNames={modifiersClassNames}
         onHover={onHoverDate}
         onSelect={onSelectDate}
       />
@@ -66,6 +73,7 @@ export default function CalendarGrid({
 CalendarGrid.propTypes = {
   currentMonth: instanceOf(Date).isRequired,
   modifiers: objectOf(func),
+  modifiersClassNames: objectOf(string),
   onChange: func.isRequired,
   onHoverDate: func,
   onSelectDate: func,
