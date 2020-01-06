@@ -1,7 +1,6 @@
 $color-gray-dark: #333;
 $color-gray: #999;
 $color-gray-light: #ddd;
-$color-gray-lighter: #f0f0f0;
 $color-accent: $color-gray-dark;
 
 $font-size-small: 12px;
@@ -72,9 +71,9 @@ $cell-width: calc(100% / 7);
   }
 
   &-week-header {
-    border-bottom: 1px solid $color-gray-lighter;
+    box-shadow: 0 1px 0 rgba(0,0,0,.06);
     display: flex;
-    padding: 6px 0;
+    padding: 8px 0;
 
     &_day {
       color: $color-gray;
@@ -172,13 +171,16 @@ $cell-width: calc(100% / 7);
 
     &:after {
       border: 2px solid $color-accent;
-      transition: 150ms opacity;
+      transform: scale(.95);
+      transition-duration: 150ms;
+      transition-property: transform, opacity;
       z-index: 2;
     }
 
     &:not(.-disabled):hover {
       &:after {
         opacity: 1;
+        transform: scale(1);
       }
     }
 
