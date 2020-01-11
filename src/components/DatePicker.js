@@ -5,7 +5,6 @@ import useDetectTouch from './useDetectTouch'
 import useOutsideClickHandler from './useOutsideClickHandler'
 import DatePickerCalendar from './DatePickerCalendar'
 import Popover from './Popover'
-import { isBefore, isAfter } from 'date-fns'
 
 export default function DatePicker({
   children,
@@ -31,11 +30,12 @@ export default function DatePicker({
     date,
     format,
     locale,
+    minimumDate,
+    maximumDate,
     onDateChange: date => {
       onDateChange(date)
       date && setMonth(date)
-    },
-    validate: date => !isBefore(date, minimumDate) && !isAfter(date, maximumDate)
+    }
   })
 
   const handleDateChange = date => {

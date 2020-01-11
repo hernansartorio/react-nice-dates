@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
-import { startOfMonth, isBefore, isAfter } from 'date-fns'
+import { startOfMonth } from 'date-fns'
+import isSelectable from './isSelectable'
 import mergeModifiers from './mergeModifiers'
 import CalendarNavigation from './CalendarNavigation'
 import CalendarWeekHeader from './CalendarWeekHeader'
@@ -22,7 +23,7 @@ export default function Calendar({
   const handleMonthChange = onMonthChange || setLocalStateMonth
 
   const modifiers = mergeModifiers(
-    { disabled: date => isBefore(date, minimumDate) || isAfter(date, maximumDate) },
+    { disabled: date => !isSelectable(date, { minimumDate, maximumDate }) },
     receivedModifiers
   )
 

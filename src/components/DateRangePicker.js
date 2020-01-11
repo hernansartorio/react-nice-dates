@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
-import { isAfter, isBefore } from 'date-fns'
+import { addDays, subDays } from 'date-fns'
+import isSelectable from './isSelectable'
 import useDateInput from './useDateInput'
 import useOutsideClickHandler from './useOutsideClickHandler'
 import useDetectTouch from './useDetectTouch'
@@ -34,22 +35,26 @@ export default function DateRangePicker({
     date: startDate,
     format,
     locale,
+    maximumDate,
+    minimumDate,
     onDateChange: date => {
       onStartDateChange(date)
       date && setMonth(date)
     },
-    validate: date => (!endDate || isBefore(date, endDate)) && !isBefore(date, minimumDate)
+    validate: date => isSelectable(date, { maximumDate: subDays(endDate, 1) })
   })
 
   const [endDateInputProps, updateEndDateInputValue] = useDateInput({
     date: endDate,
     format,
     locale,
+    maximumDate,
+    minimumDate,
     onDateChange: date => {
       onEndDateChange(date)
       date && setMonth(date)
     },
-    validate: date => (!startDate || isAfter(date, startDate)) && !isAfter(date, maximumDate)
+    validate: date => isSelectable(date, { minimumDate: addDays(startDate, 1) })
   })
 
   const handleStartDateChange = date => {
