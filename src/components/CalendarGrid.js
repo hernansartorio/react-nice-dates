@@ -17,15 +17,15 @@ const computeModifiers = (modifiers, date) => {
 }
 
 export default function CalendarGrid({
-  currentMonth,
+  month,
   modifiers,
   modifiersClassNames,
-  onChange,
+  onMonthChange,
   onHoverDate,
   onSelectDate,
   transitionDuration
 }) {
-  const grid = useGrid({ currentMonth, onChange, transitionDuration })
+  const grid = useGrid({ currentMonth: month, onMonthChange, transitionDuration })
   const { startDate, endDate, cellHeight, containerElementRef, isWide, offset, origin, transition } = grid
 
   const days = eachDayOfInterval({
@@ -39,7 +39,7 @@ export default function CalendarGrid({
         key={format(date, 'yyyy-MM-dd', { locale })}
         modifiers={{
           ...computeModifiers(modifiers, date),
-          outside: !isSameMonth(date, currentMonth),
+          outside: !isSameMonth(date, month),
           wide: isWide
         }}
         modifiersClassNames={modifiersClassNames}
@@ -71,10 +71,10 @@ export default function CalendarGrid({
 }
 
 CalendarGrid.propTypes = {
-  currentMonth: instanceOf(Date).isRequired,
+  month: instanceOf(Date).isRequired,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
-  onChange: func.isRequired,
+  onMonthChange: func.isRequired,
   onHoverDate: func,
   onSelectDate: func,
   transitionDuration: number.isRequired

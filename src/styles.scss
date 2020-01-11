@@ -1,19 +1,65 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700');
 
+$color-gray-dark: #333;
+$color-gray: #999;
+$color-gray-light: #ddd;
+$color-accent: $color-gray-dark;
+
+$font-size: 16px;
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #333;
+  color: $color-gray-dark;
   font-family: 'IBM Plex Sans', sans-serif;
   margin: 0;
   padding: 0 10px;
 }
 
+input, textarea {
+  -webkit-appearance: none;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid $color-gray-light;
+  color: $color-gray-dark;
+  display: block;
+  margin-top: 30px;
+  font-family: inherit;
+  font-size: $font-size;
+  height: 42px;
+  outline: none;
+  padding: 0 12px;
+  transition: border-color 200ms;
+  width: 150px;
+
+  &:focus, &.-active {
+    border-color: $color-accent;
+  }
+
+  &::placeholder {
+    color: $color-gray-light;
+  }
+}
+
 .container {
   max-width: 532px;
   margin: 300px auto;
+  position: relative;
 }
 
-.nice-dates-day.-highlight {
-  color: orange;
+.date-range {
+  display: flex;
+  justify-content: space-between;
+
+  input {
+    flex-grow: 1;
+
+    &:first-child {
+      margin-right: 30px;
+    }
+  }
 }

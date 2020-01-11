@@ -1,57 +1,37 @@
 import React, { useState } from 'react'
 import { render } from 'react-dom'
-import DatePickerCalendar from './components/DatePickerCalendar'
-import DateRangePickerCalendar from './components/DateRangePickerCalendar'
+import { enGB as locale } from 'date-fns/locale'
+import classNames from 'classnames'
+import DatePicker from './components/DatePicker'
+import DateRangePicker from './components/DateRangePicker'
 import './styles.scss'
 import './nice-dates.scss'
-import { addMonths, subMonths, getDay } from 'date-fns'
 
 function App() {
   const [date, setDate] = useState()
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
-  const [focus, setFocus] = useState('startDate')
 
   return (
     <div className='container'>
-      <DatePickerCalendar date={date} onChange={setDate} />
+      <DatePicker date={date} onDateChange={setDate} locale={locale} minimumDate={new Date()}>
+        {({ inputProps, focused }) => <input className={classNames({ '-active': focused })} type='text' {...inputProps} />}
+      </DatePicker>
 
-      <DatePickerCalendar
-        date={date}
-        onChange={setDate}
-        minimumDate={subMonths(new Date(), 1)}
-        maximumDate={addMonths(new Date(), 4)}
-        modifiers={{
-          highlight: date => getDay(date) === 3,
-          disabled: date => getDay(date) === 6
-        }}
-        modifiersClassNames={{ highlight: '-highlight' }}
-      />
-
-      <DateRangePickerCalendar
+      <DateRangePicker
         startDate={startDate}
         endDate={endDate}
-        focus={focus}
         onStartDateChange={setStartDate}
         onEndDateChange={setEndDate}
-        onFocusChange={setFocus}
-        modifiers={{
-          highlight: date => getDay(date) === 3,
-          disabled: date => getDay(date) === 6
-        }}
-        modifiersClassNames={{ highlight: '-highlight' }}
-      />
-
-      <DateRangePickerCalendar
-        startDate={startDate}
-        endDate={endDate}
-        focus={focus}
-        minimumDate={new Date()}
-        maximumDate={addMonths(new Date(), 1)}
-        onStartDateChange={setStartDate}
-        onEndDateChange={setEndDate}
-        onFocusChange={setFocus}
-      />
+        locale={locale}
+      >
+        {({ startDateInputProps, endDateInputProps, focus }) => (
+          <div className='date-range'>
+            <input className={classNames({ '-active': focus === 'startDate' })} type='text' {...startDateInputProps} />
+            <input className={classNames({ '-active': focus === 'endDate' })} type='text' {...endDateInputProps} />
+          </div>
+        )}
+      </DateRangePicker>
     </div>
   )
 }

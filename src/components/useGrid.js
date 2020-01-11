@@ -4,6 +4,7 @@ import { enGB as locale } from 'date-fns/locale'
 import {
   addMonths,
   addWeeks,
+  differenceInCalendarMonths,
   differenceInCalendarWeeks,
   endOfMonth,
   endOfWeek,
@@ -88,7 +89,7 @@ function reducer(state, action) {
   }
 }
 
-export default function useGrid({ currentMonth, onChange, transitionDuration }) {
+export default function useGrid({ currentMonth, onMonthChange, transitionDuration }) {
   const timeoutRef = useRef()
   const containerElementRef = useRef()
   const initialDragPositionRef = useRef(0)
@@ -102,11 +103,16 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
       const containerElement = containerElementRef.current
       containerElement.classList.add('-transition')
       clearTimeout(timeoutRef.current)
-      dispatch({ type: 'transitionToCurrentMonth', currentMonth })
 
-      timeoutRef.current = setTimeout(() => {
+      if (Math.abs(differenceInCalendarMonths(currentMonth, lastCurrentMonth)) <= 3) {
+        dispatch({ type: 'transitionToCurrentMonth', currentMonth })
+
+        timeoutRef.current = setTimeout(() => {
+          dispatch({ type: 'reset', currentMonth })
+        }, transitionDuration)
+      } else {
         dispatch({ type: 'reset', currentMonth })
-      }, transitionDuration)
+      }
     }
   }, [currentMonth]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -159,9 +165,9 @@ export default function useGrid({ currentMonth, onChange, transitionDuration }) 
           Math.abs(dragOffset) < currentMonthPosition - halfGridHeight
 
         if (shouldChangeToNextMonth) {
-          onChange(nextMonth)
+          onMonthChange(nextMonth)
         } else if (shouldChangeToPreviousMonth) {
-          onChange(previousMonth)
+          onMonthChange(previousMonth)
         }
 
         containerElement.style.transform = `translate3d(0, ${dragOffset}px, 0)`

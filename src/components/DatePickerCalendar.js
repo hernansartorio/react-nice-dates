@@ -4,26 +4,10 @@ import { isSameDay } from 'date-fns'
 import mergeModifiers from './mergeModifiers'
 import Calendar from './Calendar'
 
-export default function DatePickerCalendar({
-  date: selectedDate,
-  minimumDate,
-  maximumDate,
-  modifiers: receivedModifiers,
-  modifiersClassNames,
-  onChange
-}) {
+export default function DatePickerCalendar({ date: selectedDate, onDateChange, ...calendarProps }) {
   const isSelected = date => isSameDay(date, selectedDate)
-  const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, receivedModifiers)
-
-  return (
-    <Calendar
-      minimumDate={minimumDate}
-      maximumDate={maximumDate}
-      modifiers={modifiers}
-      modifiersClassNames={modifiersClassNames}
-      onSelectDate={onChange}
-    />
-  )
+  const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, calendarProps.modifiers)
+  return <Calendar {...calendarProps} onSelectDate={onDateChange} modifiers={modifiers} />
 }
 
 DatePickerCalendar.propTypes = {
@@ -32,7 +16,7 @@ DatePickerCalendar.propTypes = {
   modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
-  onChange: func
+  onDateChange: func
 }
 
 DatePickerCalendar.defaultProps = {

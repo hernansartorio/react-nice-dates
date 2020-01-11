@@ -7,6 +7,8 @@ import CalendarWeekHeader from './CalendarWeekHeader'
 import CalendarGrid from './CalendarGrid'
 
 export default function Calendar({
+  month: receivedMonth,
+  onMonthChange,
   modifiers: receivedModifiers,
   modifiersClassNames,
   minimumDate,
@@ -14,11 +16,9 @@ export default function Calendar({
   onHoverDate,
   onSelectDate
 }) {
-  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()))
-
-  const handleCurrentMonthChange = month => {
-    setCurrentMonth(month)
-  }
+  const [localStateMonth, setLocalStateMonth] = useState(startOfMonth(new Date()))
+  const month = receivedMonth ? startOfMonth(receivedMonth) : localStateMonth
+  const handleMonthChange = onMonthChange || setLocalStateMonth
 
   const modifiers = mergeModifiers(
     { disabled: date => isBefore(date, minimumDate) || isAfter(date, maximumDate) },
@@ -28,19 +28,19 @@ export default function Calendar({
   return (
     <div>
       <CalendarNavigation
-        currentMonth={currentMonth}
         minimumDate={minimumDate}
         maximumDate={maximumDate}
-        onChange={setCurrentMonth}
+        month={month}
+        onMonthChange={handleMonthChange}
       />
 
       <CalendarWeekHeader />
 
       <CalendarGrid
-        currentMonth={currentMonth}
         modifiers={modifiers}
         modifiersClassNames={modifiersClassNames}
-        onChange={handleCurrentMonthChange}
+        month={month}
+        onMonthChange={handleMonthChange}
         onHoverDate={onHoverDate}
         onSelectDate={onSelectDate}
       />
@@ -53,6 +53,8 @@ Calendar.propTypes = {
   modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
+  month: instanceOf(Date),
+  onMonthChange: func,
   onHoverDate: func,
   onSelectDate: func
 }

@@ -8,57 +8,64 @@ export default function DateRangePickerCalendar({
   startDate,
   endDate,
   focus,
-  minimumDate,
-  maximumDate,
-  modifiers: receivedModifiers,
-  modifiersClassNames,
   onStartDateChange,
   onEndDateChange,
-  onFocusChange
+  onFocusChange,
+  ...calendarProps
 }) {
-  const [hoveredEndDate, setHoveredEndDate] = useState()
-  const displayedEndDate =
-    focus === 'endDate' && hoveredEndDate && !isSameDay(hoveredEndDate, startDate) ? hoveredEndDate : endDate
+  const [hoveredDate, setHoveredDate] = useState()
+  const displayedStartDate =
+    focus === 'startDate' && endDate && hoveredDate && !isSameDay(hoveredDate, endDate) ? hoveredDate : startDate
 
-  const isStartDate = date => isSameDay(date, startDate)
-  const isMiddleDate = date => isAfter(date, startDate) && isBefore(date, displayedEndDate)
-  const isEndDate = date => isSameDay(date, displayedEndDate)
+  const displayedEndDate =
+    focus === 'endDate' && startDate && hoveredDate && !isSameDay(hoveredDate, startDate) ? hoveredDate : endDate
+
+  const isStartDate = date => isSameDay(date, displayedStartDate) && isBefore(date, displayedEndDate)
+  const isMiddleDate = date => isAfter(date, displayedStartDate) && isBefore(date, displayedEndDate)
+  const isEndDate = date => isSameDay(date, displayedEndDate) && isAfter(date, displayedStartDate)
 
   const modifiers = mergeModifiers(
     {
-      selected: date => isStartDate(date) || isEndDate(date) || isMiddleDate(date),
-      selectedStart: date => displayedEndDate && isStartDate(date),
+      selected: date =>
+        isStartDate(date) ||
+        isMiddleDate(date) ||
+        isEndDate(date) ||
+        isSameDay(date, displayedStartDate) ||
+        isSameDay(date, displayedEndDate),
+      selectedStart: isStartDate,
       selectedMiddle: isMiddleDate,
-      selectedEnd: date => startDate && isEndDate(date),
-      disabled: date => focus === 'endDate' && (isBefore(date, startDate) || isStartDate(date))
+      selectedEnd: isEndDate,
+      disabled: date => (focus === 'startDate' && isEndDate(date)) || (focus === 'endDate' && isStartDate(date))
     },
-    receivedModifiers
+    calendarProps.modifiers
   )
 
-  const handleChange = date => {
+  const handleSelectDate = date => {
     if (focus === 'startDate') {
-      onStartDateChange(date)
-
-      if (!isAfter(endDate, date)) {
+      if (endDate && !isAfter(endDate, date)) {
         onEndDateChange(null)
       }
 
+      onStartDateChange(date)
       onFocusChange('endDate')
     } else if (focus === 'endDate') {
+      const invalidStartDate = startDate && !isBefore(startDate, date)
+
+      if (invalidStartDate) {
+        onStartDateChange(null)
+      }
+
       onEndDateChange(date)
-      onFocusChange('startDate')
+      onFocusChange(invalidStartDate ? 'startDate' : null)
     }
   }
 
+  const handleHoverDate = date => {
+    setHoveredDate(date)
+  }
+
   return (
-    <Calendar
-      minimumDate={minimumDate}
-      maximumDate={maximumDate}
-      modifiers={modifiers}
-      modifiersClassNames={modifiersClassNames}
-      onSelectDate={handleChange}
-      onHoverDate={setHoveredEndDate}
-    />
+    <Calendar {...calendarProps} modifiers={modifiers} onSelectDate={handleSelectDate} onHoverDate={handleHoverDate} />
   )
 }
 

@@ -5,14 +5,14 @@ import { enGB as locale } from 'date-fns/locale'
 
 import { addMonths, getYear, startOfMonth, subMonths, format, isSameMonth } from 'date-fns'
 
-export default function CalendarNavigation({ currentMonth, minimumDate, maximumDate, onChange }) {
+export default function CalendarNavigation({ month, minimumDate, maximumDate, onMonthChange }) {
   const handlePrevious = event => {
-    onChange(startOfMonth(subMonths(currentMonth, 1)))
+    onMonthChange(startOfMonth(subMonths(month, 1)))
     event.preventDefault()
   }
 
   const handleNext = event => {
-    onChange(startOfMonth(addMonths(currentMonth, 1)))
+    onMonthChange(startOfMonth(addMonths(month, 1)))
     event.preventDefault()
   }
 
@@ -20,19 +20,19 @@ export default function CalendarNavigation({ currentMonth, minimumDate, maximumD
     <div className='nice-dates-navigation'>
       <a
         className={classNames('nice-dates-navigation_previous', {
-          '-disabled': isSameMonth(currentMonth, minimumDate)
+          '-disabled': isSameMonth(month, minimumDate)
         })}
         onClick={handlePrevious}
         onTouchEnd={handlePrevious}
       />
 
       <span className='nice-dates-navigation_current'>
-        {format(currentMonth, getYear(currentMonth) === getYear(new Date()) ? 'MMMM' : 'MMMM yyyy', { locale })}
+        {format(month, getYear(month) === getYear(new Date()) ? 'MMMM' : 'MMMM yyyy', { locale })}
       </span>
 
       <a
         className={classNames('nice-dates-navigation_next', {
-          '-disabled': isSameMonth(currentMonth, maximumDate)
+          '-disabled': isSameMonth(month, maximumDate)
         })}
         onClick={handleNext}
         onTouchEnd={handleNext}
@@ -42,8 +42,8 @@ export default function CalendarNavigation({ currentMonth, minimumDate, maximumD
 }
 
 CalendarNavigation.propTypes = {
-  currentMonth: instanceOf(Date).isRequired,
+  month: instanceOf(Date).isRequired,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
-  onChange: func.isRequired
+  onMonthChange: func.isRequired
 }

@@ -10,9 +10,6 @@ $font-size-big: 16px;
 $cell-width: calc(100% / 7);
 
 .nice-dates {
-  padding-top: 18px;
-  position: relative;
-
   &-navigation {
     align-items: center;
     display: flex;
@@ -20,7 +17,6 @@ $cell-width: calc(100% / 7);
     position: relative;
     text-align: center;
     text-transform: capitalize;
-    z-index: 9;
 
     &_current {
       flex-grow: 1;
@@ -71,7 +67,7 @@ $cell-width: calc(100% / 7);
   }
 
   &-week-header {
-    box-shadow: 0 1px 0 rgba(0,0,0,.06);
+    box-shadow: 0 1px 0 rgba(#000, .06);
     display: flex;
     padding: 8px 0;
 
@@ -80,6 +76,7 @@ $cell-width: calc(100% / 7);
       font-size: $font-size;
       line-height: 1;
       text-align: center;
+      text-transform: capitalize;
       width: $cell-width;
     }
   }
@@ -97,7 +94,7 @@ $cell-width: calc(100% / 7);
       left: 0;
       position: absolute;
       right: 0;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-timing-function: cubic-bezier(.4, 0, .2, 1);
       transition-property: none;
       will-change: transform;
 
@@ -143,11 +140,12 @@ $cell-width: calc(100% / 7);
     &_month {
       color: $color-gray;
       font-size: $font-size-small;
+      left: 0;
       line-height: 1;
       position: absolute;
-      top: 10%;
-      left: 0;
       right: 0;
+      text-transform: capitalize;
+      top: 10%;
       z-index: 3;
     }
 
@@ -265,6 +263,27 @@ $cell-width: calc(100% / 7);
       cursor: default;
       pointer-events: none;
       color: $color-gray-light;
+    }
+  }
+
+  &-popover {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 8px rgba(#000, .12);
+    margin: 8px 0;
+    max-width: 600px;
+    position: absolute;
+    transform-origin: top;
+    transform: perspective(1000px);
+    transition: all 500ms cubic-bezier(.4, .2, 0, 1.1);
+    width: 100%;
+    will-change: transform, opacity;
+    z-index: 9;
+
+    &:not(.-open) {
+      opacity: 0;
+      pointer-events: none;
+      transform: perspective(1000px) rotateX(-15deg);
     }
   }
 }
