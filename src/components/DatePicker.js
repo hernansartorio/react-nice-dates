@@ -67,6 +67,7 @@ export default function DatePicker({
           month={month}
           onMonthChange={setMonth}
           date={date}
+          locale={locale}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           modifiers={modifiers}
@@ -82,7 +83,7 @@ DatePicker.propTypes = {
   date: instanceOf(Date),
   format: string,
   children: func,
-  locale: object,
+  locale: object.isRequired,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),

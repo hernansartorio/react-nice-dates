@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { func, instanceOf, objectOf, oneOf, string } from 'prop-types'
+import { func, instanceOf, object, objectOf, oneOf, string } from 'prop-types'
 import { isSameDay, isAfter, isBefore } from 'date-fns'
 import mergeModifiers from './mergeModifiers'
 import Calendar from './Calendar'
@@ -73,6 +73,7 @@ DateRangePickerCalendar.propTypes = {
   startDate: instanceOf(Date),
   endDate: instanceOf(Date),
   focus: oneOf(['startDate', 'endDate']),
+  locale: object.isRequired,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),

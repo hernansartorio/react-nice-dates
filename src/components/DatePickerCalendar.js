@@ -1,5 +1,5 @@
 import React from 'react'
-import { instanceOf, func, objectOf, string } from 'prop-types'
+import { instanceOf, func, object, objectOf, string } from 'prop-types'
 import { isSameDay } from 'date-fns'
 import mergeModifiers from './mergeModifiers'
 import Calendar from './Calendar'
@@ -13,6 +13,7 @@ export default function DatePickerCalendar({ date: selectedDate, onDateChange, .
 DatePickerCalendar.propTypes = {
   date: instanceOf(Date),
   modifiers: objectOf(func),
+  locale: object.isRequired,
   modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),

@@ -1,11 +1,9 @@
 import React from 'react'
-import { func, instanceOf } from 'prop-types'
+import { func, instanceOf, object } from 'prop-types'
 import classNames from 'classnames'
-import { enGB as locale } from 'date-fns/locale'
-
 import { addMonths, getYear, startOfMonth, subMonths, format, isSameMonth } from 'date-fns'
 
-export default function CalendarNavigation({ month, minimumDate, maximumDate, onMonthChange }) {
+export default function CalendarNavigation({ locale, month, minimumDate, maximumDate, onMonthChange }) {
   const handlePrevious = event => {
     onMonthChange(startOfMonth(subMonths(month, 1)))
     event.preventDefault()
@@ -42,6 +40,7 @@ export default function CalendarNavigation({ month, minimumDate, maximumDate, on
 }
 
 CalendarNavigation.propTypes = {
+  locale: object.isRequired,
   month: instanceOf(Date).isRequired,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),

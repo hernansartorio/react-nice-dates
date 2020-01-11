@@ -98,6 +98,7 @@ export default function DateRangePicker({
           startDate={startDate}
           endDate={endDate}
           focus={focus}
+          locale={locale}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           modifiers={modifiers}
@@ -116,7 +117,7 @@ DateRangePicker.propTypes = {
   startDate: instanceOf(Date),
   endDate: instanceOf(Date),
   children: func,
-  locale: object,
+  locale: object.isRequired,
   format: string,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),

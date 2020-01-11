@@ -1,5 +1,4 @@
 import { useRef, useLayoutEffect, useEffect, useReducer } from 'react'
-import { enGB as locale } from 'date-fns/locale'
 
 import {
   addMonths,
@@ -15,25 +14,26 @@ import {
   subMonths
 } from 'date-fns'
 
-const rowsBetweenDates = (startDate, endDate) => differenceInCalendarWeeks(endDate, startDate, { locale }) + 1
-const rowsInMonth = date => rowsBetweenDates(startOfMonth(date), endOfMonth(date))
-const getStartDate = date => startOfWeek(startOfMonth(date), { locale })
-const getEndDate = date => endOfWeek(addWeeks(endOfMonth(date), 6 - rowsInMonth(date)), { locale })
+const rowsBetweenDates = (startDate, endDate, locale) => differenceInCalendarWeeks(endDate, startDate, { locale }) + 1
+const rowsInMonth = (date, locale) => rowsBetweenDates(startOfMonth(date), endOfMonth(date), locale)
+const getStartDate = (date, locale) => startOfWeek(startOfMonth(date), { locale })
+const getEndDate = (date, locale) => endOfWeek(addWeeks(endOfMonth(date), 6 - rowsInMonth(date, locale)), { locale })
 
-function createInitialState(currentMonth) {
+const createInitialState = (currentMonth, locale) => {
   return {
-    endDate: getEndDate(currentMonth),
-    startDate: getStartDate(currentMonth),
+    startDate: getStartDate(currentMonth, locale),
+    endDate: getEndDate(currentMonth, locale),
     cellHeight: 0,
     isWide: false,
     lastCurrentMonth: currentMonth,
+    locale,
     offset: 0,
     origin: 'top',
     transition: false
   }
 }
 
-function reducer(state, action) {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'setStartDate':
       return { ...state, startDate: action.value }
@@ -47,7 +47,7 @@ function reducer(state, action) {
       return { ...state, isWide: action.value }
     case 'reset':
       return {
-        ...createInitialState(action.currentMonth),
+        ...createInitialState(action.currentMonth, state.locale),
         cellHeight: state.cellHeight,
         isWide: state.isWide
       }
@@ -62,21 +62,21 @@ function reducer(state, action) {
       }
 
       if (isAfter(currentMonth, lastCurrentMonth)) {
-        const offset = -(rowsBetweenDates(startDate, currentMonth) - 1) * cellHeight
+        const offset = -(rowsBetweenDates(startDate, currentMonth, state.locale) - 1) * cellHeight
 
         return {
           ...newState,
-          endDate: getEndDate(currentMonth),
+          endDate: getEndDate(currentMonth, state.locale),
           offset,
           origin: 'top'
         }
       } else if (isBefore(currentMonth, lastCurrentMonth)) {
         const gridHeight = cellHeight * 6
-        const offset = rowsBetweenDates(currentMonth, endDate) * cellHeight - gridHeight
+        const offset = rowsBetweenDates(currentMonth, endDate, state.locale) * cellHeight - gridHeight
 
         return {
           ...newState,
-          startDate: getStartDate(currentMonth),
+          startDate: getStartDate(currentMonth, state.locale),
           offset,
           origin: 'bottom'
         }
@@ -89,11 +89,11 @@ function reducer(state, action) {
   }
 }
 
-export default function useGrid({ currentMonth, onMonthChange, transitionDuration }) {
+export default function useGrid({ locale, month: currentMonth, onMonthChange, transitionDuration }) {
   const timeoutRef = useRef()
   const containerElementRef = useRef()
   const initialDragPositionRef = useRef(0)
-  const [state, dispatch] = useReducer(reducer, createInitialState(currentMonth))
+  const [state, dispatch] = useReducer(reducer, createInitialState(currentMonth, locale))
   const { startDate, endDate, cellHeight, lastCurrentMonth, offset, origin, transition, isWide } = state
 
   useLayoutEffect(() => {
@@ -128,9 +128,9 @@ export default function useGrid({ currentMonth, onMonthChange, transitionDuratio
         let currentMonthPosition = 0
 
         if (!initialDragPositionRef.current) {
-          const newStartDate = getStartDate(subMonths(currentMonth, 1))
-          currentMonthPosition = (rowsBetweenDates(newStartDate, currentMonth) - 1) * cellHeight
-          dispatch({ type: 'setRange', startDate: newStartDate, endDate: getEndDate(addMonths(currentMonth, 1)) })
+          const newStartDate = getStartDate(subMonths(currentMonth, 1), locale)
+          currentMonthPosition = (rowsBetweenDates(newStartDate, currentMonth, locale) - 1) * cellHeight
+          dispatch({ type: 'setRange', startDate: newStartDate, endDate: getEndDate(addMonths(currentMonth, 1), locale) })
         }
 
         containerElement.style.transform = `translate3d(0, ${computedOffset || -currentMonthPosition}px, 0)`
@@ -143,18 +143,18 @@ export default function useGrid({ currentMonth, onMonthChange, transitionDuratio
         const initialDragPosition = initialDragPositionRef.current
         const dragOffset = event.touches[0].clientY - initialDragPosition
         const previousMonth = subMonths(currentMonth, 1)
-        const previousMonthPosition = (rowsBetweenDates(startDate, previousMonth) - 1) * cellHeight
-        const currentMonthPosition = (rowsBetweenDates(startDate, currentMonth) - 1) * cellHeight
+        const previousMonthPosition = (rowsBetweenDates(startDate, previousMonth, locale) - 1) * cellHeight
+        const currentMonthPosition = (rowsBetweenDates(startDate, currentMonth, locale) - 1) * cellHeight
         const nextMonth = addMonths(currentMonth, 1)
-        const nextMonthPosition = (rowsBetweenDates(startDate, nextMonth) - 1) * cellHeight
+        const nextMonthPosition = (rowsBetweenDates(startDate, nextMonth, locale) - 1) * cellHeight
 
         if (dragOffset < 0) {
           if (Math.abs(dragOffset) > currentMonthPosition && isBefore(endDate, addMonths(currentMonth, 2))) {
-            dispatch({ type: 'setEndDate', value: getEndDate(nextMonth) })
+            dispatch({ type: 'setEndDate', value: getEndDate(nextMonth, locale) })
           }
         } else if (dragOffset > 0) {
-          const newStartDate = getStartDate(previousMonth)
-          const newCurrentMonthPosition = (rowsBetweenDates(newStartDate, currentMonth) - 1) * cellHeight
+          const newStartDate = getStartDate(previousMonth, locale)
+          const newCurrentMonthPosition = (rowsBetweenDates(newStartDate, currentMonth, locale) - 1) * cellHeight
           initialDragPositionRef.current += newCurrentMonthPosition
           dispatch({ type: 'setStartDate', value: newStartDate })
         }
@@ -175,7 +175,7 @@ export default function useGrid({ currentMonth, onMonthChange, transitionDuratio
       }
 
       const handleDragEnd = event => {
-        const currentMonthPosition = (rowsBetweenDates(startDate, currentMonth) - 1) * cellHeight
+        const currentMonthPosition = (rowsBetweenDates(startDate, currentMonth, locale) - 1) * cellHeight
         containerElement.style.transform = `translate3d(0, ${-currentMonthPosition}px, 0)`
         containerElement.classList.add('-transition')
         containerElement.classList.remove('-moving')

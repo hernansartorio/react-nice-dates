@@ -1,7 +1,6 @@
 import React from 'react'
-import { instanceOf, func, number, objectOf, string } from 'prop-types'
-import { eachDayOfInterval, format, isSameMonth } from 'date-fns'
-import { enGB as locale } from 'date-fns/locale'
+import { instanceOf, func, number, object, objectOf, string } from 'prop-types'
+import { eachDayOfInterval, isSameMonth, lightFormat } from 'date-fns'
 import classNames from 'classnames'
 import useGrid from './useGrid'
 import CalendarDay from './CalendarDay'
@@ -17,6 +16,7 @@ const computeModifiers = (modifiers, date) => {
 }
 
 export default function CalendarGrid({
+  locale,
   month,
   modifiers,
   modifiersClassNames,
@@ -25,7 +25,7 @@ export default function CalendarGrid({
   onSelectDate,
   transitionDuration
 }) {
-  const grid = useGrid({ currentMonth: month, onMonthChange, transitionDuration })
+  const grid = useGrid({ locale, month, onMonthChange, transitionDuration })
   const { startDate, endDate, cellHeight, containerElementRef, isWide, offset, origin, transition } = grid
 
   const days = eachDayOfInterval({
@@ -36,7 +36,8 @@ export default function CalendarGrid({
       <CalendarDay
         date={date}
         height={cellHeight}
-        key={format(date, 'yyyy-MM-dd', { locale })}
+        key={lightFormat(date, 'yyyy-MM-dd')}
+        locale={locale}
         modifiers={{
           ...computeModifiers(modifiers, date),
           outside: !isSameMonth(date, month),
@@ -71,6 +72,7 @@ export default function CalendarGrid({
 }
 
 CalendarGrid.propTypes = {
+  locale: object.isRequired,
   month: instanceOf(Date).isRequired,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),

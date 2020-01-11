@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { func, instanceOf, objectOf, string } from 'prop-types'
+import { func, instanceOf, object, objectOf, string } from 'prop-types'
 import { startOfMonth, isBefore, isAfter } from 'date-fns'
 import mergeModifiers from './mergeModifiers'
 import CalendarNavigation from './CalendarNavigation'
@@ -7,12 +7,13 @@ import CalendarWeekHeader from './CalendarWeekHeader'
 import CalendarGrid from './CalendarGrid'
 
 export default function Calendar({
+  locale,
   month: receivedMonth,
-  onMonthChange,
   modifiers: receivedModifiers,
   modifiersClassNames,
   minimumDate,
   maximumDate,
+  onMonthChange,
   onHoverDate,
   onSelectDate
 }) {
@@ -28,15 +29,17 @@ export default function Calendar({
   return (
     <div>
       <CalendarNavigation
+        locale={locale}
         minimumDate={minimumDate}
         maximumDate={maximumDate}
         month={month}
         onMonthChange={handleMonthChange}
       />
 
-      <CalendarWeekHeader />
+      <CalendarWeekHeader locale={locale} />
 
       <CalendarGrid
+        locale={locale}
         modifiers={modifiers}
         modifiersClassNames={modifiersClassNames}
         month={month}
@@ -49,6 +52,7 @@ export default function Calendar({
 }
 
 Calendar.propTypes = {
+  locale: object.isRequired,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),

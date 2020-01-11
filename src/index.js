@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className='container'>
-      <DatePicker date={date} onDateChange={setDate} locale={locale} minimumDate={new Date()}>
+      <DatePicker date={date} onDateChange={setDate} locale={locale}>
         {({ inputProps, focused }) => <input className={classNames({ '-active': focused })} type='text' {...inputProps} />}
       </DatePicker>
 

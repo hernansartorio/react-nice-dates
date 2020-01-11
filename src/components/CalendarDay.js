@@ -1,7 +1,6 @@
 import React from 'react'
-import { bool, instanceOf, func, number, objectOf, string } from 'prop-types'
+import { bool, instanceOf, func, number, object, objectOf, string } from 'prop-types'
 import { getDate, format, isToday } from 'date-fns'
-import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
 
 const defaultModifiersClassNames = {
@@ -18,6 +17,7 @@ const defaultModifiersClassNames = {
 export default function CalendarDay({
   date,
   height,
+  locale,
   modifiers: receivedModifiers,
   modifiersClassNames: receivedModifiersClassNames,
   onSelect,
@@ -65,6 +65,7 @@ export default function CalendarDay({
 CalendarDay.propTypes = {
   date: instanceOf(Date).isRequired,
   height: number.isRequired,
+  locale: object.isRequired,
   modifiers: objectOf(bool).isRequired,
   modifiersClassNames: objectOf(string),
   onHover: func,
