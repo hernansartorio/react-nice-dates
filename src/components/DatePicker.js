@@ -82,11 +82,11 @@ export default function DatePicker({
 DatePicker.propTypes = {
   date: instanceOf(Date),
   format: string,
-  children: func,
+  children: func.isRequired,
   locale: object.isRequired,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
-  onDateChange: func
+  onDateChange: func.isRequired
 }

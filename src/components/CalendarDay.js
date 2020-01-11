@@ -66,7 +66,7 @@ CalendarDay.propTypes = {
   date: instanceOf(Date).isRequired,
   height: number.isRequired,
   locale: object.isRequired,
-  modifiers: objectOf(bool).isRequired,
+  modifiers: objectOf(bool),
   modifiersClassNames: objectOf(string),
   onHover: func,
   onSelect: func

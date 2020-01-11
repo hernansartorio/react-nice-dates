@@ -116,7 +116,7 @@ export default function DateRangePicker({
 DateRangePicker.propTypes = {
   startDate: instanceOf(Date),
   endDate: instanceOf(Date),
-  children: func,
+  children: func.isRequired,
   locale: object.isRequired,
   format: string,
   minimumDate: instanceOf(Date),
@@ -125,4 +125,9 @@ DateRangePicker.propTypes = {
   modifiersClassNames: objectOf(string),
   onStartDateChange: func,
   onEndDateChange: func
+}
+
+DateRangePicker.defaultProps = {
+  onStartDateChange: () => {},
+  onEndDateChange: () => {}
 }

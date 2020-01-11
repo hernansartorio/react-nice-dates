@@ -62,7 +62,3 @@ Calendar.propTypes = {
   onHoverDate: func,
   onSelectDate: func
 }
-
-Calendar.defaultProps = {
-  modifiers: {}
-}

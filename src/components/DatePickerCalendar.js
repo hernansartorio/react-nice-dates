@@ -19,7 +19,3 @@ DatePickerCalendar.propTypes = {
   maximumDate: instanceOf(Date),
   onDateChange: func
 }
-
-DatePickerCalendar.defaultProps = {
-  modifiers: {}
-}

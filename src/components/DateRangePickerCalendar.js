@@ -78,13 +78,12 @@ DateRangePickerCalendar.propTypes = {
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
-  onStartDateChange: func,
-  onEndDateChange: func,
-  onFocusChange: func
+  onStartDateChange: func.isRequired,
+  onEndDateChange: func.isRequired,
+  onFocusChange: func.isRequired
 }
 
 DateRangePickerCalendar.defaultProps = {
-  modifiers: {},
   onStartDateChange: () => {},
   onEndDateChange: () => {},
   onFocusChange: () => {}
