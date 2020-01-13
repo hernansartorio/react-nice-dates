@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
 import { addDays, subDays } from 'date-fns'
 import { isSelectable } from './utils'
+import { START_DATE, END_DATE } from './constants'
 import useDateInput from './useDateInput'
 import useOutsideClickHandler from './useOutsideClickHandler'
 import useDetectTouch from './useDetectTouch'
@@ -73,7 +74,7 @@ export default function DateRangePicker({
         startDateInputProps: {
           ...startDateInputProps,
           onFocus: () => {
-            setFocus('startDate')
+            setFocus(START_DATE)
 
             if (isTouch) {
               startDateInputRef.current.blur()
@@ -85,7 +86,7 @@ export default function DateRangePicker({
         endDateInputProps: {
           ...endDateInputProps,
           onFocus: () => {
-            setFocus('endDate')
+            setFocus(END_DATE)
 
             if (isTouch) {
               endDateInputRef.current.blur()

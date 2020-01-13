@@ -3,6 +3,7 @@ import { instanceOf, func, number, object, objectOf, string } from 'prop-types'
 import { eachDayOfInterval, isSameMonth, lightFormat } from 'date-fns'
 import classNames from 'classnames'
 import useGrid from './useGrid'
+import { ORIGIN_BOTTOM, ORIGIN_TOP } from './constants'
 import CalendarDay from './CalendarDay'
 
 const computeModifiers = (modifiers, date) => {
@@ -55,8 +56,8 @@ export default function CalendarGrid({
       <div
         className={classNames('nice-dates-grid_container', {
           '-moving': offset,
-          '-origin-bottom': origin === 'bottom',
-          '-origin-top': origin === 'top',
+          '-origin-bottom': origin === ORIGIN_BOTTOM,
+          '-origin-top': origin === ORIGIN_TOP,
           '-transition': transition
         })}
         ref={containerElementRef}

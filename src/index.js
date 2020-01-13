@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { render } from 'react-dom'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
+import { START_DATE, END_DATE } from './components/constants'
 import DatePicker from './components/DatePicker'
 import DateRangePicker from './components/DateRangePicker'
 import './styles.scss'
@@ -31,8 +32,8 @@ function App() {
       >
         {({ startDateInputProps, endDateInputProps, focus }) => (
           <div className='date-range'>
-            <input className={classNames({ '-active': focus === 'startDate' })} {...startDateInputProps} />
-            <input className={classNames({ '-active': focus === 'endDate' })} {...endDateInputProps} />
+            <input className={classNames({ '-active': focus === START_DATE })} {...startDateInputProps} />
+            <input className={classNames({ '-active': focus === END_DATE })} {...endDateInputProps} />
           </div>
         )}
       </DateRangePicker>

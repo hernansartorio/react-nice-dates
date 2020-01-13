@@ -14,6 +14,8 @@ import {
   subMonths
 } from 'date-fns'
 
+import { ORIGIN_BOTTOM, ORIGIN_TOP } from './constants'
+
 const rowsBetweenDates = (startDate, endDate, locale) => differenceInCalendarWeeks(endDate, startDate, { locale }) + 1
 const rowsInMonth = (date, locale) => rowsBetweenDates(startOfMonth(date), endOfMonth(date), locale)
 const getStartDate = (date, locale) => startOfWeek(startOfMonth(date), { locale })
@@ -28,7 +30,7 @@ const createInitialState = (currentMonth, locale) => {
     lastCurrentMonth: currentMonth,
     locale,
     offset: 0,
-    origin: 'top',
+    origin: ORIGIN_TOP,
     transition: false
   }
 }
@@ -68,7 +70,7 @@ const reducer = (state, action) => {
           ...newState,
           endDate: getEndDate(currentMonth, state.locale),
           offset,
-          origin: 'top'
+          origin: ORIGIN_TOP
         }
       } else if (isBefore(currentMonth, lastCurrentMonth)) {
         const gridHeight = cellHeight * 6
@@ -78,7 +80,7 @@ const reducer = (state, action) => {
           ...newState,
           startDate: getStartDate(currentMonth, state.locale),
           offset,
-          origin: 'bottom'
+          origin: ORIGIN_BOTTOM
         }
       }
 
