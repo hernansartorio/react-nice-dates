@@ -16,7 +16,7 @@ function App() {
     <div className='container'>
       <DatePicker date={date} onDateChange={setDate} locale={locale} minimumDate={new Date()}>
         {({ inputProps, focused }) => (
-          <input className={classNames({ '-active': focused })} type='text' {...inputProps} />
+          <input className={classNames({ '-active': focused })} {...inputProps} />
         )}
       </DatePicker>
 
@@ -31,8 +31,8 @@ function App() {
       >
         {({ startDateInputProps, endDateInputProps, focus }) => (
           <div className='date-range'>
-            <input className={classNames({ '-active': focus === 'startDate' })} type='text' {...startDateInputProps} />
-            <input className={classNames({ '-active': focus === 'endDate' })} type='text' {...endDateInputProps} />
+            <input className={classNames({ '-active': focus === 'startDate' })} {...startDateInputProps} />
+            <input className={classNames({ '-active': focus === 'endDate' })} {...endDateInputProps} />
           </div>
         )}
       </DateRangePicker>

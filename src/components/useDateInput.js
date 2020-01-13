@@ -53,6 +53,7 @@ export default function useDateInput({
       onBlur: handleBlur,
       onChange: handleChange,
       placeholder: formatString.toUpperCase(),
+      type: 'text',
       value
     },
     updateValue
