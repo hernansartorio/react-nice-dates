@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
 import { addDays, subDays } from 'date-fns'
-import isSelectable from './isSelectable'
+import { isSelectable } from './utils'
 import useDateInput from './useDateInput'
 import useOutsideClickHandler from './useOutsideClickHandler'
 import useDetectTouch from './useDetectTouch'

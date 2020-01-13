@@ -1,4 +1,9 @@
-export default function mergeModifiers(baseModifiers, newModifiers) {
+import { isAfter, isBefore, startOfDay } from 'date-fns'
+
+export const isSelectable = (date, { minimumDate, maximumDate }) =>
+  !isBefore(date, startOfDay(minimumDate)) && !isAfter(date, maximumDate)
+
+export const mergeModifiers = (baseModifiers, newModifiers) => {
   const modifiers = { ...baseModifiers }
 
   if (!newModifiers) {

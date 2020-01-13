@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, oneOf, string } from 'prop-types'
 import { isSameDay, isAfter, isBefore } from 'date-fns'
-import mergeModifiers from './mergeModifiers'
+import { mergeModifiers } from './utils'
 import Calendar from './Calendar'
 
 export default function DateRangePickerCalendar({
