@@ -11,14 +11,21 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src"
+    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@neutrinojs/jest": "^9.0.0",
     "@neutrinojs/react-components": "^9.0.0",
     "@neutrinojs/standardjs": "^9.0.0",
     "@neutrinojs/style-loader": "^9.0.0",
+    "@testing-library/dom": "^6.11.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
     "autoprefixer": "^9.7.3",
     "eslint": "^6",
+    "jest": "^24.9.0",
     "neutrino": "^9.0.0",
     "node-sass": "^4.13.0",
     "postcss-loader": "^3.0.0",
