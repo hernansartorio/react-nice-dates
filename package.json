@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "peerDependencies": {
+    "date-fns": "^2.0.0",
     "prop-types": "^15",
     "react": "^16",
     "react-dom": "^16"
@@ -38,7 +39,6 @@
     "webpack-dev-server": "^3"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "date-fns": "^2.8.1"
+    "classnames": "^2.2.6"
   }
 }
