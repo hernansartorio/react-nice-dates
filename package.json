@@ -2,19 +2,28 @@
   "name": "react-nice-dates",
   "version": "1.0.0",
   "main": "index.js",
+  "author": "Hernán Sartorio",
   "license": "MIT",
-  "peerDependencies": {
-    "date-fns": "^2.0.0",
-    "prop-types": "^15",
-    "react": "^16",
-    "react-dom": "^16"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hernansartorio/react-nice-dates.git"
   },
+  "bugs": {
+    "url": "https://github.com/hernansartorio/react-nice-dates/issues"
+  },
+  "homepage": "https://github.com/hernansartorio/react-nice-dates#readme",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src",
     "test": "jest",
     "test:watch": "jest --watch"
+  },
+  "peerDependencies": {
+    "date-fns": "^2.0.0",
+    "prop-types": "^15",
+    "react": "^16",
+    "react-dom": "^16"
   },
   "devDependencies": {
     "@neutrinojs/jest": "^9.0.0",
