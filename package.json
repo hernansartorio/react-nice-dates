@@ -15,8 +15,9 @@
   },
   "homepage": "https://github.com/hernansartorio/react-nice-dates#readme",
   "scripts": {
-    "start": "",
+    "start": "parcel website/index.html -d tmp",
     "build": "rollup -c",
+    "build:website": "rm -rf build-website/* && parcel build website/index.html -d build-website --experimental-scope-hoisting",
     "lint": "eslint --cache --format codeframe src test website",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -48,6 +49,7 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
+    "parcel-bundler": "^1.12.4",
     "prop-types": "^15",
     "react": "^16",
     "react-dom": "^16",

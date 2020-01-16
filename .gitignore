@@ -1,3 +1,6 @@
 node_modules/
 .eslintcache
+.cache
 build
+build-website
+tmp
