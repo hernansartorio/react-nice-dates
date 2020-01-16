@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { render } from 'react-dom'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
-import { START_DATE, END_DATE } from '../src/components/constants'
-import DatePicker from '../src/components/DatePicker'
-import DateRangePicker from '../src/components/DateRangePicker'
+import { START_DATE, END_DATE } from '../src/constants'
+import DatePicker from '../src/DatePicker'
+import DateRangePicker from '../src/DateRangePicker'
 
 function App() {
   const [date, setDate] = useState()

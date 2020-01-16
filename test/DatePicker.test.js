@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
-import DatePicker from '../src/components/DatePicker'
+import DatePicker from '../src/DatePicker'
 
 describe('DatePicker', () => {
   it('should render', () => {

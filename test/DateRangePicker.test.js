@@ -3,8 +3,8 @@ import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
-import { START_DATE, END_DATE } from '../src/components/constants'
-import DateRangePicker from '../src/components/DateRangePicker'
+import { START_DATE, END_DATE } from '../src/constants'
+import DateRangePicker from '../src/DateRangePicker'
 
 describe('DateRangePicker', () => {
   it('should render', () => {
