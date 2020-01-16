@@ -1,44 +1,14 @@
-import React, { useState } from 'react'
-import { render } from 'react-dom'
-import { enGB as locale } from 'date-fns/locale'
-import classNames from 'classnames'
-import { START_DATE, END_DATE } from './components/constants'
-import DatePicker from './components/DatePicker'
-import DateRangePicker from './components/DateRangePicker'
-import './styles.scss'
 import './nice-dates.scss'
 
-function App() {
-  const [date, setDate] = useState()
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
-
-  return (
-    <div className='container'>
-      <DatePicker date={date} onDateChange={setDate} locale={locale} minimumDate={new Date()}>
-        {({ inputProps, focused }) => (
-          <input className={classNames({ '-active': focused })} {...inputProps} />
-        )}
-      </DatePicker>
-
-      <DateRangePicker
-        startDate={startDate}
-        endDate={endDate}
-        onStartDateChange={setStartDate}
-        onEndDateChange={setEndDate}
-        locale={locale}
-        minimumDate={new Date(2020, 0, 10)}
-        maximumDate={new Date(2020, 0, 25)}
-      >
-        {({ startDateInputProps, endDateInputProps, focus }) => (
-          <div className='date-range'>
-            <input className={classNames({ '-active': focus === START_DATE })} {...startDateInputProps} />
-            <input className={classNames({ '-active': focus === END_DATE })} {...endDateInputProps} />
-          </div>
-        )}
-      </DateRangePicker>
-    </div>
-  )
-}
-
-render(<App />, document.getElementById('root'))
+export { default as CalendarDay } from './components/CalendarDay'
+export { default as CalendarNavigation } from './components/CalendarNavigation'
+export { default as CalendarGrid } from './components/CalendarGrid'
+export { default as CalendarWeekHeader } from './components/CalendarWeekHeader'
+export { default as Calendar } from './components/Calendar'
+export { default as DatePickerCalendar } from './components/DatePickerCalendar'
+export { default as DateRangePickerCalendar } from './components/DateRangePickerCalendar'
+export { default as Popover } from './components/Popover'
+export { default as DatePicker } from './components/DatePicker'
+export { default as DateRangePicker } from './components/DateRangePicker'
+export { default as useDateInput } from './components/useDateInput'
+export { START_DATE, END_DATE } from './components/constants'

@@ -1,7 +1,9 @@
 {
   "name": "react-nice-dates",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "unpkg": "build/index.umd.js",
   "author": "Hernán Sartorio",
   "license": "MIT",
   "repository": {
@@ -13,9 +15,9 @@
   },
   "homepage": "https://github.com/hernansartorio/react-nice-dates#readme",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode production",
-    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src",
+    "start": "",
+    "build": "rollup -c",
+    "lint": "eslint --cache --format codeframe src test website",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -26,26 +28,32 @@
     "react-dom": "^16"
   },
   "devDependencies": {
-    "@neutrinojs/jest": "^9.0.0",
-    "@neutrinojs/react-components": "^9.0.0",
-    "@neutrinojs/standardjs": "^9.0.0",
-    "@neutrinojs/style-loader": "^9.0.0",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
     "@testing-library/dom": "^6.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "autoprefixer": "^9.7.3",
-    "eslint": "^6",
+    "date-fns": "^2.9.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
-    "neutrino": "^9.0.0",
-    "node-sass": "^4.13.0",
-    "postcss-loader": "^3.0.0",
     "prop-types": "^15",
     "react": "^16",
     "react-dom": "^16",
-    "sass-loader": "^8.0.0",
-    "webpack": "^4",
-    "webpack-cli": "^3",
-    "webpack-dev-server": "^3"
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-sass": "^1.2.2"
   },
   "dependencies": {
     "classnames": "^2.2.6"
