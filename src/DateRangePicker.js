@@ -11,16 +11,16 @@ import Popover from './Popover'
 
 export default function DateRangePicker({
   children,
+  locale,
   startDate,
   endDate,
-  format,
-  locale,
-  maximumDate,
-  minimumDate,
-  modifiers,
-  modifiersClassNames,
   onStartDateChange,
-  onEndDateChange
+  onEndDateChange,
+  format,
+  minimumDate,
+  maximumDate,
+  modifiers,
+  modifiersClassNames
 }) {
   const [month, setMonth] = useState(new Date())
   const [focus, setFocus] = useState()
@@ -100,19 +100,19 @@ export default function DateRangePicker({
 
       <Popover open={!!focus}>
         <DateRangePickerCalendar
-          month={month}
+          locale={locale}
           startDate={startDate}
           endDate={endDate}
           focus={focus}
-          locale={locale}
+          month={month}
+          onStartDateChange={handleStartDateChange}
+          onEndDateChange={handleEndDateChange}
+          onFocusChange={setFocus}
+          onMonthChange={setMonth}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
-          onMonthChange={setMonth}
-          onStartDateChange={handleStartDateChange}
-          onEndDateChange={handleEndDateChange}
-          onFocusChange={setFocus}
         />
       </Popover>
     </div>
@@ -120,17 +120,17 @@ export default function DateRangePicker({
 }
 
 DateRangePicker.propTypes = {
-  startDate: instanceOf(Date),
-  endDate: instanceOf(Date),
   children: func.isRequired,
   locale: object.isRequired,
+  startDate: instanceOf(Date),
+  endDate: instanceOf(Date),
+  onStartDateChange: func,
+  onEndDateChange: func,
   format: string,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string),
-  onStartDateChange: func,
-  onEndDateChange: func
+  modifiersClassNames: objectOf(string)
 }
 
 DateRangePicker.defaultProps = {

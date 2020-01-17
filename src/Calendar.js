@@ -53,10 +53,10 @@ export default function Calendar({
 
 Calendar.propTypes = {
   locale: object.isRequired,
-  modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string),
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
+  modifiers: objectOf(func),
+  modifiersClassNames: objectOf(string),
   month: instanceOf(Date),
   onMonthChange: func,
   onHoverDate: func,

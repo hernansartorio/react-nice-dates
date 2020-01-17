@@ -8,14 +8,14 @@ import Popover from './Popover'
 
 export default function DatePicker({
   children,
-  date,
-  format,
   locale,
+  date,
+  onDateChange,
+  format,
   minimumDate,
   maximumDate,
   modifiers,
-  modifiersClassNames,
-  onDateChange
+  modifiersClassNames
 }) {
   const [month, setMonth] = useState(new Date())
   const [focused, setFocused] = useState(false)
@@ -64,15 +64,15 @@ export default function DatePicker({
 
       <Popover open={focused}>
         <DatePickerCalendar
-          month={month}
-          onMonthChange={setMonth}
-          date={date}
           locale={locale}
+          date={date}
+          month={month}
+          onDateChange={handleDateChange}
+          onMonthChange={setMonth}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
-          onDateChange={handleDateChange}
         />
       </Popover>
     </div>
@@ -80,13 +80,17 @@ export default function DatePicker({
 }
 
 DatePicker.propTypes = {
-  date: instanceOf(Date),
-  format: string,
   children: func.isRequired,
   locale: object.isRequired,
-  modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string),
+  date: instanceOf(Date),
+  onDateChange: func,
+  format: string,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
-  onDateChange: func.isRequired
+  modifiers: objectOf(func),
+  modifiersClassNames: objectOf(string)
+}
+
+DatePicker.defaultProps = {
+  onDateChange: () => {}
 }

@@ -6,13 +6,19 @@ import { START_DATE, END_DATE } from './constants'
 import Calendar from './Calendar'
 
 export default function DateRangePickerCalendar({
+  locale,
   startDate,
   endDate,
   focus,
+  month,
   onStartDateChange,
   onEndDateChange,
   onFocusChange,
-  ...calendarProps
+  onMonthChange,
+  minimumDate,
+  maximumDate,
+  modifiers: receivedModifiers,
+  modifiersClassNames
 }) {
   const [hoveredDate, setHoveredDate] = useState()
   const displayedStartDate =
@@ -38,7 +44,7 @@ export default function DateRangePickerCalendar({
       selectedEnd: isEndDate,
       disabled: date => (focus === START_DATE && isEndDate(date)) || (focus === END_DATE && isStartDate(date))
     },
-    calendarProps.modifiers
+    receivedModifiers
   )
 
   const handleSelectDate = date => {
@@ -66,22 +72,34 @@ export default function DateRangePickerCalendar({
   }
 
   return (
-    <Calendar {...calendarProps} modifiers={modifiers} onSelectDate={handleSelectDate} onHoverDate={handleHoverDate} />
+    <Calendar
+      locale={locale}
+      month={month}
+      onMonthChange={onMonthChange}
+      onHoverDate={handleHoverDate}
+      onSelectDate={handleSelectDate}
+      minimumDate={minimumDate}
+      maximumDate={maximumDate}
+      modifiers={modifiers}
+      modifiersClassNames={modifiersClassNames}
+    />
   )
 }
 
 DateRangePickerCalendar.propTypes = {
+  locale: object.isRequired,
   startDate: instanceOf(Date),
   endDate: instanceOf(Date),
   focus: oneOf([START_DATE, END_DATE]),
-  locale: object.isRequired,
+  month: instanceOf(Date),
+  onStartDateChange: func.isRequired,
+  onEndDateChange: func.isRequired,
+  onFocusChange: func.isRequired,
+  onMonthChange: func,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string),
-  onStartDateChange: func.isRequired,
-  onEndDateChange: func.isRequired,
-  onFocusChange: func.isRequired
+  modifiersClassNames: objectOf(string)
 }
 
 DateRangePickerCalendar.defaultProps = {
