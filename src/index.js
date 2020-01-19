@@ -1,5 +1,3 @@
-import './style.scss'
-
 export { default as CalendarDay } from './CalendarDay'
 export { default as CalendarNavigation } from './CalendarNavigation'
 export { default as CalendarGrid } from './CalendarGrid'

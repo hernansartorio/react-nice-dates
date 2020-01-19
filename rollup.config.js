@@ -2,9 +2,6 @@ import resolve from '@rollup/plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import { eslint } from 'rollup-plugin-eslint'
-import sass from 'rollup-plugin-sass'
-import autoprefixer from 'autoprefixer'
-import postcss from 'postcss'
 
 export default {
   input: 'src/index.js',
@@ -37,14 +34,7 @@ export default {
       exclude: 'node_modules/**',
       babelrc: false
     }),
-    commonjs(),
-    sass({
-      output: 'build/styles.css',
-      processor: css =>
-        postcss([autoprefixer])
-          .process(css, { from: false })
-          .then(result => result.css)
-    })
+    commonjs()
   ],
   external: ['date-fns', 'prop-types', 'react']
 }
