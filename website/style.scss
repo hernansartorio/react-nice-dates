@@ -191,7 +191,7 @@ footer {
   &_preview {
     margin: 24px;
     position: relative;
-
+    transform: translate(0);
   }
 
   @media screen and (max-width: 480px) {
