@@ -50,12 +50,15 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-prerender": "^1.4.1",
     "postcss-cli": "^7.1.0",
+    "prism-react-renderer": "^1.0.2",
     "prop-types": "^15",
     "react": "^16",
     "react-dom": "^16",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-sass": "^1.2.2",
     "sass": "^1.25.0"
   },
   "dependencies": {

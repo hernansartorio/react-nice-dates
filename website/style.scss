@@ -1,43 +1,149 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700');
+$color-gray-dark: #0e3254;
+$color-gray: #818d98;
+$color-gray-light: #d3dde6;
+$color-gray-lighter: #f6f8fa;
+$color-accent: #438cd2;
+
+$font-size-small: 14px;
+$font-size: 17px;
+$font-size-big: 21px;
+
+$nice-dates-color-gray-dark: $color-gray-dark;
+$nice-dates-color-gray: $color-gray;
+$nice-dates-color-gray-light: $color-gray-light;
+$nice-dates-color-accent: $color-accent;
+
 @import '../src/style';
-
-$color-gray-dark: #333;
-$color-gray: #999;
-$color-gray-light: #ddd;
-$color-accent: $color-gray-dark;
-
-$font-size: 16px;
 
 * {
   box-sizing: border-box;
 }
 
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: $color-gray-dark;
-  font-family: 'IBM Plex Sans', sans-serif;
-  margin: 0;
-  padding: 0 10px;
+html {
+  scroll-behavior: smooth;
 }
 
-input, textarea {
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: $color-gray-dark;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: $font-size;
+  line-height: 1.75;
+  margin: 0;
+  padding: 0 16px;
+}
+
+h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.25;
+
+  + p {
+    margin-top: 1em;
+  }
+}
+
+h1 {
+  font-size: 40px;
+  margin: 0;
+
+  + p {
+    margin-top: .5em;
+  }
+}
+
+h2 {
+  font-size: 32px;
+  margin: 3em 0 0;
+}
+
+h3 {
+  font-size: 24px;
+  margin: 3em 0 0;
+}
+
+p {
+  margin: 1.5em 0 0;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+code, pre {
+  background-color: $color-gray-lighter;
+  font-family: 'IBM Plex Mono', sans-serif;
+}
+
+code {
+  padding: 1px 4px;
+  white-space: pre-wrap;
+}
+
+pre {
+  font-size: $font-size-small;
+  line-height: 1.5;
+  margin: 2em 0;
+  overflow: auto;
+  padding: 16px;
+  white-space: pre;
+
+  code {
+    padding: 0;
+    white-space: inherit;
+  }
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+
+  a {
+    margin-right: 16px;
+    white-space: nowrap;
+  }
+}
+
+footer {
+  color: $color-gray;
+  font-size: $font-size-small;
+  margin-top: 120px;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 180px 0;
+  position: relative;
+}
+
+.tagline {
+  color: $color-gray;
+  font-size: $font-size-big;
+}
+
+.input {
   -webkit-appearance: none;
   background-color: #fff;
   border-radius: 6px;
   border: 1px solid $color-gray-light;
   color: $color-gray-dark;
   display: block;
-  margin-top: 30px;
   font-family: inherit;
-  font-size: $font-size;
+  font-size: inherit;
   height: 42px;
   outline: none;
   padding: 0 12px;
   transition: border-color 200ms;
-  width: 150px;
 
-  &:focus, &.-active {
+  &:focus, &.-focused {
     border-color: $color-accent;
   }
 
@@ -46,21 +152,74 @@ input, textarea {
   }
 }
 
-.container {
-  max-width: 532px;
-  margin: 300px auto;
-  position: relative;
-}
-
 .date-range {
   display: flex;
   justify-content: space-between;
 
-  input {
-    flex-grow: 1;
+  .input {
+    width: 100%;
+  }
 
-    &:first-child {
-      margin-right: 30px;
+  &_arrow {
+    flex-shrink: 0;
+    position: relative;
+    width: 36px;
+
+    &:before {
+      border-right: 2px solid $color-gray-light;
+      border-top: 2px solid $color-gray-light;
+      box-sizing: border-box;
+      content: '';
+      display: block;
+      height: 18px;
+      left: 50%;
+      margin-left: -14px;
+      margin-top: -9px;
+      position: absolute;
+      top: 50%;
+      transform: rotate(45deg);
+      width: 18px;
     }
   }
+}
+
+.example {
+  border: 2px solid $color-gray-lighter;
+  border-radius: 3px;
+  margin: 3em 0;
+
+  &_preview {
+    margin: 24px;
+    position: relative;
+
+  }
+
+  @media screen and (max-width: 480px) {
+    border: none;
+
+    &_preview {
+      margin: 0 0 24px;
+    }
+  }
+
+  pre {
+    margin: 0;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0 0 .5em;
+  }
+}
+
+.token-line {
+  min-height: 1.5em;
+}
+
+.token.plain {
+  color: $color-gray-dark;
+}
+
+.nice-dates-day.-highlight {
+  color: orange;
 }

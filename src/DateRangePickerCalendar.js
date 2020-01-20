@@ -23,10 +23,14 @@ export default function DateRangePickerCalendar({
   const [hoveredDate, setHoveredDate] = useState()
 
   const displayedStartDate =
-    focus === START_DATE && endDate && hoveredDate && !isSameDay(hoveredDate, endDate) ? hoveredDate : startDate
+    focus === START_DATE && !startDate && endDate && hoveredDate && !isSameDay(hoveredDate, endDate)
+      ? hoveredDate
+      : startDate
 
   const displayedEndDate =
-    focus === END_DATE && startDate && hoveredDate && !isSameDay(hoveredDate, startDate) ? hoveredDate : endDate
+    focus === END_DATE && !endDate && startDate && hoveredDate && !isSameDay(hoveredDate, startDate)
+      ? hoveredDate
+      : endDate
 
   const isStartDate = date => isSameDay(date, displayedStartDate) && isBefore(date, displayedEndDate)
   const isMiddleDate = date => isAfter(date, displayedStartDate) && isBefore(date, displayedEndDate)
@@ -38,8 +42,8 @@ export default function DateRangePickerCalendar({
         isStartDate(date) ||
         isMiddleDate(date) ||
         isEndDate(date) ||
-        (isSameDay(date, displayedStartDate) && focus === END_DATE) ||
-        (isSameDay(date, displayedEndDate) && focus === START_DATE),
+        isSameDay(date, startDate) ||
+        isSameDay(date, endDate),
       selectedStart: isStartDate,
       selectedMiddle: isMiddleDate,
       selectedEnd: isEndDate,
