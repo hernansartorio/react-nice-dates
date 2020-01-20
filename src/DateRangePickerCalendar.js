@@ -77,8 +77,8 @@ export default function DateRangePickerCalendar({
       locale={locale}
       month={month}
       onMonthChange={onMonthChange}
-      onHoverDate={handleHoverDate}
-      onSelectDate={handleSelectDate}
+      onDayHover={handleHoverDate}
+      onDayClick={handleSelectDate}
       minimumDate={minimumDate}
       maximumDate={maximumDate}
       modifiers={modifiers}

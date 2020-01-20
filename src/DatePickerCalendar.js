@@ -23,7 +23,7 @@ export default function DatePickerCalendar({
       locale={locale}
       month={month}
       onMonthChange={onMonthChange}
-      onSelectDate={onDateChange}
+      onDayClick={onDateChange}
       minimumDate={minimumDate}
       maximumDate={maximumDate}
       modifiers={modifiers}

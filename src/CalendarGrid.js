@@ -22,8 +22,8 @@ export default function CalendarGrid({
   modifiers,
   modifiersClassNames,
   onMonthChange,
-  onHoverDate,
-  onSelectDate,
+  onDayHover,
+  onDayClick,
   transitionDuration
 }) {
   const grid = useGrid({ locale, month, onMonthChange, transitionDuration })
@@ -45,8 +45,8 @@ export default function CalendarGrid({
           wide: isWide
         }}
         modifiersClassNames={modifiersClassNames}
-        onHover={onHoverDate}
-        onSelect={onSelectDate}
+        onHover={onDayHover}
+        onClick={onDayClick}
       />
     )
   })
@@ -78,8 +78,8 @@ CalendarGrid.propTypes = {
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   onMonthChange: func.isRequired,
-  onHoverDate: func,
-  onSelectDate: func,
+  onDayHover: func,
+  onDayClick: func,
   transitionDuration: number.isRequired
 }
 

@@ -14,8 +14,8 @@ export default function Calendar({
   minimumDate,
   maximumDate,
   onMonthChange,
-  onHoverDate,
-  onSelectDate
+  onDayHover,
+  onDayClick
 }) {
   const [localStateMonth, setLocalStateMonth] = useState(startOfMonth(new Date()))
   const month = receivedMonth ? startOfMonth(receivedMonth) : localStateMonth
@@ -44,8 +44,8 @@ export default function Calendar({
         modifiersClassNames={modifiersClassNames}
         month={month}
         onMonthChange={handleMonthChange}
-        onHoverDate={onHoverDate}
-        onSelectDate={onSelectDate}
+        onDayHover={onDayHover}
+        onDayClick={onDayClick}
       />
     </div>
   )
@@ -59,6 +59,6 @@ Calendar.propTypes = {
   modifiersClassNames: objectOf(string),
   month: instanceOf(Date),
   onMonthChange: func,
-  onHoverDate: func,
-  onSelectDate: func
+  onDayHover: func,
+  onDayClick: func
 }
