@@ -21,7 +21,7 @@
   "scripts": {
     "start": "parcel website/index.html -d tmp",
     "build": "rollup -c && sass src/style.scss build/style.css --no-source-map && postcss build/style.css --use autoprefixer -o build/style.css",
-    "build:website": "rm -rf build-website/* && parcel build website/index.html -d build-website --experimental-scope-hoisting",
+    "build:website": "rm -rf build-website/* && parcel build website/index.html -d build-website --experimental-scope-hoisting --no-content-hash",
     "lint": "eslint --cache --format codeframe src test website",
     "test": "jest",
     "test:watch": "jest --watch"
