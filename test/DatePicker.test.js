@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+import { format, subMonths } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
 import DatePicker from '../src/DatePicker'
@@ -21,7 +22,9 @@ describe('DatePicker', () => {
   it('should open and close', () => {
     const { container, getAllByText, getByLabelText } = render(
       <DatePicker onDateChange={() => {}} locale={locale}>
-        {({ inputProps, focused }) => <input aria-label='input' {...inputProps} className={focused ? '-focused' : undefined} />}
+        {({ inputProps, focused }) => (
+          <input aria-label='input' {...inputProps} className={focused ? '-focused' : undefined} />
+        )}
       </DatePicker>
     )
 
@@ -51,5 +54,18 @@ describe('DatePicker', () => {
     fireEvent.click(getAllByText('1')[0])
 
     expect(popover).not.toHaveClass('-open')
+  })
+
+  it('should display pre-selected date’s month on initial render', () => {
+    const pastDate = subMonths(new Date(), 1)
+    const monthName = format(pastDate, 'MMMM', { locale })
+
+    const { getByText } = render(
+      <DatePicker locale={locale} date={pastDate}>
+        {() => {}}
+      </DatePicker>
+    )
+
+    expect(getByText(monthName, { exact: false })).toBeInTheDocument()
   })
 })

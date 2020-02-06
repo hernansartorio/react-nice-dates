@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
 import { startOfMonth } from 'date-fns'
 import { isSelectable, mergeModifiers } from './utils'
+import useControllableState from './useControllableState'
 import CalendarNavigation from './CalendarNavigation'
 import CalendarWeekHeader from './CalendarWeekHeader'
 import CalendarGrid from './CalendarGrid'
@@ -17,9 +18,7 @@ export default function Calendar({
   onDayHover,
   onDayClick
 }) {
-  const [localStateMonth, setLocalStateMonth] = useState(startOfMonth(new Date()))
-  const month = receivedMonth ? startOfMonth(receivedMonth) : localStateMonth
-  const handleMonthChange = onMonthChange || setLocalStateMonth
+  const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(new Date()))
 
   const modifiers = mergeModifiers(
     { disabled: date => !isSelectable(date, { minimumDate, maximumDate }) },
@@ -33,7 +32,7 @@ export default function Calendar({
         minimumDate={minimumDate}
         maximumDate={maximumDate}
         month={month}
-        onMonthChange={handleMonthChange}
+        onMonthChange={setMonth}
       />
 
       <CalendarWeekHeader locale={locale} />
@@ -43,7 +42,7 @@ export default function Calendar({
         modifiers={modifiers}
         modifiersClassNames={modifiersClassNames}
         month={month}
-        onMonthChange={handleMonthChange}
+        onMonthChange={setMonth}
         onDayHover={onDayHover}
         onDayClick={onDayClick}
       />

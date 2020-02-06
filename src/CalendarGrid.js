@@ -1,6 +1,6 @@
 import React from 'react'
 import { instanceOf, func, number, object, objectOf, string } from 'prop-types'
-import { eachDayOfInterval, isSameMonth, lightFormat } from 'date-fns'
+import { eachDayOfInterval, isSameMonth, lightFormat, startOfMonth } from 'date-fns'
 import classNames from 'classnames'
 import useGrid from './useGrid'
 import { ORIGIN_BOTTOM, ORIGIN_TOP } from './constants'
@@ -26,7 +26,7 @@ export default function CalendarGrid({
   onDayClick,
   transitionDuration
 }) {
-  const grid = useGrid({ locale, month, onMonthChange, transitionDuration })
+  const grid = useGrid({ locale, month: startOfMonth(month), onMonthChange, transitionDuration })
   const { startDate, endDate, cellHeight, containerElementRef, isWide, offset, origin, transition } = grid
 
   const days = eachDayOfInterval({

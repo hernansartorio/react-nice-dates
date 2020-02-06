@@ -17,7 +17,7 @@ export default function DatePicker({
   modifiers,
   modifiersClassNames
 }) {
-  const [month, setMonth] = useState(new Date())
+  const [month, setMonth] = useState(date || new Date())
   const [focused, setFocused] = useState(false)
   const isTouch = useDetectTouch()
   const inputRef = useRef()

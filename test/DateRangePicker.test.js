@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+import { format, subMonths } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import classNames from 'classnames'
 import { START_DATE, END_DATE } from '../src/constants'
@@ -66,5 +67,32 @@ describe('DateRangePicker', () => {
     fireEvent.click(getAllByText('2')[0])
 
     expect(popover).not.toHaveClass('-open')
+  })
+
+  it('should display pre-selected start date’s month on initial render', () => {
+    const today = new Date()
+    const pastDate = subMonths(today, 1)
+    const monthName = format(pastDate, 'MMMM', { locale })
+
+    const { getByText } = render(
+      <DateRangePicker locale={locale} startDate={pastDate} endDate={today}>
+        {() => {}}
+      </DateRangePicker>
+    )
+
+    expect(getByText(monthName, { exact: false })).toBeInTheDocument()
+  })
+
+  it('should display pre-selected end date’s month on initial render', () => {
+    const pastDate = subMonths(new Date(), 1)
+    const monthName = format(pastDate, 'MMMM', { locale })
+
+    const { getByText } = render(
+      <DateRangePicker locale={locale} endDate={pastDate}>
+        {() => {}}
+      </DateRangePicker>
+    )
+
+    expect(getByText(monthName, { exact: false })).toBeInTheDocument()
   })
 })

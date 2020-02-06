@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import { startOfMonth, addDays } from 'date-fns'
+import { addDays, format, startOfMonth, subMonths } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import { START_DATE, END_DATE } from '../src/constants'
 import DateRangePickerCalendar from '../src/DateRangePickerCalendar'
@@ -85,5 +85,24 @@ describe('DateRangePickerCalendar', () => {
     expect(getAllByText('2')[0].parentElement).toHaveClass('-selected -selected-middle')
     expect(getAllByText('3')[0].parentElement).toHaveClass('-selected -selected-end')
     expect(container.querySelectorAll('.-selected').length).toBe(3)
+  })
+
+  it('should display pre-selected start date’s month on initial render', () => {
+    const today = new Date()
+    const pastDate = subMonths(today, 1)
+    const monthName = format(pastDate, 'MMMM', { locale })
+
+    const { getByText } = render(<DateRangePickerCalendar locale={locale} startDate={pastDate} endDate={today} />)
+
+    expect(getByText(monthName, { exact: false })).toBeInTheDocument()
+  })
+
+  it('should display pre-selected end date’s month on initial render', () => {
+    const pastDate = subMonths(new Date(), 1)
+    const monthName = format(pastDate, 'MMMM', { locale })
+
+    const { getByText } = render(<DateRangePickerCalendar locale={locale} endDate={pastDate} />)
+
+    expect(getByText(monthName, { exact: false })).toBeInTheDocument()
   })
 })

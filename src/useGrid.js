@@ -9,6 +9,7 @@ import {
   endOfWeek,
   isAfter,
   isBefore,
+  isSameMonth,
   startOfMonth,
   startOfWeek,
   subMonths
@@ -101,7 +102,7 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
   useLayoutEffect(() => {
     const notDragging = !initialDragPositionRef.current
 
-    if (lastCurrentMonth !== currentMonth && notDragging) {
+    if (!isSameMonth(lastCurrentMonth, currentMonth) && notDragging) {
       const containerElement = containerElementRef.current
       containerElement.classList.add('-transition')
       clearTimeout(timeoutRef.current)

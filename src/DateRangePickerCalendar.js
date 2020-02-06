@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, oneOf, string } from 'prop-types'
-import { isSameDay, isAfter, isBefore } from 'date-fns'
+import { isSameDay, isAfter, isBefore, startOfMonth } from 'date-fns'
 import { mergeModifiers } from './utils'
 import { START_DATE, END_DATE } from './constants'
+import useControllableState from './useControllableState'
 import Calendar from './Calendar'
 
 export default function DateRangePickerCalendar({
@@ -10,7 +11,7 @@ export default function DateRangePickerCalendar({
   startDate,
   endDate,
   focus,
-  month,
+  month: receivedMonth,
   onStartDateChange,
   onEndDateChange,
   onFocusChange,
@@ -21,6 +22,7 @@ export default function DateRangePickerCalendar({
   modifiersClassNames
 }) {
   const [hoveredDate, setHoveredDate] = useState()
+  const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(startDate || endDate || new Date()))
 
   const displayedStartDate =
     focus === START_DATE && !startDate && endDate && hoveredDate && !isSameDay(hoveredDate, endDate)
@@ -80,7 +82,7 @@ export default function DateRangePickerCalendar({
     <Calendar
       locale={locale}
       month={month}
-      onMonthChange={onMonthChange}
+      onMonthChange={setMonth}
       onDayHover={handleHoverDate}
       onDayClick={handleSelectDate}
       minimumDate={minimumDate}

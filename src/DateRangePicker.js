@@ -22,8 +22,8 @@ export default function DateRangePicker({
   modifiers,
   modifiersClassNames
 }) {
-  const [month, setMonth] = useState(new Date())
   const [focus, setFocus] = useState()
+  const [month, setMonth] = useState(startDate || endDate || new Date())
   const isTouch = useDetectTouch()
   const startDateInputRef = useRef()
   const endDateInputRef = useRef()
