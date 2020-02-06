@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import { startOfMonth } from 'date-fns'
+import { format, startOfMonth, subMonths } from 'date-fns'
 import { enGB as locale } from 'date-fns/locale'
 import DatePickerCalendar from '../src/DatePickerCalendar'
 
@@ -26,5 +26,14 @@ describe('DatePickerCalendar', () => {
     const { getAllByText } = render(<DatePickerCalendar locale={locale} date={startOfMonth(new Date())} />)
 
     expect(getAllByText('1')[0].parentElement).toHaveClass('-selected')
+  })
+
+  it('should display pre-selected date’s month on initial render', () => {
+    const pastDate = subMonths(new Date(), 1)
+    const monthName = format(pastDate, 'MMMM', { locale })
+
+    const { getByText } = render(<DatePickerCalendar locale={locale} date={pastDate} />)
+
+    expect(getByText(monthName, { exact: false })).toBeInTheDocument()
   })
 })
