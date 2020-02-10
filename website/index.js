@@ -227,7 +227,7 @@ modifiersClassNames: objectOf(string)`}
 onBlur,
 onChange,
 onFocus,
-placeholder, // Default: format.toUpperCase()
+placeholder, // Default: format.toLowerCase()
 readOnly, // Default: true for touch devices to avoid triggering the on-screen keyboard
 ref,
 type, // Default: 'text'
@@ -262,7 +262,7 @@ modifiersClassNames: objectOf(string)`}
 onBlur,
 onChange,
 onFocus,
-placeholder, // Default: format.toUpperCase()
+placeholder, // Default: format.toLowerCase()
 readOnly, // Default: true for touch devices to avoid triggering the on-screen keyboard
 ref,
 type, // Default: 'text'
@@ -331,21 +331,19 @@ onDayClick: func`}
 
       <CodeBlock
         code={`
-const [
-  {
-    onBlur
-    onChange
-    placeholder // Default: format.toUpperCase(),
-    type // 'text'
-    value
-  }, // Input props
-  updateValue // Function that updates the input value with a given date
-] = useDateInput({
+const {
+  onBlur
+  onChange
+  onFocus
+  placeholder // Default: format.toLowerCase(),
+  type // 'text'
+  value
+} = useDateInput({
   date, // Current date
   format, // Default: locale.formatLong.date({ width: 'short' })
   locale, // date-fns locale object
-  minimumDate, // Dates before minimumDate won't be valid
-  maximumDate, // Dates after maximumDate won't be valid
+  minimumDate, // Dates before minimumDate won’t be valid
+  maximumDate, // Dates after maximumDate won’t be valid
   onDateChange, // Function to call when a valid date is typed
   validate // Custom date validation function. Recieves a date and must return a boolean.
 })`}

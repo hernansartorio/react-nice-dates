@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { format, parse, isValid } from 'date-fns'
 import { isSelectable } from './utils'
 
@@ -18,7 +18,12 @@ export default function useDateInput({
   const isValidAndSelectable = date =>
     isValid(date) && isSelectable(date, { minimumDate, maximumDate }) && (!validate || validate(date))
 
-  const [value, setValue] = useState(selectedDate ? formatDate(selectedDate) : '')
+  const [value, setValue] = useState(isValidAndSelectable(selectedDate) ? formatDate(selectedDate) : '')
+  const [focused, setFocused] = useState(false)
+
+  const handleFocus = () => {
+    setFocused(true)
+  }
 
   const handleChange = event => {
     const newValue = event.target.value
@@ -36,26 +41,30 @@ export default function useDateInput({
 
       if (isValidAndSelectable(parsedDate)) {
         setValue(formatDate(parsedDate))
+      } else if (isValidAndSelectable(selectedDate)) {
+        setValue(formatDate(selectedDate))
       } else {
-        setValue(selectedDate ? formatDate(selectedDate) : '')
+        setValue('')
       }
     } else if (selectedDate) {
       onDateChange(null)
     }
+
+    setFocused(false)
   }
 
-  const updateValue = date => {
-    setValue(isValid(date) ? formatDate(date) : '')
-  }
+  useEffect(() => {
+    if (!focused) {
+      setValue(isValidAndSelectable(selectedDate) ? formatDate(selectedDate) : '')
+    }
+  }, [selectedDate]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return [
-    {
-      onBlur: handleBlur,
-      onChange: handleChange,
-      placeholder: formatString.toUpperCase(),
-      type: 'text',
-      value
-    },
-    updateValue
-  ]
+  return {
+    onFocus: handleFocus,
+    onChange: handleChange,
+    onBlur: handleBlur,
+    placeholder: formatString.toLowerCase(),
+    type: 'text',
+    value
+  }
 }

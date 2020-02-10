@@ -14,23 +14,18 @@ import { DatePickerCalendar, useDateInput } from 'react-nice-dates'
 export default function DatePickerCalendarWithInputExample() {
   const [date, setDate] = useState()
 
-  const [props, updateValue] = useDateInput({
+  const inputProps = useDateInput({
     date,
     format: 'yyyy-MM-dd',
     locale: enGB,
     onDateChange: setDate
   })
 
-  const handleDateChange = newDate => {
-    updateInputValue(newDate)
-    setDate(newDate)
-  }
-
   return (
     <div>
       <p>The selected date is {date && format(date, 'dd MMM yyyy', { locale: enGB })}</p>
       <input className='input' {...inputProps} />
-      <DatePickerCalendar date={date} onDateChange={handleDateChange} locale={enGB} />
+      <DatePickerCalendar date={date} onDateChange={setDate} locale={enGB} />
     </div>
   )
 }
@@ -40,23 +35,18 @@ export default function DatePickerCalendarWithInputExample() {
 export default function DatePickerCalendarWithInputExample() {
   const [date, setDate] = useState()
 
-  const [props, updateValue] = useDateInput({
+  const inputProps = useDateInput({
     date,
     format: 'yyyy-MM-dd',
     locale: enGB,
     onDateChange: setDate
   })
 
-  const handleDateChange = newDate => {
-    updateValue(newDate)
-    setDate(newDate)
-  }
-
   return (
     <Example code={code}>
       <p>The selected date is {date && format(date, 'dd MMM yyyy', { locale: enGB })}</p>
-      <input className='input' {...props} />
-      <DatePickerCalendar date={date} onDateChange={handleDateChange} locale={enGB} />
+      <input className='input' {...inputProps} />
+      <DatePickerCalendar date={date} onDateChange={setDate} locale={enGB} />
     </Example>
   )
 }
