@@ -13,7 +13,7 @@ describe('useDateInput', () => {
       onFocus: expect.any(Function),
       onChange: expect.any(Function),
       onBlur: expect.any(Function),
-      placeholder: enGB.formatLong.date({ width: 'short' }).toUpperCase(),
+      placeholder: enGB.formatLong.date({ width: 'short' }).toLowerCase(),
       type: 'text',
       value: ''
     })

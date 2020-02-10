@@ -63,7 +63,7 @@ export default function useDateInput({
     onFocus: handleFocus,
     onChange: handleChange,
     onBlur: handleBlur,
-    placeholder: formatString.toUpperCase(),
+    placeholder: formatString.toLowerCase(),
     type: 'text',
     value
   }

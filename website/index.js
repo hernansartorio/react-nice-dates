@@ -227,7 +227,7 @@ modifiersClassNames: objectOf(string)`}
 onBlur,
 onChange,
 onFocus,
-placeholder, // Default: format.toUpperCase()
+placeholder, // Default: format.toLowerCase()
 readOnly, // Default: true for touch devices to avoid triggering the on-screen keyboard
 ref,
 type, // Default: 'text'
@@ -262,7 +262,7 @@ modifiersClassNames: objectOf(string)`}
 onBlur,
 onChange,
 onFocus,
-placeholder, // Default: format.toUpperCase()
+placeholder, // Default: format.toLowerCase()
 readOnly, // Default: true for touch devices to avoid triggering the on-screen keyboard
 ref,
 type, // Default: 'text'
@@ -335,7 +335,7 @@ const {
   onBlur
   onChange
   onFocus
-  placeholder // Default: format.toUpperCase(),
+  placeholder // Default: format.toLowerCase(),
   type // 'text'
   value
 } = useDateInput({
