@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, oneOf, string } from 'prop-types'
 import { isSameDay, isAfter, isBefore, startOfMonth } from 'date-fns'
-import { mergeModifiers } from './utils'
+import { mergeModifiers, isSelectable } from './utils'
 import { START_DATE, END_DATE } from './constants'
 import useControllableState from './useControllableState'
 import Calendar from './Calendar'
@@ -41,11 +41,13 @@ export default function DateRangePickerCalendar({
   const modifiers = mergeModifiers(
     {
       selected: date =>
-        isStartDate(date) ||
-        isMiddleDate(date) ||
-        isEndDate(date) ||
-        isSameDay(date, startDate) ||
-        isSameDay(date, endDate),
+        isSelectable(date, { minimumDate, maximumDate }) &&
+        (isStartDate(date) ||
+          isMiddleDate(date) ||
+          isEndDate(date) ||
+          isSameDay(date, startDate) ||
+          isSameDay(date, endDate)
+        ),
       selectedStart: isStartDate,
       selectedMiddle: isMiddleDate,
       selectedEnd: isEndDate,

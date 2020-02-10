@@ -1,7 +1,7 @@
 import React from 'react'
 import { instanceOf, func, object, objectOf, string } from 'prop-types'
 import { isSameDay, startOfMonth } from 'date-fns'
-import { mergeModifiers } from './utils'
+import { mergeModifiers, isSelectable } from './utils'
 import useControllableState from './useControllableState'
 import Calendar from './Calendar'
 
@@ -16,7 +16,7 @@ export default function DatePickerCalendar({
   modifiers: receivedModifiers,
   modifiersClassNames
 }) {
-  const isSelected = date => isSameDay(date, selectedDate)
+  const isSelected = date => isSameDay(date, selectedDate) && isSelectable(date, { minimumDate, maximumDate })
   const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, receivedModifiers)
   const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(selectedDate || new Date()))
 
