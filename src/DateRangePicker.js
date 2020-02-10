@@ -32,7 +32,7 @@ export default function DateRangePicker({
     setFocus(null)
   })
 
-  const [startDateInputProps, updateStartDateInputValue] = useDateInput({
+  const startDateInputProps = useDateInput({
     date: startDate,
     format,
     locale,
@@ -45,7 +45,7 @@ export default function DateRangePicker({
     validate: date => isSelectable(date, { maximumDate: subDays(endDate, 1) })
   })
 
-  const [endDateInputProps, updateEndDateInputValue] = useDateInput({
+  const endDateInputProps = useDateInput({
     date: endDate,
     format,
     locale,
@@ -58,22 +58,13 @@ export default function DateRangePicker({
     validate: date => isSelectable(date, { minimumDate: addDays(startDate, 1) })
   })
 
-  const handleStartDateChange = date => {
-    onStartDateChange(date)
-    updateStartDateInputValue(date)
-  }
-
-  const handleEndDateChange = date => {
-    onEndDateChange(date)
-    updateEndDateInputValue(date)
-  }
-
   return (
     <div className='nice-dates' ref={containerRef}>
       {children({
         startDateInputProps: {
           ...startDateInputProps,
           onFocus: () => {
+            startDateInputProps.onFocus()
             setFocus(START_DATE)
 
             if (isTouch) {
@@ -86,6 +77,7 @@ export default function DateRangePicker({
         endDateInputProps: {
           ...endDateInputProps,
           onFocus: () => {
+            endDateInputProps.onFocus()
             setFocus(END_DATE)
 
             if (isTouch) {
@@ -105,8 +97,8 @@ export default function DateRangePicker({
           endDate={endDate}
           focus={focus}
           month={month}
-          onStartDateChange={handleStartDateChange}
-          onEndDateChange={handleEndDateChange}
+          onStartDateChange={onStartDateChange}
+          onEndDateChange={onEndDateChange}
           onFocusChange={setFocus}
           onMonthChange={setMonth}
           minimumDate={minimumDate}

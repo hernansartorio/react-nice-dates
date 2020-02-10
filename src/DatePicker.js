@@ -26,7 +26,7 @@ export default function DatePicker({
     setFocused(false)
   })
 
-  const [inputProps, updateInputValue] = useDateInput({
+  const inputProps = useDateInput({
     date,
     format,
     locale,
@@ -40,7 +40,6 @@ export default function DatePicker({
 
   const handleDateChange = date => {
     onDateChange(date)
-    updateInputValue(date)
     setFocused(false)
   }
 
@@ -51,6 +50,7 @@ export default function DatePicker({
           ...inputProps,
           ref: inputRef,
           onFocus: () => {
+            inputProps.onFocus()
             setFocused(true)
 
             if (isTouch) {
