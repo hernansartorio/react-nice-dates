@@ -7,6 +7,7 @@ const code = `
 import React, { useState } from 'react'
 import { enGB } from 'date-fns/locale'
 import { DateRangePicker, START_DATE, END_DATE } from 'react-nice-dates'
+import 'react-nice-dates/build/style.css'
 
 function DateRangePickerExample() {
   const [startDate, setStartDate] = useState()
