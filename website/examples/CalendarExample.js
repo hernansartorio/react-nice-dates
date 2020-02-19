@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import { isSameDay } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { Calendar } from 'react-nice-dates'
+import 'react-nice-dates/build/style.css'
 
 // Very rough implementation of multiple date selection
 export default function CalendarExample() {

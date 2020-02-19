@@ -7,6 +7,7 @@ const code = `
 import React, { useState } from 'react'
 import { enUS, es } from 'date-fns/locale'
 import { DatePicker } from 'react-nice-dates'
+import 'react-nice-dates/build/style.css'
 
 export default function LocalesExample() {
   const [date, setDate] = useState()
