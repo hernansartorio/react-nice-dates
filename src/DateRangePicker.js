@@ -20,7 +20,8 @@ export default function DateRangePicker({
   minimumDate,
   maximumDate,
   modifiers,
-  modifiersClassNames
+  modifiersClassNames,
+  weekdayFormat
 }) {
   const [focus, setFocus] = useState()
   const [month, setMonth] = useState(startDate || endDate || new Date())
@@ -105,6 +106,7 @@ export default function DateRangePicker({
           maximumDate={maximumDate}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
+          weekdayFormat={weekdayFormat}
         />
       </Popover>
     </div>
@@ -122,7 +124,8 @@ DateRangePicker.propTypes = {
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string)
+  modifiersClassNames: objectOf(string),
+  weekdayFormat: string
 }
 
 DateRangePicker.defaultProps = {

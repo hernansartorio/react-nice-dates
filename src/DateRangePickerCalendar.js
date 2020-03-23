@@ -19,7 +19,8 @@ export default function DateRangePickerCalendar({
   minimumDate,
   maximumDate,
   modifiers: receivedModifiers,
-  modifiersClassNames
+  modifiersClassNames,
+  weekdayFormat
 }) {
   const [hoveredDate, setHoveredDate] = useState()
   const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(startDate || endDate || new Date()))
@@ -91,6 +92,7 @@ export default function DateRangePickerCalendar({
       maximumDate={maximumDate}
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
+      weekdayFormat={weekdayFormat}
     />
   )
 }
@@ -108,7 +110,8 @@ DateRangePickerCalendar.propTypes = {
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string)
+  modifiersClassNames: objectOf(string),
+  weekdayFormat: string
 }
 
 DateRangePickerCalendar.defaultProps = {
