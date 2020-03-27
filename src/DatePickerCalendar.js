@@ -14,7 +14,8 @@ export default function DatePickerCalendar({
   minimumDate,
   maximumDate,
   modifiers: receivedModifiers,
-  modifiersClassNames
+  modifiersClassNames,
+  weekdayFormat
 }) {
   const isSelected = date => isSameDay(date, selectedDate) && isSelectable(date, { minimumDate, maximumDate })
   const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, receivedModifiers)
@@ -30,6 +31,7 @@ export default function DatePickerCalendar({
       maximumDate={maximumDate}
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
+      weekdayFormat={weekdayFormat}
     />
   )
 }
@@ -43,5 +45,6 @@ DatePickerCalendar.propTypes = {
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string)
+  modifiersClassNames: objectOf(string),
+  weekdayFormat: string
 }

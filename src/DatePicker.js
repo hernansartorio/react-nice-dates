@@ -15,7 +15,8 @@ export default function DatePicker({
   minimumDate,
   maximumDate,
   modifiers,
-  modifiersClassNames
+  modifiersClassNames,
+  weekdayFormat
 }) {
   const [month, setMonth] = useState(date || new Date())
   const [focused, setFocused] = useState(false)
@@ -73,6 +74,7 @@ export default function DatePicker({
           maximumDate={maximumDate}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
+          weekdayFormat={weekdayFormat}
         />
       </Popover>
     </div>
@@ -88,7 +90,8 @@ DatePicker.propTypes = {
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
-  modifiersClassNames: objectOf(string)
+  modifiersClassNames: objectOf(string),
+  weekdayFormat: string
 }
 
 DatePicker.defaultProps = {

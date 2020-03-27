@@ -16,7 +16,8 @@ export default function Calendar({
   maximumDate,
   onMonthChange,
   onDayHover,
-  onDayClick
+  onDayClick,
+  weekdayFormat
 }) {
   const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(new Date()))
 
@@ -35,7 +36,7 @@ export default function Calendar({
         onMonthChange={setMonth}
       />
 
-      <CalendarWeekHeader locale={locale} />
+      <CalendarWeekHeader locale={locale} weekdayFormat={weekdayFormat}/>
 
       <CalendarGrid
         locale={locale}
@@ -59,5 +60,6 @@ Calendar.propTypes = {
   month: instanceOf(Date),
   onMonthChange: func,
   onDayHover: func,
-  onDayClick: func
+  onDayClick: func,
+  weekdayFormat: string
 }

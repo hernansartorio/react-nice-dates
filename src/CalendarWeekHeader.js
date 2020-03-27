@@ -1,14 +1,14 @@
 import React from 'react'
-import { object } from 'prop-types'
+import { object, string } from 'prop-types'
 import { eachDayOfInterval, endOfWeek, startOfWeek, format } from 'date-fns'
 
-export default function CalendarWeekHeader({ locale }) {
+export default function CalendarWeekHeader({ locale, weekdayFormat }) {
   const today = new Date()
 
   const weekDays = eachDayOfInterval({
     start: startOfWeek(today, { locale }),
     end: endOfWeek(today, { locale })
-  }).map(date => format(date, 'eee', { locale }))
+  }).map(date => format(date, weekdayFormat, { locale }))
 
   return (
     <div className='nice-dates-week-header'>
@@ -22,5 +22,10 @@ export default function CalendarWeekHeader({ locale }) {
 }
 
 CalendarWeekHeader.propTypes = {
-  locale: object.isRequired
+  locale: object.isRequired,
+  weekdayFormat: string
+}
+
+CalendarWeekHeader.defaultProps = {
+  weekdayFormat: 'eee'
 }

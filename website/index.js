@@ -215,7 +215,8 @@ format: string, // Default: locale.formatLong.date({ width: 'short' })
 minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
-modifiersClassNames: objectOf(string)`}
+modifiersClassNames: objectOf(string),
+weekdayFormat: string // See Calendar props`}
       />
 
       <p>
@@ -250,7 +251,8 @@ format: string, // Default: locale.formatLong.date({ width: 'short' })
 minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
-modifiersClassNames: objectOf(string)`}
+modifiersClassNames: objectOf(string),
+weekdayFormat: string // See Calendar props`}
       />
 
       <p>
@@ -284,7 +286,8 @@ onMonthChange: func, // See Calendar props
 minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
-modifiersClassNames: objectOf(string)`}
+modifiersClassNames: objectOf(string),
+weekdayFormat: string // See Calendar props`}
       />
 
       <h3>
@@ -305,7 +308,8 @@ onMonthChange: func, // See Calendar props
 minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
-modifiersClassNames: objectOf(string)`}
+modifiersClassNames: objectOf(string),
+weekdayFormat: string // See Calendar props`}
       />
 
       <h3>
@@ -322,7 +326,8 @@ modifiersClassNames: objectOf(string),
 month: instanceOf(Date), // Optional: Turns current month into a controlled prop
 onMonthChange: func, // Optional: Turns current month into a controlled prop
 onDayHover: func,
-onDayClick: func`}
+onDayClick: func,
+weekdayFormat: string // Optional: allows weekday to be dynamically formatted (ex. "EEEEE")`}
       />
 
       <h3>

@@ -21,4 +21,15 @@ describe('Calendar', () => {
     expect(getByText(monthShortName)).toBeInTheDocument()
     expect(getAllByText('1').length).toBeGreaterThan(0)
   })
+
+  it('should render the weekday dynamically', () => {
+    const { getByText } = render(
+      <Calendar locale={locale} weekdayFormat='EEEEEE' />
+    )
+
+    const today = new Date()
+    const dayShortName = format(today, 'EEEEEE', { locale })
+
+    expect(getByText(dayShortName)).toBeInTheDocument()
+  })
 })
