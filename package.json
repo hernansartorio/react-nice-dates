@@ -6,6 +6,7 @@
   "unpkg": "build/index.umd.js",
   "author": "Hernán Sartorio",
   "license": "MIT",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hernansartorio/react-nice-dates.git"
@@ -16,7 +17,8 @@
   "homepage": "https://github.com/hernansartorio/react-nice-dates#readme",
   "files": [
     "build",
-    "src/style.scss"
+    "src/style.scss",
+    "index.d.ts"
   ],
   "scripts": {
     "start": "parcel website/index.html -d tmp",
@@ -70,6 +72,7 @@
     "sass": "^1.25.0"
   },
   "dependencies": {
+    "@types/date-fns": "^2.6.0",
     "classnames": "^2.2.6"
   }
 }
