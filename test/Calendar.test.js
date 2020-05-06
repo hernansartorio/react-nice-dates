@@ -17,8 +17,8 @@ describe('Calendar', () => {
     const monthShortName = format(today, 'MMM', { locale })
 
     expect(getByText(dayShortName)).toBeInTheDocument()
-    expect(getByText(monthName)).toBeInTheDocument()
-    expect(getByText(monthShortName)).toBeInTheDocument()
+    expect(getAllByText(monthName).length).toBeGreaterThan(0)
+    expect(getAllByText(monthShortName).length).toBeGreaterThan(0)
     expect(getAllByText('1').length).toBeGreaterThan(0)
   })
 
