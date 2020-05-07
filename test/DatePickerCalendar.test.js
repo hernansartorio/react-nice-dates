@@ -36,4 +36,15 @@ describe('DatePickerCalendar', () => {
 
     expect(getByText(monthName, { exact: false })).toBeInTheDocument()
   })
+
+  it('should maintain the selected date’s time when selecting a new date', () => {
+    const handleDateChange = jest.fn()
+    const date = new Date(2020, 1, 24, 18, 30)
+
+    const { getByText } = render(<DatePickerCalendar locale={locale} date={date} onDateChange={handleDateChange} />)
+
+    fireEvent.click(getByText('25'))
+
+    expect(handleDateChange).toHaveBeenCalledWith(new Date(2020, 1, 25, 18, 30))
+  })
 })

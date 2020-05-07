@@ -1,4 +1,4 @@
-import { isAfter, isBefore, startOfDay } from 'date-fns'
+import { isAfter, isBefore, startOfDay, set } from 'date-fns'
 
 export const isSelectable = (date, { minimumDate, maximumDate }) =>
   !isBefore(date, startOfDay(minimumDate)) && !isAfter(date, maximumDate)
@@ -18,3 +18,6 @@ export const mergeModifiers = (baseModifiers, newModifiers) => {
 
   return modifiers
 }
+
+export const setTime = (date, dateWithTime) =>
+  set(date, { hours: dateWithTime.getHours(), minutes: dateWithTime.getMinutes(), seconds: dateWithTime.getSeconds() })

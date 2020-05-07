@@ -10,6 +10,8 @@ import ModifiersExample from './examples/ModifiersExample'
 import LocalesExample from './examples/LocalesExample'
 import CalendarExample from './examples/CalendarExample'
 import CodeBlock from './CodeBlock'
+import DatePickerWithTimeInputExample from './examples/DatePickerWithTimeInputExample'
+import DatePickerWithTimeExample from './examples/DatePickerWithTimeExample'
 
 function App() {
   return (
@@ -122,6 +124,21 @@ function App() {
       </p>
 
       <DatePickerCalendarWithInputExample />
+
+      <h3>Time-picking</h3>
+
+      <p>
+        While there’s no custom time-picking user interface, you can use an input format that includes the time, and the
+        selected time will get carried over when the selected date changes.
+      </p>
+
+      <DatePickerWithTimeExample />
+
+      <p>
+        You can also use separate input for the time of the date, using the <code>useDateInput</code> hook.
+      </p>
+
+      <DatePickerWithTimeInputExample />
 
       <h3>Localization</h3>
 

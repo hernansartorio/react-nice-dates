@@ -64,22 +64,13 @@ describe('DateRangePickerCalendar', () => {
     const endDate = addDays(startDate, 2)
 
     const { container, getAllByText, rerender } = render(
-      <DateRangePickerCalendar
-        locale={locale}
-        startDate={startDate}
-      />
+      <DateRangePickerCalendar locale={locale} startDate={startDate} />
     )
 
     expect(getAllByText('1')[0].parentElement).toHaveClass('-selected')
     expect(container.querySelectorAll('.-selected').length).toBe(1)
 
-    rerender(
-      <DateRangePickerCalendar
-        locale={locale}
-        startDate={startDate}
-        endDate={endDate}
-      />
-    )
+    rerender(<DateRangePickerCalendar locale={locale} startDate={startDate} endDate={endDate} />)
 
     expect(getAllByText('1')[0].parentElement).toHaveClass('-selected -selected-start')
     expect(getAllByText('2')[0].parentElement).toHaveClass('-selected -selected-middle')
@@ -104,5 +95,39 @@ describe('DateRangePickerCalendar', () => {
     const { getByText } = render(<DateRangePickerCalendar locale={locale} endDate={pastDate} />)
 
     expect(getByText(monthName, { exact: false })).toBeInTheDocument()
+  })
+
+  it('should maintain the selected start date’s time when selecting a new date', () => {
+    const handleStartDateChange = jest.fn()
+
+    const { getByText } = render(
+      <DateRangePickerCalendar
+        locale={locale}
+        focus={START_DATE}
+        startDate={new Date(2020, 1, 24, 18, 30)}
+        onStartDateChange={handleStartDateChange}
+      />
+    )
+
+    fireEvent.click(getByText('25'))
+
+    expect(handleStartDateChange).toHaveBeenCalledWith(new Date(2020, 1, 25, 18, 30))
+  })
+
+  it('should maintain the selected end date’s time when selecting a new date', () => {
+    const handleEndDateChange = jest.fn()
+
+    const { getByText } = render(
+      <DateRangePickerCalendar
+        locale={locale}
+        focus={END_DATE}
+        endDate={new Date(2020, 1, 24, 18, 30)}
+        onEndDateChange={handleEndDateChange}
+      />
+    )
+
+    fireEvent.click(getByText('25'))
+
+    expect(handleEndDateChange).toHaveBeenCalledWith(new Date(2020, 1, 25, 18, 30))
   })
 })
