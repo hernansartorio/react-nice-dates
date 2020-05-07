@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, oneOf, string } from 'prop-types'
-import { isSameDay, isAfter, isBefore, startOfMonth } from 'date-fns'
-import { mergeModifiers, isSelectable } from './utils'
+import { isSameDay, isAfter, isBefore, startOfMonth, startOfDay } from 'date-fns'
+import { isSelectable, mergeModifiers, setTime } from './utils'
 import { START_DATE, END_DATE } from './constants'
 import useControllableState from './useControllableState'
 import Calendar from './Calendar'
@@ -28,12 +28,12 @@ export default function DateRangePickerCalendar({
   const displayedStartDate =
     focus === START_DATE && !startDate && endDate && hoveredDate && !isSameDay(hoveredDate, endDate)
       ? hoveredDate
-      : startDate
+      : startOfDay(startDate)
 
   const displayedEndDate =
     focus === END_DATE && !endDate && startDate && hoveredDate && !isSameDay(hoveredDate, startDate)
       ? hoveredDate
-      : endDate
+      : startOfDay(endDate)
 
   const isStartDate = date => isSameDay(date, displayedStartDate) && isBefore(date, displayedEndDate)
   const isMiddleDate = date => isAfter(date, displayedStartDate) && isBefore(date, displayedEndDate)
@@ -63,7 +63,7 @@ export default function DateRangePickerCalendar({
         onEndDateChange(null)
       }
 
-      onStartDateChange(date)
+      onStartDateChange(startDate ? setTime(date, startDate) : date)
       onFocusChange(END_DATE)
     } else if (focus === END_DATE) {
       const invalidStartDate = startDate && !isBefore(startDate, date)
@@ -72,7 +72,7 @@ export default function DateRangePickerCalendar({
         onStartDateChange(null)
       }
 
-      onEndDateChange(date)
+      onEndDateChange(endDate ? setTime(date, endDate) : date)
       onFocusChange(invalidStartDate ? START_DATE : null)
     }
   }
