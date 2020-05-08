@@ -57,7 +57,7 @@ export default function useDateInput({
     if (!focused) {
       setValue(isValidAndSelectable(selectedDate) ? formatDate(selectedDate) : '')
     }
-  }, [selectedDate]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedDate, focused]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     onFocus: handleFocus,
