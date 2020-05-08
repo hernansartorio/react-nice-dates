@@ -29,6 +29,8 @@ declare module "react-nice-dates" {
     children: JSX.Element;
     startDate?: Date | undefined;
     endDate?: Date | undefined;
+    minimumLength?: number | undefined;
+    maximumLength?: number | undefined;
     onStartDateChange?: (date: Date | undefined) => void;
     onEndDateChange?: (date: Date | undefined) => void;
     format?: string;
@@ -46,6 +48,8 @@ declare module "react-nice-dates" {
     endDate?: Date | undefined;
     focus?: "startDate, endDate";
     month?: Date | undefined;
+    minimumLength?: number | undefined;
+    maximumLength?: number | undefined;
     onFocusChange: (focus: "startDate" | "endDate") => void;
     onStartDateChange: (date: Date | undefined) => void;
     onEndDateChange: (date: Date | undefined) => void;

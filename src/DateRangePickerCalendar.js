@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { func, instanceOf, object, objectOf, oneOf, string } from 'prop-types'
-import { isSameDay, isAfter, isBefore, startOfMonth, startOfDay } from 'date-fns'
-import { isSelectable, mergeModifiers, setTime } from './utils'
+import { func, instanceOf, number, object, objectOf, oneOf, string } from 'prop-types'
+import { differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, startOfDay } from 'date-fns'
+import { isRangeLengthValid, isSelectable, mergeModifiers, setTime } from './utils'
 import { START_DATE, END_DATE } from './constants'
 import useControllableState from './useControllableState'
 import Calendar from './Calendar'
@@ -18,12 +18,18 @@ export default function DateRangePickerCalendar({
   onMonthChange,
   minimumDate,
   maximumDate,
+  minimumLength,
+  maximumLength,
   modifiers: receivedModifiers,
   modifiersClassNames,
   weekdayFormat
 }) {
   const [hoveredDate, setHoveredDate] = useState()
-  const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(startDate || endDate || new Date()))
+  const [month, setMonth] = useControllableState(
+    receivedMonth,
+    onMonthChange,
+    startOfMonth(startDate || endDate || new Date())
+  )
 
   const displayedStartDate =
     focus === START_DATE && !startDate && endDate && hoveredDate && !isSameDay(hoveredDate, endDate)
@@ -47,38 +53,45 @@ export default function DateRangePickerCalendar({
           isMiddleDate(date) ||
           isEndDate(date) ||
           isSameDay(date, startDate) ||
-          isSameDay(date, endDate)
-        ),
+          isSameDay(date, endDate)),
       selectedStart: isStartDate,
       selectedMiddle: isMiddleDate,
       selectedEnd: isEndDate,
-      disabled: date => (focus === START_DATE && isEndDate(date)) || (focus === END_DATE && isStartDate(date))
+      disabled: date =>
+        (focus === START_DATE &&
+          endDate &&
+          ((differenceInDays(endDate, date) < minimumLength && (!startDate || !isAfter(date, endDate))) ||
+            (!startDate && maximumLength && differenceInDays(endDate, date) > maximumLength))) ||
+        (focus === END_DATE &&
+          startDate &&
+          ((differenceInDays(date, startDate) < minimumLength && (!endDate || !isBefore(date, startDate))) ||
+            (!endDate && maximumLength && differenceInDays(date, startDate) > maximumLength)))
     },
     receivedModifiers
   )
 
   const handleSelectDate = date => {
     if (focus === START_DATE) {
-      if (endDate && !isAfter(endDate, date)) {
+      const invalidEndDate =
+        endDate && !isRangeLengthValid({ startDate: date, endDate }, { minimumLength, maximumLength })
+
+      if (invalidEndDate) {
         onEndDateChange(null)
       }
 
       onStartDateChange(startDate ? setTime(date, startDate) : date)
       onFocusChange(END_DATE)
     } else if (focus === END_DATE) {
-      const invalidStartDate = startDate && !isBefore(startDate, date)
+      const invalidStartDate =
+        startDate && !isRangeLengthValid({ startDate, endDate: date }, { minimumLength, maximumLength })
 
       if (invalidStartDate) {
         onStartDateChange(null)
       }
 
       onEndDateChange(endDate ? setTime(date, endDate) : date)
-      onFocusChange(invalidStartDate ? START_DATE : null)
+      onFocusChange(invalidStartDate || !startDate ? START_DATE : null)
     }
-  }
-
-  const handleHoverDate = date => {
-    setHoveredDate(date)
   }
 
   return (
@@ -86,7 +99,7 @@ export default function DateRangePickerCalendar({
       locale={locale}
       month={month}
       onMonthChange={setMonth}
-      onDayHover={handleHoverDate}
+      onDayHover={setHoveredDate}
       onDayClick={handleSelectDate}
       minimumDate={minimumDate}
       maximumDate={maximumDate}
@@ -109,6 +122,8 @@ DateRangePickerCalendar.propTypes = {
   onMonthChange: func,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
+  minimumLength: number,
+  maximumLength: number,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   weekdayFormat: string
@@ -117,5 +132,7 @@ DateRangePickerCalendar.propTypes = {
 DateRangePickerCalendar.defaultProps = {
   onStartDateChange: () => {},
   onEndDateChange: () => {},
-  onFocusChange: () => {}
+  onFocusChange: () => {},
+  minimumLength: 0,
+  maximumLength: null
 }

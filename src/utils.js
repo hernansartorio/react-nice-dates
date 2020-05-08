@@ -1,4 +1,4 @@
-import { isAfter, isBefore, startOfDay, set } from 'date-fns'
+import { differenceInDays, isAfter, isBefore, startOfDay, set } from 'date-fns'
 
 export const isSelectable = (date, { minimumDate, maximumDate }) =>
   !isBefore(date, startOfDay(minimumDate)) && !isAfter(date, maximumDate)
@@ -21,3 +21,7 @@ export const mergeModifiers = (baseModifiers, newModifiers) => {
 
 export const setTime = (date, dateWithTime) =>
   set(date, { hours: dateWithTime.getHours(), minutes: dateWithTime.getMinutes(), seconds: dateWithTime.getSeconds() })
+
+export const isRangeLengthValid = ({ startDate, endDate }, { minimumLength, maximumLength }) =>
+  differenceInDays(endDate, startDate) >= minimumLength &&
+  (!maximumLength || differenceInDays(endDate, startDate) <= maximumLength)

@@ -267,6 +267,8 @@ onEndDateChange: func,
 format: string, // Default: locale.formatLong.date({ width: 'short' })
 minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
+minimumLength: number, // See DateRangePickerCalendar props
+maximumLength: number, // See DateRangePickerCalendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
 weekdayFormat: string // See Calendar props`}
@@ -324,6 +326,8 @@ onFocusChange: func.isRequired,
 onMonthChange: func, // See Calendar props
 minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
+minimumLength: number, // Minimum range selection length, defaults to 0
+maximumLength: number, // Maximum range selection length, defaults to null
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
 weekdayFormat: string // See Calendar props`}
