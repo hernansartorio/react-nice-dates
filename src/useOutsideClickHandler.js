@@ -1,11 +1,17 @@
 import { useRef, useEffect } from 'react'
 
 export default function useOutsideClickHandler(callback) {
-  const ref = useRef()
+  const refA = useRef()
+  const refB = useRef()
+  const refC = useRef()
 
   useEffect(() => {
     const handleOutsideClick = event => {
-      if (!ref.current.contains(event.target)) {
+      if (
+        (!refA.current || !refA.current.contains(event.target)) &&
+        (!refB.current || !refB.current.contains(event.target)) &&
+        (!refC.current || !refC.current.contains(event.target))
+      ) {
         callback()
       }
     }
@@ -17,5 +23,5 @@ export default function useOutsideClickHandler(callback) {
     }
   }, [callback])
 
-  return ref
+  return [refA, refB, refC]
 }

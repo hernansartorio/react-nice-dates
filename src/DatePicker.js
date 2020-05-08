@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
 import useDateInput from './useDateInput'
 import useDetectTouch from './useDetectTouch'
@@ -21,10 +21,11 @@ export default function DatePicker({
   const [month, setMonth] = useState(date || new Date())
   const [focused, setFocused] = useState(false)
   const isTouch = useDetectTouch()
-  const inputRef = useRef()
 
-  const containerRef = useOutsideClickHandler(() => {
-    setFocused(false)
+  const [inputRef, popoverRef] = useOutsideClickHandler(() => {
+    if (focused) {
+      setFocused(false)
+    }
   })
 
   const inputProps = useDateInput({
@@ -45,7 +46,7 @@ export default function DatePicker({
   }
 
   return (
-    <div className='nice-dates' ref={containerRef}>
+    <div className='nice-dates'>
       {children({
         inputProps: {
           ...inputProps,
@@ -63,7 +64,7 @@ export default function DatePicker({
         focused
       })}
 
-      <Popover open={focused}>
+      <Popover open={focused} ref={popoverRef}>
         <DatePickerCalendar
           locale={locale}
           date={date}

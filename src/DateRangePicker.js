@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { func, instanceOf, object, objectOf, string } from 'prop-types'
 import { addDays, subDays } from 'date-fns'
 import { isSelectable } from './utils'
@@ -26,10 +26,8 @@ export default function DateRangePicker({
   const [focus, setFocus] = useState()
   const [month, setMonth] = useState(startDate || endDate || new Date())
   const isTouch = useDetectTouch()
-  const startDateInputRef = useRef()
-  const endDateInputRef = useRef()
 
-  const containerRef = useOutsideClickHandler(() => {
+  const [startDateInputRef, endDateInputRef, popoverRef] = useOutsideClickHandler(() => {
     setFocus(null)
   })
 
@@ -60,7 +58,7 @@ export default function DateRangePicker({
   })
 
   return (
-    <div className='nice-dates' ref={containerRef}>
+    <div className='nice-dates'>
       {children({
         startDateInputProps: {
           ...startDateInputProps,
@@ -91,7 +89,7 @@ export default function DateRangePicker({
         focus
       })}
 
-      <Popover open={!!focus}>
+      <Popover open={!!focus} ref={popoverRef}>
         <DateRangePickerCalendar
           locale={locale}
           startDate={startDate}
