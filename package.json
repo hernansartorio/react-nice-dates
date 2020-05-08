@@ -26,6 +26,7 @@
     "build:website": "rm -rf build-website/* && parcel build website/index.html -d build-website --experimental-scope-hoisting --no-content-hash && cp website/CNAME build-website/CNAME",
     "deploy": "gh-pages -d build-website",
     "lint": "eslint --cache --format codeframe src test website",
+    "release": "yarn run build && np",
     "test": "jest",
     "test:watch": "jest --watch"
   },
