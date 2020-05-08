@@ -13,8 +13,16 @@ describe('DateRangePicker', () => {
       <DateRangePicker locale={locale}>
         {({ startDateInputProps, endDateInputProps, focus }) => (
           <div className='date-range'>
-            <input aria-label={START_DATE} className={classNames({ '-focused': focus === START_DATE })} {...startDateInputProps} />
-            <input aria-label={END_DATE} className={classNames({ '-focused': focus === END_DATE })} {...endDateInputProps} />
+            <input
+              aria-label={START_DATE}
+              className={classNames({ '-focused': focus === START_DATE })}
+              {...startDateInputProps}
+            />
+            <input
+              aria-label={END_DATE}
+              className={classNames({ '-focused': focus === END_DATE })}
+              {...endDateInputProps}
+            />
           </div>
         )}
       </DateRangePicker>
@@ -23,20 +31,23 @@ describe('DateRangePicker', () => {
     expect(getAllByText('1').length).toBeGreaterThan(0)
   })
 
-  it('should open and close', () => {
-    const { container, getAllByText, getByLabelText } = render(
+  it('should open and close popup', () => {
+    const { container, getByLabelText } = render(
       <DateRangePicker locale={locale}>
         {({ startDateInputProps, endDateInputProps, focus }) => (
           <div className='date-range'>
-            <input aria-label={START_DATE} className={classNames({ '-focused': focus === START_DATE })} {...startDateInputProps} />
-            <input aria-label={END_DATE} className={classNames({ '-focused': focus === END_DATE })} {...endDateInputProps} />
+            <input
+              aria-label={START_DATE}
+              className={classNames({ '-focused': focus === START_DATE })}
+              {...startDateInputProps}
+            />
+            <input className={classNames({ '-focused': focus === END_DATE })} {...endDateInputProps} />
           </div>
         )}
       </DateRangePicker>
     )
 
     const startDateInput = getByLabelText(START_DATE)
-    const endDateInput = getByLabelText(END_DATE)
     const popover = container.querySelector('.nice-dates-popover')
 
     expect(popover).not.toHaveClass('-open')
@@ -53,20 +64,6 @@ describe('DateRangePicker', () => {
 
     expect(popover).not.toHaveClass('-open')
     expect(startDateInput).not.toHaveClass('-focused')
-
-    // Should close on date range selection
-    fireEvent.focus(startDateInput)
-
-    expect(popover).toHaveClass('-open')
-
-    fireEvent.click(getAllByText('1')[0])
-
-    expect(popover).toHaveClass('-open')
-    expect(endDateInput).toHaveClass('-focused')
-
-    fireEvent.click(getAllByText('2')[0])
-
-    expect(popover).not.toHaveClass('-open')
   })
 
   it('should display pre-selected start date’s month on initial render', () => {

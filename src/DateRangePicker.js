@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { func, instanceOf, object, objectOf, string } from 'prop-types'
-import { addDays, subDays } from 'date-fns'
-import { isSelectable } from './utils'
+import { func, instanceOf, number, object, objectOf, string } from 'prop-types'
+import { isRangeLengthValid } from './utils'
 import { START_DATE, END_DATE } from './constants'
 import useDateInput from './useDateInput'
 import useOutsideClickHandler from './useOutsideClickHandler'
@@ -19,6 +18,8 @@ export default function DateRangePicker({
   format,
   minimumDate,
   maximumDate,
+  minimumLength,
+  maximumLength,
   modifiers,
   modifiersClassNames,
   weekdayFormat
@@ -41,7 +42,7 @@ export default function DateRangePicker({
       onStartDateChange(date)
       date && setMonth(date)
     },
-    validate: date => isSelectable(date, { maximumDate: subDays(endDate, 1) })
+    validate: date => !endDate || isRangeLengthValid({ startDate: date, endDate }, { minimumLength, maximumLength })
   })
 
   const endDateInputProps = useDateInput({
@@ -54,7 +55,7 @@ export default function DateRangePicker({
       onEndDateChange(date)
       date && setMonth(date)
     },
-    validate: date => isSelectable(date, { minimumDate: addDays(startDate, 1) })
+    validate: date => !startDate || isRangeLengthValid({ startDate, endDate: date }, { minimumLength, maximumLength })
   })
 
   return (
@@ -102,6 +103,8 @@ export default function DateRangePicker({
           onMonthChange={setMonth}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
+          minimumLength={minimumLength}
+          maximumLength={maximumLength}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
           weekdayFormat={weekdayFormat}
@@ -121,6 +124,8 @@ DateRangePicker.propTypes = {
   format: string,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
+  minimumLength: number,
+  maximumLength: number,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   weekdayFormat: string

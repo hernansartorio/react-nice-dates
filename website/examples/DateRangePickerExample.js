@@ -20,6 +20,7 @@ function DateRangePickerExample() {
       onStartDateChange={setStartDate}
       onEndDateChange={setEndDate}
       minimumDate={new Date()}
+      minimumLength={1}
       format='dd MMM yyyy'
       locale={enGB}
     >
@@ -55,6 +56,7 @@ export default function DateRangePickerExample() {
         onStartDateChange={setStartDate}
         onEndDateChange={setEndDate}
         minimumDate={new Date()}
+        minimumLength={1}
         format='dd MMM yyyy'
         locale={enGB}
       >
