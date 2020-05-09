@@ -23,5 +23,5 @@ export const setTime = (date, dateWithTime) =>
   set(date, { hours: dateWithTime.getHours(), minutes: dateWithTime.getMinutes(), seconds: dateWithTime.getSeconds() })
 
 export const isRangeLengthValid = ({ startDate, endDate }, { minimumLength, maximumLength }) =>
-  differenceInDays(endDate, startDate) >= minimumLength &&
-  (!maximumLength || differenceInDays(endDate, startDate) <= maximumLength)
+  differenceInDays(startOfDay(endDate), startOfDay(startDate)) >= minimumLength &&
+  (!maximumLength || differenceInDays(startOfDay(endDate), startOfDay(startDate)) <= maximumLength)

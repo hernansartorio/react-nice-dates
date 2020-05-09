@@ -60,12 +60,12 @@ export default function DateRangePickerCalendar({
       disabled: date =>
         (focus === START_DATE &&
           endDate &&
-          ((differenceInDays(endDate, date) < minimumLength && (!startDate || !isAfter(date, endDate))) ||
-            (!startDate && maximumLength && differenceInDays(endDate, date) > maximumLength))) ||
+          ((differenceInDays(startOfDay(endDate), date) < minimumLength && (!startDate || !isAfter(date, startOfDay(endDate)))) ||
+            (!startDate && maximumLength && differenceInDays(startOfDay(endDate), date) > maximumLength))) ||
         (focus === END_DATE &&
           startDate &&
-          ((differenceInDays(date, startDate) < minimumLength && (!endDate || !isBefore(date, startDate))) ||
-            (!endDate && maximumLength && differenceInDays(date, startDate) > maximumLength)))
+          ((differenceInDays(date, startOfDay(startDate)) < minimumLength && (!endDate || !isBefore(date, startOfDay(startDate)))) ||
+            (!endDate && maximumLength && differenceInDays(date, startOfDay(startDate)) > maximumLength)))
     },
     receivedModifiers
   )
