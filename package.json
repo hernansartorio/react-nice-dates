@@ -1,6 +1,6 @@
 {
   "name": "react-nice-dates",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "main": "build/index.js",
   "module": "build/index.esm.js",
   "unpkg": "build/index.umd.js",
