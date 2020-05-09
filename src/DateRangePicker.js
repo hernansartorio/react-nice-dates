@@ -133,5 +133,7 @@ DateRangePicker.propTypes = {
 
 DateRangePicker.defaultProps = {
   onStartDateChange: () => {},
-  onEndDateChange: () => {}
+  onEndDateChange: () => {},
+  minimumLength: 0,
+  maximumLength: null
 }
