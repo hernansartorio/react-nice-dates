@@ -17,12 +17,15 @@ declare module "react-nice-dates" {
   type DefaultModifiers = 'disabled' | 'selected' | 'today';
   type ModifierMatcher = (date: Date) => boolean;
 
+  type Modifiers = { [key in DefaultModifiers | string]: ModifierMatcher };
+  type ModifiersClassNames = { [key in DefaultModifiers | string]: string };
+
   interface CommonProps {
     locale: Locale;
     minimumDate?: Date;
     maximumDate?: Date;
-    modifiers?: { [key in DefaultModifiers | string]: ModifierMatcher };
-    modifiersClassNames?: { [key in DefaultModifiers | string]: string };
+    modifiers?: Modifiers;
+    modifiersClassNames?: ModifiersClassNames;
     weekdayFormat?: string;
   }
 
