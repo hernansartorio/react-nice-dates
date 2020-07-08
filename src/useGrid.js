@@ -211,7 +211,13 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
   useEffect(() => {
     const handleResize = () => {
       const containerElement = containerElementRef.current
-      const containerWidth = containerElement.offsetWidth
+      let containerWidth = containerElement.offsetWidth
+
+      // Element is not rendered yet. Therefore, a fallback size must be provided
+      if (containerWidth === 0) {
+        containerWidth = Math.min(window.innerWidth, 548)
+      }
+
       const cellWidth = containerWidth / 7
       let newCellHeight = 1
       let wide = false
