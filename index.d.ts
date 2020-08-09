@@ -97,3 +97,21 @@ declare module "react-nice-dates" {
     props: DateRangePickerCalendarProps
   ): JSX.Element;
 }
+
+export function useDateInput({
+  date,
+  format,
+  locale,
+  minimumDate,
+  maximumDate,
+  onDateChange,
+  validate
+}: {
+  date?: Date,
+  format?: string,
+  locale: Locale,
+  minimumDate?: Date,
+  maximumDate?: Date,
+  onDateChange?: (date: Date) => void,
+  validate?: (date: Date) => boolean,
+}): any
