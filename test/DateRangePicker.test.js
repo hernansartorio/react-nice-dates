@@ -69,7 +69,7 @@ describe('DateRangePicker', () => {
   it('should display pre-selected start date’s month on initial render', () => {
     const today = new Date()
     const pastDate = subMonths(today, 1)
-    const monthName = format(pastDate, 'MMMM', { locale })
+    const monthName = format(pastDate, 'LLLL', { locale })
 
     const { getByText } = render(
       <DateRangePicker locale={locale} startDate={pastDate} endDate={today}>
@@ -82,7 +82,7 @@ describe('DateRangePicker', () => {
 
   it('should display pre-selected end date’s month on initial render', () => {
     const pastDate = subMonths(new Date(), 1)
-    const monthName = format(pastDate, 'MMMM', { locale })
+    const monthName = format(pastDate, 'LLLL', { locale })
 
     const { getByText } = render(
       <DateRangePicker locale={locale} endDate={pastDate}>

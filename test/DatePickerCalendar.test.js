@@ -30,7 +30,7 @@ describe('DatePickerCalendar', () => {
 
   it('should display pre-selected date’s month on initial render', () => {
     const pastDate = subMonths(new Date(), 1)
-    const monthName = format(pastDate, 'MMMM', { locale })
+    const monthName = format(pastDate, 'LLLL', { locale })
 
     const { getByText } = render(<DatePickerCalendar locale={locale} date={pastDate} />)
 

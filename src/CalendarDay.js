@@ -55,7 +55,7 @@ export default function CalendarDay({
       style={{ height }}
     >
       {dayOfMonth === 1 && (
-        <span className='nice-dates-day_month'>{format(date, 'MMMM', { locale }).substring(0, 3)}</span>
+        <span className='nice-dates-day_month'>{format(date, 'LLLL', { locale }).substring(0, 3)}</span>
       )}
       <span className='nice-dates-day_date'>{dayOfMonth}</span>
     </span>
