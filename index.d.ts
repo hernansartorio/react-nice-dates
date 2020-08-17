@@ -111,7 +111,7 @@ declare module "react-nice-dates" {
     locale: Locale,
     minimumDate?: Date,
     maximumDate?: Date,
-    onDateChange?: (date: Date) => void,
+    onDateChange: (date: Date) => void,
     validate?: (date: Date) => boolean,
   }): any
 }
