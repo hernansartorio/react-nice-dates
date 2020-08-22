@@ -13,7 +13,7 @@ describe('Calendar', () => {
 
     const today = new Date()
     const dayShortName = format(today, 'eee', { locale })
-    const monthName = format(today, 'MMMM', { locale })
+    const monthName = format(today, 'LLLL', { locale })
     const monthShortName = format(today, 'MMM', { locale })
 
     expect(getByText(dayShortName)).toBeInTheDocument()
