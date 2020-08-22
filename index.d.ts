@@ -48,7 +48,10 @@ declare module "react-nice-dates" {
     format?: string;
   }
 
-  type DateRangeFocus = 'startDate' | 'endDate';
+  export enum DateRangeFocus {
+    startDate = 'startDate',
+    endDate = 'endDate'
+  }
 
   interface DateRangePickerChildrenProps {
     startDateInputProps: InputProps;
