@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { isSameDay } from 'date-fns'
-import { enGB } from 'date-fns/locale'
-import { Calendar } from '../../src'
-import Example from './Example'
+import React, { useState } from "react";
+import { isSameDay } from "date-fns";
+import { enGB } from "date-fns/locale";
+import { Calendar } from "../../src";
+import Example from "./Example";
 
 const code = `
 import React, { useState } from 'react'
@@ -28,22 +28,28 @@ export default function CalendarExample() {
   )
 }
 
-`
+`;
 
 export default function CalendarExample() {
-  const [selectedDates, setSelectedDates] = useState([])
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const modifiers = {
-    selected: date => selectedDates.some(selectedDate => isSameDay(selectedDate, date))
-  }
+    selected: (date) =>
+      selectedDates.some((selectedDate) => isSameDay(selectedDate, date)),
+  };
 
-  const handleDayClick = date => {
-    setSelectedDates([...selectedDates, date])
-  }
+  const handleDayClick = (date) => {
+    setSelectedDates([...selectedDates, date]);
+  };
 
   return (
     <Example code={code}>
-      <Calendar onDayClick={handleDayClick} modifiers={modifiers} locale={enGB} />
+      <Calendar
+        onDayClick={handleDayClick}
+        modifiers={modifiers}
+        locale={enGB}
+        direction={"ltr"}
+      />
     </Example>
-  )
+  );
 }

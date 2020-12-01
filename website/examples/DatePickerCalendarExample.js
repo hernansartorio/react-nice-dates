@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
-import { DatePickerCalendar } from '../../src'
-import Example from './Example'
+import React, { useState } from "react";
+import { format } from "date-fns";
+import { enGB } from "date-fns/locale";
+import { DatePickerCalendar } from "../../src";
+import Example from "./Example";
 
 const code = `
 import React, { useState } from 'react'
@@ -24,16 +24,24 @@ function DatePickerCalendarExample() {
     </div>
   )
 }
-`
+`;
 
 export default function DatePickerCalendarExample() {
-  const [date, setDate] = useState()
+  const [date, setDate] = useState();
 
   return (
     <Example code={code}>
-      <p>Selected date: {date ? format(date, 'dd MMM yyyy', { locale: enGB }) : 'none'}.</p>
+      <p>
+        Selected date:{" "}
+        {date ? format(date, "dd MMM yyyy", { locale: enGB }) : "none"}.
+      </p>
 
-      <DatePickerCalendar date={date} onDateChange={setDate} locale={enGB} />
+      <DatePickerCalendar
+        date={date}
+        onDateChange={setDate}
+        locale={enGB}
+        direction={"ltr"}
+      />
     </Example>
-  )
+  );
 }
