@@ -1,9 +1,9 @@
-import React from 'react'
-import { instanceOf, func, object, objectOf, string } from 'prop-types'
-import { isSameDay, startOfMonth } from 'date-fns'
-import { isSelectable, mergeModifiers, setTime } from './utils'
-import useControllableState from './useControllableState'
-import Calendar from './Calendar'
+import React from "react";
+import { instanceOf, func, object, objectOf, string } from "prop-types";
+import { isSameDay, startOfMonth } from "date-fns";
+import { isSelectable, mergeModifiers, setTime } from "./utils";
+import useControllableState from "./useControllableState";
+import Calendar from "./Calendar";
 
 export default function DatePickerCalendar({
   locale,
@@ -15,15 +15,25 @@ export default function DatePickerCalendar({
   maximumDate,
   modifiers: receivedModifiers,
   modifiersClassNames,
-  weekdayFormat
+  weekdayFormat,
+  direction,
 }) {
-  const isSelected = date => isSameDay(date, selectedDate) && isSelectable(date, { minimumDate, maximumDate })
-  const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, receivedModifiers)
-  const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(selectedDate || new Date()))
+  const isSelected = (date) =>
+    isSameDay(date, selectedDate) &&
+    isSelectable(date, { minimumDate, maximumDate });
+  const modifiers = mergeModifiers(
+    { selected: isSelected, disabled: isSelected },
+    receivedModifiers
+  );
+  const [month, setMonth] = useControllableState(
+    receivedMonth,
+    onMonthChange,
+    startOfMonth(selectedDate || new Date())
+  );
 
-  const handleDateChange = date => {
-    onDateChange(selectedDate ? setTime(date, selectedDate) : date)
-  }
+  const handleDateChange = (date) => {
+    onDateChange(selectedDate ? setTime(date, selectedDate) : date);
+  };
 
   return (
     <Calendar
@@ -36,8 +46,9 @@ export default function DatePickerCalendar({
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
       weekdayFormat={weekdayFormat}
+      direction={direction}
     />
-  )
+  );
 }
 
 DatePickerCalendar.propTypes = {
@@ -50,5 +61,6 @@ DatePickerCalendar.propTypes = {
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
-  weekdayFormat: string
-}
+  weekdayFormat: string,
+  direction: string,
+};
