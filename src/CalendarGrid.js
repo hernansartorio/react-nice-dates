@@ -105,6 +105,7 @@ CalendarGrid.propTypes = {
   onDayHover: func,
   onDayClick: func,
   transitionDuration: number.isRequired,
+  direction: string,
 };
 
 CalendarGrid.defaultProps = {

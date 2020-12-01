@@ -16,6 +16,7 @@ export default function DatePickerCalendar({
   modifiers: receivedModifiers,
   modifiersClassNames,
   weekdayFormat,
+  direction,
 }) {
   const isSelected = (date) =>
     isSameDay(date, selectedDate) &&
@@ -45,7 +46,7 @@ export default function DatePickerCalendar({
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
       weekdayFormat={weekdayFormat}
-      direction="ltr"
+      direction={direction}
     />
   );
 }
@@ -61,4 +62,5 @@ DatePickerCalendar.propTypes = {
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   weekdayFormat: string,
+  direction: string,
 };

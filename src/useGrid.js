@@ -178,7 +178,7 @@ export default function useGrid({
         }
 
         containerElement.style.transform =
-          direction === "ltr"
+          direction === "lr"
             ? `translate3d(${computedOffset || -currentMonthPosition}px,0, 0)`
             : `translate3d(${
                 (0, computedOffset || -currentMonthPosition)
@@ -186,7 +186,7 @@ export default function useGrid({
         containerElement.classList.remove("-transition");
         containerElement.classList.add("-moving");
         initialDragPositionRef.current =
-          (direction === "ltr"
+          (direction === "lr"
             ? event.touches[0].clientX
             : event.touches[0].clientY) +
           (-computedOffset || currentMonthPosition);
@@ -195,7 +195,7 @@ export default function useGrid({
       const handleDrag = (event) => {
         const initialDragPosition = initialDragPositionRef.current;
         const dragOffset =
-          (direction === "ltr"
+          (direction === "lr"
             ? event.touches[0].clientX
             : event.touches[0].clientY) - initialDragPosition;
         const previousMonth = subMonths(currentMonth, 1);
@@ -239,7 +239,7 @@ export default function useGrid({
         }
 
         containerElement.style.transform =
-          direction === "ltr"
+          direction === "lr"
             ? `translate3d( ${dragOffset}px,0, 0)`
             : `translate3d( 0,${dragOffset}px, 0)`;
         event.preventDefault();
@@ -249,7 +249,7 @@ export default function useGrid({
         const currentMonthPosition =
           (rowsBetweenDates(startDate, currentMonth, locale) - 1) * cellHeight;
         containerElement.style.transform =
-          direction === "ltr"
+          direction === "lr"
             ? `translate3d( ${-currentMonthPosition}px,0, 0)`
             : `translate3d( 0,${-currentMonthPosition}px, 0)`;
         containerElement.classList.add("-transition");
@@ -266,7 +266,7 @@ export default function useGrid({
           Math.abs(
             initialDragPositionRef.current -
               currentMonthPosition -
-              (direction === "ltr"
+              (direction === "lr"
                 ? event.changedTouches[0].clientX
                 : event.changedTouches[0].clientY)
           ) > 10

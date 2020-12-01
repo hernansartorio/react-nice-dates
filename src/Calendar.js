@@ -68,4 +68,5 @@ Calendar.propTypes = {
   onDayHover: func,
   onDayClick: func,
   weekdayFormat: string,
+  direction: string,
 };
