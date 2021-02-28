@@ -92,7 +92,7 @@ const reducer = (state, action) => {
   }
 }
 
-export default function useGrid({ locale, month: currentMonth, onMonthChange, transitionDuration }) {
+export default function useGrid({ locale, month: currentMonth, onMonthChange, transitionDuration, touchDragEnabled }) {
   const timeoutRef = useRef()
   const containerElementRef = useRef()
   const initialDragPositionRef = useRef(0)
@@ -196,9 +196,11 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
         }
       }
 
-      containerElement.addEventListener('touchstart', handleDragStart)
-      containerElement.addEventListener('touchmove', handleDrag)
-      containerElement.addEventListener('touchend', handleDragEnd)
+      if (touchDragEnabled) {
+        containerElement.addEventListener('touchstart', handleDragStart)
+        containerElement.addEventListener('touchmove', handleDrag)
+        containerElement.addEventListener('touchend', handleDragEnd)
+      }
 
       return () => {
         containerElement.removeEventListener('touchstart', handleDragStart)

@@ -233,7 +233,8 @@ minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
-weekdayFormat: string // See Calendar props`}
+weekdayFormat: string, // See Calendar props
+touchDragEnabled: bool // See Calendar props `}
       />
 
       <p>
@@ -306,7 +307,8 @@ minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
-weekdayFormat: string // See Calendar props`}
+weekdayFormat: string, // See Calendar props
+touchDragEnabled: bool // See Calendar props`}
       />
 
       <h3>
@@ -348,7 +350,8 @@ month: instanceOf(Date), // Optional: Turns current month into a controlled prop
 onMonthChange: func, // Optional: Turns current month into a controlled prop
 onDayHover: func,
 onDayClick: func,
-weekdayFormat: string // Optional: allows weekday to be dynamically formatted (ex. "EEEEE")`}
+weekdayFormat: string, // Optional: allows weekday to be dynamically formatted (ex. "EEEEE")
+touchDragEnabled: bool // Default: true`}
       />
 
       <h3>
