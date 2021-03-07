@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { func, instanceOf, number, object, objectOf, string } from 'prop-types'
+import { bool, func, instanceOf, number, object, objectOf, string } from 'prop-types'
 import { isRangeLengthValid } from './utils'
 import { START_DATE, END_DATE } from './constants'
 import useDateInput from './useDateInput'
@@ -22,7 +22,8 @@ export default function DateRangePicker({
   maximumLength,
   modifiers,
   modifiersClassNames,
-  weekdayFormat
+  weekdayFormat,
+  touchDragEnabled
 }) {
   const [focus, setFocus] = useState()
   const [month, setMonth] = useState(startDate || endDate || new Date())
@@ -108,6 +109,7 @@ export default function DateRangePicker({
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
           weekdayFormat={weekdayFormat}
+          touchDragEnabled={touchDragEnabled}
         />
       </Popover>
     </div>
@@ -128,7 +130,8 @@ DateRangePicker.propTypes = {
   maximumLength: number,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
-  weekdayFormat: string
+  weekdayFormat: string,
+  touchDragEnabled: bool
 }
 
 DateRangePicker.defaultProps = {

@@ -120,6 +120,10 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
   }, [currentMonth]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useLayoutEffect(() => {
+    if (!touchDragEnabled) {
+      return
+    }
+
     const containerElement = containerElementRef.current
     const gridHeight = cellHeight * 6
     const halfGridHeight = gridHeight / 2
@@ -196,11 +200,9 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
         }
       }
 
-      if (touchDragEnabled) {
-        containerElement.addEventListener('touchstart', handleDragStart)
-        containerElement.addEventListener('touchmove', handleDrag)
-        containerElement.addEventListener('touchend', handleDragEnd)
-      }
+      containerElement.addEventListener('touchstart', handleDragStart)
+      containerElement.addEventListener('touchmove', handleDrag)
+      containerElement.addEventListener('touchend', handleDragEnd)
 
       return () => {
         containerElement.removeEventListener('touchstart', handleDragStart)

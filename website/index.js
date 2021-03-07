@@ -272,7 +272,8 @@ minimumLength: number, // See DateRangePickerCalendar props
 maximumLength: number, // See DateRangePickerCalendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
-weekdayFormat: string // See Calendar props`}
+weekdayFormat: string, // See Calendar props
+touchDragEnabled: bool // See Calendar props `}
       />
 
       <p>
@@ -332,7 +333,8 @@ minimumLength: number, // Minimum range selection length, defaults to 0
 maximumLength: number, // Maximum range selection length, defaults to null
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
-weekdayFormat: string // See Calendar props`}
+weekdayFormat: string, // See Calendar props
+touchDragEnabled: bool // See Calendar props `}
       />
 
       <h3>
