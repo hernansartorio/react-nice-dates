@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { func, instanceOf, number, object, objectOf, oneOf, string } from 'prop-types'
+import { bool, func, instanceOf, number, object, objectOf, oneOf, string } from 'prop-types'
 import { differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, startOfDay } from 'date-fns'
 import { isRangeLengthValid, isSelectable, mergeModifiers, setTime } from './utils'
 import { START_DATE, END_DATE } from './constants'
@@ -22,7 +22,8 @@ export default function DateRangePickerCalendar({
   maximumLength,
   modifiers: receivedModifiers,
   modifiersClassNames,
-  weekdayFormat
+  weekdayFormat,
+  touchDragEnabled
 }) {
   const [hoveredDate, setHoveredDate] = useState()
   const [month, setMonth] = useControllableState(
@@ -106,6 +107,7 @@ export default function DateRangePickerCalendar({
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
       weekdayFormat={weekdayFormat}
+      touchDragEnabled={touchDragEnabled}
     />
   )
 }
@@ -126,7 +128,8 @@ DateRangePickerCalendar.propTypes = {
   maximumLength: number,
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
-  weekdayFormat: string
+  weekdayFormat: string,
+  touchDragEnabled: bool
 }
 
 DateRangePickerCalendar.defaultProps = {

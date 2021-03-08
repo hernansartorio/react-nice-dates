@@ -92,7 +92,7 @@ const reducer = (state, action) => {
   }
 }
 
-export default function useGrid({ locale, month: currentMonth, onMonthChange, transitionDuration }) {
+export default function useGrid({ locale, month: currentMonth, onMonthChange, transitionDuration, touchDragEnabled }) {
   const timeoutRef = useRef()
   const containerElementRef = useRef()
   const initialDragPositionRef = useRef(0)
@@ -120,6 +120,10 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
   }, [currentMonth]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useLayoutEffect(() => {
+    if (!touchDragEnabled) {
+      return
+    }
+
     const containerElement = containerElementRef.current
     const gridHeight = cellHeight * 6
     const halfGridHeight = gridHeight / 2

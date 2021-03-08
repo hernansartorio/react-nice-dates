@@ -1,5 +1,5 @@
 import React from 'react'
-import { instanceOf, func, object, objectOf, string } from 'prop-types'
+import { bool, instanceOf, func, object, objectOf, string } from 'prop-types'
 import { isSameDay, startOfMonth } from 'date-fns'
 import { isSelectable, mergeModifiers, setTime } from './utils'
 import useControllableState from './useControllableState'
@@ -15,7 +15,8 @@ export default function DatePickerCalendar({
   maximumDate,
   modifiers: receivedModifiers,
   modifiersClassNames,
-  weekdayFormat
+  weekdayFormat,
+  touchDragEnabled
 }) {
   const isSelected = date => isSameDay(date, selectedDate) && isSelectable(date, { minimumDate, maximumDate })
   const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, receivedModifiers)
@@ -36,6 +37,7 @@ export default function DatePickerCalendar({
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
       weekdayFormat={weekdayFormat}
+      touchDragEnabled={touchDragEnabled}
     />
   )
 }
@@ -50,5 +52,6 @@ DatePickerCalendar.propTypes = {
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
-  weekdayFormat: string
+  weekdayFormat: string,
+  touchDragEnabled: bool
 }

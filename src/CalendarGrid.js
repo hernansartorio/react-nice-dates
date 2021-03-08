@@ -1,5 +1,5 @@
 import React from 'react'
-import { instanceOf, func, number, object, objectOf, string } from 'prop-types'
+import { bool, instanceOf, func, number, object, objectOf, string } from 'prop-types'
 import { eachDayOfInterval, isSameMonth, lightFormat, startOfMonth } from 'date-fns'
 import classNames from 'classnames'
 import useGrid from './useGrid'
@@ -24,9 +24,10 @@ export default function CalendarGrid({
   onMonthChange,
   onDayHover,
   onDayClick,
-  transitionDuration
+  transitionDuration,
+  touchDragEnabled
 }) {
-  const grid = useGrid({ locale, month: startOfMonth(month), onMonthChange, transitionDuration })
+  const grid = useGrid({ locale, month: startOfMonth(month), onMonthChange, transitionDuration, touchDragEnabled })
   const { startDate, endDate, cellHeight, containerElementRef, isWide, offset, origin, transition } = grid
 
   const days = eachDayOfInterval({
@@ -80,10 +81,12 @@ CalendarGrid.propTypes = {
   onMonthChange: func.isRequired,
   onDayHover: func,
   onDayClick: func,
-  transitionDuration: number.isRequired
+  transitionDuration: number.isRequired,
+  touchDragEnabled: bool
 }
 
 CalendarGrid.defaultProps = {
   modifiers: {},
-  transitionDuration: 500
+  transitionDuration: 500,
+  touchDragEnabled: true
 }

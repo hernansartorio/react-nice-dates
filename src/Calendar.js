@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, instanceOf, object, objectOf, string } from 'prop-types'
+import { bool, func, instanceOf, object, objectOf, string } from 'prop-types'
 import { startOfMonth } from 'date-fns'
 import { isSelectable, mergeModifiers } from './utils'
 import useControllableState from './useControllableState'
@@ -17,7 +17,8 @@ export default function Calendar({
   onMonthChange,
   onDayHover,
   onDayClick,
-  weekdayFormat
+  weekdayFormat,
+  touchDragEnabled
 }) {
   const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(new Date()))
 
@@ -46,6 +47,7 @@ export default function Calendar({
         onMonthChange={setMonth}
         onDayHover={onDayHover}
         onDayClick={onDayClick}
+        touchDragEnabled={touchDragEnabled}
       />
     </div>
   )
@@ -61,5 +63,6 @@ Calendar.propTypes = {
   onMonthChange: func,
   onDayHover: func,
   onDayClick: func,
-  weekdayFormat: string
+  weekdayFormat: string,
+  touchDragEnabled: bool
 }
