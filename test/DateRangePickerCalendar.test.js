@@ -140,13 +140,13 @@ describe('DateRangePickerCalendar', () => {
   })
 
   it('should disable dates before the start date when selecting an end date with no existing end date selected', () => {
-    const startDate = startOfDay(set(new Date(), { date: 13 }))
+    const startDate = startOfDay(set(new Date(), { date: 18 }))
 
     const { getByText } = render(<DateRangePickerCalendar locale={locale} focus={END_DATE} startDate={startDate} />)
 
-    expect(getByText('11').parentElement).toHaveClass('-disabled')
-    expect(getByText('12').parentElement).toHaveClass('-disabled')
-    expect(getByText('13').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('16').parentElement).toHaveClass('-disabled')
+    expect(getByText('17').parentElement).toHaveClass('-disabled')
+    expect(getByText('18').parentElement).not.toHaveClass('-disabled')
   })
 
   it('should disable dates after the end date when selecting a start date with no existing start date selected', () => {
@@ -160,29 +160,29 @@ describe('DateRangePickerCalendar', () => {
   })
 
   it('should disable in-between dates when minimumLength is set', () => {
-    const startDate = startOfDay(set(new Date(), { date: 13 }))
+    const startDate = startOfDay(set(new Date(), { date: 18 }))
 
     const { getByText } = render(
       <DateRangePickerCalendar locale={locale} focus={END_DATE} startDate={startDate} minimumLength={3} />
     )
 
-    expect(getByText('13').parentElement).toHaveClass('-disabled')
-    expect(getByText('14').parentElement).toHaveClass('-disabled')
-    expect(getByText('15').parentElement).toHaveClass('-disabled')
-    expect(getByText('16').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('18').parentElement).toHaveClass('-disabled')
+    expect(getByText('19').parentElement).toHaveClass('-disabled')
+    expect(getByText('20').parentElement).toHaveClass('-disabled')
+    expect(getByText('21').parentElement).not.toHaveClass('-disabled')
   })
 
   it('should disable in-between dates when selecting start date and minimumLength is set', () => {
-    const endDate = startOfDay(set(new Date(), { date: 13 }))
+    const endDate = startOfDay(set(new Date(), { date: 18 }))
 
     const { getByText } = render(
       <DateRangePickerCalendar locale={locale} focus={START_DATE} endDate={endDate} minimumLength={3} />
     )
 
-    expect(getByText('13').parentElement).toHaveClass('-disabled')
-    expect(getByText('12').parentElement).toHaveClass('-disabled')
-    expect(getByText('11').parentElement).toHaveClass('-disabled')
-    expect(getByText('10').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('18').parentElement).toHaveClass('-disabled')
+    expect(getByText('17').parentElement).toHaveClass('-disabled')
+    expect(getByText('16').parentElement).toHaveClass('-disabled')
+    expect(getByText('15').parentElement).not.toHaveClass('-disabled')
   })
 
   it('should disable later dates when maximumLength is set', () => {
@@ -200,16 +200,16 @@ describe('DateRangePickerCalendar', () => {
   })
 
   it('should disable earlier dates when selecting start date and maximumLength is set', () => {
-    const endDate = startOfDay(set(new Date(), { date: 13 }))
+    const endDate = startOfDay(set(new Date(), { date: 18 }))
 
     const { getByText } = render(
       <DateRangePickerCalendar locale={locale} focus={START_DATE} endDate={endDate} maximumLength={3} />
     )
 
-    expect(getByText('13').parentElement).not.toHaveClass('-disabled')
-    expect(getByText('12').parentElement).not.toHaveClass('-disabled')
-    expect(getByText('11').parentElement).not.toHaveClass('-disabled')
-    expect(getByText('10').parentElement).not.toHaveClass('-disabled')
-    expect(getByText('9').parentElement).toHaveClass('-disabled')
+    expect(getByText('18').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('17').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('16').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('15').parentElement).not.toHaveClass('-disabled')
+    expect(getByText('14').parentElement).toHaveClass('-disabled')
   })
 })
