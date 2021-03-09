@@ -95,7 +95,7 @@ DatePicker.propTypes = {
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   weekdayFormat: string,
-  touchDragEnabled: bool,
+  touchDragEnabled: bool
 }
 
 DatePicker.defaultProps = {
