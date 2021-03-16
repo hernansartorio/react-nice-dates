@@ -25,7 +25,7 @@ export default function CalendarNavigation({ locale, month, minimumDate, maximum
       />
 
       <span className='nice-dates-navigation_current'>
-        {format(month, getYear(month) === getYear(new Date()) ? 'LLLL' : 'LLLL yyyy', { locale })}
+        {format(month, 'LLLL yyyy', { locale })}
       </span>
 
       <a
