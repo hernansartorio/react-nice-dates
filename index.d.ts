@@ -87,6 +87,8 @@ declare module "react-nice-dates" {
     onMonthChange?: DateChangeCallBack;
   }
 
+  export const START_DATE: string;
+  export const END_DATE: string;
   export function Calendar(props: CalendarProps): JSX.Element;
   export function DatePicker(props: DatePickerProps): JSX.Element;
   export function DateRangePicker(props: DateRangePickerProps): JSX.Element;
