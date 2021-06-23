@@ -27,6 +27,7 @@ declare module "react-nice-dates" {
     modifiers?: Modifiers;
     modifiersClassNames?: ModifiersClassNames;
     weekdayFormat?: string;
+    touchDragEnabled?: boolean;
   }
 
   interface CalendarProps extends CommonProps {
