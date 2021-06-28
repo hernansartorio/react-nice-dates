@@ -33,8 +33,8 @@
   "peerDependencies": {
     "date-fns": "^2.0.0",
     "prop-types": "^15",
-    "react": "^16",
-    "react-dom": "^16"
+    "react": "^16 || ^17",
+    "react-dom": "^16 || ^17"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
