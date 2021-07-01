@@ -21,7 +21,8 @@ export default function CalendarDay({
   modifiers: receivedModifiers,
   modifiersClassNames: receivedModifiersClassNames,
   onClick,
-  onHover
+  onHover,
+  renderDay
 }) {
   const dayOfMonth = getDate(date)
   const dayClassNames = {}
@@ -45,9 +46,11 @@ export default function CalendarDay({
     onHover(null)
   }
 
-  return (
+  const rootClassName = classNames('nice-dates-day', dayClassNames)
+
+  const defaultDay = (
     <span
-      className={classNames('nice-dates-day', dayClassNames)}
+      className={rootClassName}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -60,6 +63,26 @@ export default function CalendarDay({
       <span className='nice-dates-day_date'>{dayOfMonth}</span>
     </span>
   )
+
+  const day = renderDay
+    ? renderDay({
+      dayClassNames,
+      handleClick,
+      handleMouseEnter,
+      handleMouseLeave,
+      height,
+      dayOfMonth,
+      date,
+      locale,
+      rootClassName
+    })
+    : defaultDay
+
+  return (
+    <>
+      {day}
+    </>
+  )
 }
 
 CalendarDay.propTypes = {
@@ -69,11 +92,13 @@ CalendarDay.propTypes = {
   modifiers: objectOf(bool),
   modifiersClassNames: objectOf(string),
   onHover: func,
-  onClick: func
+  onClick: func,
+  renderDay: func
 }
 
 CalendarDay.defaultProps = {
   modifiers: {},
   onHover: () => {},
-  onClick: () => {}
+  onClick: () => {},
+  renderDay: null
 }

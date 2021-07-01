@@ -18,7 +18,8 @@ export default function Calendar({
   onDayHover,
   onDayClick,
   weekdayFormat,
-  touchDragEnabled
+  touchDragEnabled,
+  renderDay
 }) {
   const [month, setMonth] = useControllableState(receivedMonth, onMonthChange, startOfMonth(new Date()))
 
@@ -48,6 +49,7 @@ export default function Calendar({
         onDayHover={onDayHover}
         onDayClick={onDayClick}
         touchDragEnabled={touchDragEnabled}
+        renderDay={renderDay}
       />
     </div>
   )
@@ -64,5 +66,6 @@ Calendar.propTypes = {
   onDayHover: func,
   onDayClick: func,
   weekdayFormat: string,
-  touchDragEnabled: bool
+  touchDragEnabled: bool,
+  renderDay: func
 }

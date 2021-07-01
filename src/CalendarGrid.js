@@ -25,7 +25,8 @@ export default function CalendarGrid({
   onDayHover,
   onDayClick,
   transitionDuration,
-  touchDragEnabled
+  touchDragEnabled,
+  renderDay
 }) {
   const grid = useGrid({ locale, month: startOfMonth(month), onMonthChange, transitionDuration, touchDragEnabled })
   const { startDate, endDate, cellHeight, containerElementRef, isWide, offset, origin, transition } = grid
@@ -48,6 +49,7 @@ export default function CalendarGrid({
         modifiersClassNames={modifiersClassNames}
         onHover={onDayHover}
         onClick={onDayClick}
+        renderDay={renderDay}
       />
     )
   })
@@ -82,7 +84,8 @@ CalendarGrid.propTypes = {
   onDayHover: func,
   onDayClick: func,
   transitionDuration: number.isRequired,
-  touchDragEnabled: bool
+  touchDragEnabled: bool,
+  renderDay: func
 }
 
 CalendarGrid.defaultProps = {
