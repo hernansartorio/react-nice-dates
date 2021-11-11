@@ -243,6 +243,7 @@ minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props `}
       />
@@ -282,6 +283,7 @@ minimumLength: number, // See DateRangePickerCalendar props
 maximumLength: number, // See DateRangePickerCalendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props `}
       />
@@ -318,6 +320,7 @@ minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props`}
       />
@@ -343,6 +346,7 @@ minimumLength: number, // Minimum range selection length, defaults to 0
 maximumLength: number, // Maximum range selection length, defaults to null
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props `}
       />
@@ -359,6 +363,7 @@ maximumDate: instanceOf(Date), // Days after maximumDate will be disabled
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
 month: instanceOf(Date), // Optional: Turns current month into a controlled prop
+monthFormat: string, // Optional: allows month name to be dynamically formatted (ex. "GGGG yyyy, MMMM")
 onMonthChange: func, // Optional: Turns current month into a controlled prop
 onDayHover: func,
 onDayClick: func,
