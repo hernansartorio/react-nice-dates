@@ -16,6 +16,7 @@ export default function DatePicker({
   maximumDate,
   modifiers,
   modifiersClassNames,
+  monthFormat,
   weekdayFormat,
   touchDragEnabled
 }) {
@@ -76,6 +77,7 @@ export default function DatePicker({
           maximumDate={maximumDate}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
+          monthFormat={monthFormat}
           weekdayFormat={weekdayFormat}
           touchDragEnabled={touchDragEnabled}
         />
@@ -94,6 +96,7 @@ DatePicker.propTypes = {
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
+  monthFormat: string,
   weekdayFormat: string,
   touchDragEnabled: bool
 }

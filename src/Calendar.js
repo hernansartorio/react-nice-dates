@@ -17,6 +17,7 @@ export default function Calendar({
   onMonthChange,
   onDayHover,
   onDayClick,
+  monthFormat,
   weekdayFormat,
   touchDragEnabled
 }) {
@@ -34,6 +35,7 @@ export default function Calendar({
         minimumDate={minimumDate}
         maximumDate={maximumDate}
         month={month}
+        monthFormat={monthFormat}
         onMonthChange={setMonth}
       />
 
@@ -63,6 +65,7 @@ Calendar.propTypes = {
   onMonthChange: func,
   onDayHover: func,
   onDayClick: func,
+  monthFormat: string,
   weekdayFormat: string,
   touchDragEnabled: bool
 }

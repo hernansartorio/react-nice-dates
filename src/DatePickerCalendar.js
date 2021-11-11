@@ -15,6 +15,7 @@ export default function DatePickerCalendar({
   maximumDate,
   modifiers: receivedModifiers,
   modifiersClassNames,
+  monthFormat,
   weekdayFormat,
   touchDragEnabled
 }) {
@@ -36,6 +37,7 @@ export default function DatePickerCalendar({
       maximumDate={maximumDate}
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
+      monthFormat={monthFormat}
       weekdayFormat={weekdayFormat}
       touchDragEnabled={touchDragEnabled}
     />

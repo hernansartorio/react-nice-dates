@@ -7,6 +7,7 @@ import DateRangePickerCalendarExample from './examples/DateRangePickerCalendarEx
 import StandaloneInputExample from './examples/StandaloneInputExample'
 import DatePickerCalendarWithInputExample from './examples/DatePickerCalendarWithInputExample'
 import ModifiersExample from './examples/ModifiersExample'
+import FormatsExample from './examples/FormatsExample'
 import LocalesExample from './examples/LocalesExample'
 import CalendarExample from './examples/CalendarExample'
 import CodeBlock from './CodeBlock'
@@ -140,11 +141,20 @@ function App() {
 
       <DatePickerWithTimeInputExample />
 
-      <h3>Localization</h3>
+      <h3>Dates format</h3>
 
       <p>
         As you might have noticed, React Nice Dates relies of the awesome <a href='https://date-fns.org/'>date-fns</a>{' '}
-        library as a peer dependency. All components require a <code>locale</code> prop, which must be a{' '}
+        library as a peer dependency. Thanks to it you can configure format of visible dates.
+      </p>
+
+      <FormatsExample />
+
+      <h3>Localization</h3>
+
+      <p>
+         As mentioned above, React Nice Dates is using under the hood <a href='https://date-fns.org/'>date-fns</a>.
+         All components require a <code>locale</code> prop, which must be a{' '}
         <a href='https://date-fns.org/v2.9.0/docs/I18n'>date-fns locale object</a> of your desired language.
       </p>
 
