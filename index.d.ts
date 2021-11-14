@@ -26,6 +26,7 @@ declare module "react-nice-dates" {
     maximumDate?: Date;
     modifiers?: Modifiers;
     modifiersClassNames?: ModifiersClassNames;
+    monthFormat?: string;
     weekdayFormat?: string;
   }
 

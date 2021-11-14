@@ -7,6 +7,7 @@ import DateRangePickerCalendarExample from './examples/DateRangePickerCalendarEx
 import StandaloneInputExample from './examples/StandaloneInputExample'
 import DatePickerCalendarWithInputExample from './examples/DatePickerCalendarWithInputExample'
 import ModifiersExample from './examples/ModifiersExample'
+import FormatsExample from './examples/FormatsExample'
 import LocalesExample from './examples/LocalesExample'
 import CalendarExample from './examples/CalendarExample'
 import CodeBlock from './CodeBlock'
@@ -140,11 +141,20 @@ function App() {
 
       <DatePickerWithTimeInputExample />
 
-      <h3>Localization</h3>
+      <h3>Dates format</h3>
 
       <p>
         As you might have noticed, React Nice Dates relies of the awesome <a href='https://date-fns.org/'>date-fns</a>{' '}
-        library as a peer dependency. All components require a <code>locale</code> prop, which must be a{' '}
+        library as a peer dependency. Thanks to it you can configure format of visible dates.
+      </p>
+
+      <FormatsExample />
+
+      <h3>Localization</h3>
+
+      <p>
+         As mentioned above, React Nice Dates is using under the hood <a href='https://date-fns.org/'>date-fns</a>.
+         All components require a <code>locale</code> prop, which must be a{' '}
         <a href='https://date-fns.org/v2.9.0/docs/I18n'>date-fns locale object</a> of your desired language.
       </p>
 
@@ -233,6 +243,7 @@ minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props `}
       />
@@ -272,6 +283,7 @@ minimumLength: number, // See DateRangePickerCalendar props
 maximumLength: number, // See DateRangePickerCalendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props `}
       />
@@ -308,6 +320,7 @@ minimumDate: instanceOf(Date), // See Calendar props
 maximumDate: instanceOf(Date), // See Calendar props
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props`}
       />
@@ -333,6 +346,7 @@ minimumLength: number, // Minimum range selection length, defaults to 0
 maximumLength: number, // Maximum range selection length, defaults to null
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
+monthFormat: string, // See Calendar props
 weekdayFormat: string, // See Calendar props
 touchDragEnabled: bool // See Calendar props `}
       />
@@ -349,6 +363,7 @@ maximumDate: instanceOf(Date), // Days after maximumDate will be disabled
 modifiers: objectOf(func),
 modifiersClassNames: objectOf(string),
 month: instanceOf(Date), // Optional: Turns current month into a controlled prop
+monthFormat: string, // Optional: allows month name to be dynamically formatted (ex. "GGGG yyyy, MMMM")
 onMonthChange: func, // Optional: Turns current month into a controlled prop
 onDayHover: func,
 onDayClick: func,
