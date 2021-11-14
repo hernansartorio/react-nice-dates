@@ -54,6 +54,7 @@ DatePickerCalendar.propTypes = {
   maximumDate: instanceOf(Date),
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
+  monthFormat: string,
   weekdayFormat: string,
   touchDragEnabled: bool
 }
