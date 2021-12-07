@@ -107,7 +107,7 @@ export default function useGrid({ locale, month: currentMonth, onMonthChange, tr
       containerElement.classList.add('-transition')
       clearTimeout(timeoutRef.current)
 
-      if (Math.abs(differenceInCalendarMonths(currentMonth, lastCurrentMonth)) <= 3) {
+      if (Math.abs(differenceInCalendarMonths(currentMonth, lastCurrentMonth)) <= 12) {
         dispatch({ type: 'transitionToCurrentMonth', currentMonth })
 
         timeoutRef.current = setTimeout(() => {

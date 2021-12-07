@@ -22,6 +22,10 @@ $nice-dates-cell-width: calc(100% / 7);
     &_current {
       flex-grow: 1;
       font-size: $nice-dates-font-size-big;
+      cursor: pointer;
+      &:hover {
+        font-weight: bolder;
+      }
     }
 
     &_previous, &_next {
@@ -103,6 +107,10 @@ $nice-dates-cell-width: calc(100% / 7);
         transition: 300ms color;
       }
 
+      &.-moving .nice-dates-month {
+        transition: 300ms color;
+      }
+
       &.-origin-bottom {
         top: auto;
         bottom: 0;
@@ -117,6 +125,93 @@ $nice-dates-cell-width: calc(100% / 7);
         transition-property: transform;
       }
     }
+  }
+
+  &-month {
+    border-top: 1px solid transparent;
+    box-sizing: border-box;
+    color: $nice-dates-color-gray-dark;
+    cursor: pointer;
+    font-size: $nice-dates-font-size-big;
+    position: relative;
+    text-align: center;
+    margin-top: 20px;
+    width: calc(100% / 3);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    transition: 150ms color;
+    will-change: color;
+    z-index: 3;
+
+    &:before, &:after {
+      border-radius: 999px;
+      bottom: 0;
+      box-sizing: border-box;
+      content: '';
+      display: block;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &:before {
+      background-color: $nice-dates-color-accent;
+      z-index: 1;
+    }
+
+    &:after {
+      border: 2px solid $nice-dates-color-accent;
+      transform: scale(.95);
+      transition-duration: 150ms;
+      transition-property: transform, opacity;
+      z-index: 2;
+    }
+
+    &:hover {
+      &:after {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    &:not(.-disabled):hover {
+      &:after {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    &.-today {
+      font-weight: bolder;
+    }
+
+    &.-wide {
+      &:before, &:after {
+        left: 12.5%;
+        right: 12.5%;
+      }
+    }
+
+    @media (hover: none) {
+      &:after {
+        content: none;
+      }
+
+      &.-selected * {
+        color: #fff;
+      }
+    }
+
+    &.-disabled {
+      cursor: default;
+      pointer-events: none;
+      color: $nice-dates-color-gray-light;
+    }
+
   }
 
   &-day {
@@ -271,8 +366,8 @@ $nice-dates-cell-width: calc(100% / 7);
   &-popover {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 1px 8px rgba(#000, .12);
     margin: 8px 0;
+    box-shadow: 0 1px 8px rgba(#000, .12);
     max-width: 600px;
     position: absolute;
     transform-origin: top;

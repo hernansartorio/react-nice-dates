@@ -16,7 +16,9 @@ export default function DatePickerCalendar({
   modifiers: receivedModifiers,
   modifiersClassNames,
   weekdayFormat,
-  touchDragEnabled
+  touchDragEnabled,
+  monthModifiers,
+  monthModifiersClassNames
 }) {
   const isSelected = date => isSameDay(date, selectedDate) && isSelectable(date, { minimumDate, maximumDate })
   const modifiers = mergeModifiers({ selected: isSelected, disabled: isSelected }, receivedModifiers)
@@ -38,6 +40,8 @@ export default function DatePickerCalendar({
       modifiersClassNames={modifiersClassNames}
       weekdayFormat={weekdayFormat}
       touchDragEnabled={touchDragEnabled}
+      monthModifiers={monthModifiers}
+      monthModifiersClassNames={monthModifiersClassNames}
     />
   )
 }
@@ -53,5 +57,7 @@ DatePickerCalendar.propTypes = {
   modifiers: objectOf(func),
   modifiersClassNames: objectOf(string),
   weekdayFormat: string,
-  touchDragEnabled: bool
+  touchDragEnabled: bool,
+  monthModifiers: objectOf(func),
+  monthModifiersClassNames: objectOf(string)
 }
