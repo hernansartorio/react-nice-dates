@@ -1,9 +1,9 @@
 import React from 'react'
-import { func, instanceOf, object } from 'prop-types'
+import { bool, func, instanceOf, object } from 'prop-types'
 import classNames from 'classnames'
-import { addMonths, getYear, startOfMonth, subMonths, format, isSameMonth } from 'date-fns'
+import { startOfMonth, format, isSameMonth, subMonths, addMonths } from 'date-fns'
 
-export default function CalendarNavigation({ locale, month, minimumDate, maximumDate, onMonthChange }) {
+export default function CalendarNavigation({ locale, month, minimumDate, maximumDate, onMonthChange, showMonthPicker, show }) {
   const handlePrevious = event => {
     onMonthChange(startOfMonth(subMonths(month, 1)))
     event.preventDefault()
@@ -18,19 +18,22 @@ export default function CalendarNavigation({ locale, month, minimumDate, maximum
     <div className='nice-dates-navigation'>
       <a
         className={classNames('nice-dates-navigation_previous', {
-          '-disabled': isSameMonth(month, minimumDate)
+          '-disabled': isSameMonth(month, minimumDate) || !show
         })}
         onClick={handlePrevious}
         onTouchEnd={handlePrevious}
       />
 
-      <span className='nice-dates-navigation_current'>
-        {format(month, getYear(month) === getYear(new Date()) ? 'LLLL' : 'LLLL yyyy', { locale })}
+      <span className='nice-dates-navigation_current' onClick={ showMonthPicker }>
+        {show
+          ? format(month, 'LLLL yyyy', { locale })
+          : format(month, 'yyyy', { locale })
+        }
       </span>
 
       <a
         className={classNames('nice-dates-navigation_next', {
-          '-disabled': isSameMonth(month, maximumDate)
+          '-disabled': isSameMonth(month, maximumDate) || !show
         })}
         onClick={handleNext}
         onTouchEnd={handleNext}
@@ -44,5 +47,7 @@ CalendarNavigation.propTypes = {
   month: instanceOf(Date).isRequired,
   minimumDate: instanceOf(Date),
   maximumDate: instanceOf(Date),
-  onMonthChange: func.isRequired
+  onMonthChange: func.isRequired,
+  showMonthPicker: func,
+  show: bool
 }
