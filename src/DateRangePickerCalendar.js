@@ -61,11 +61,11 @@ export default function DateRangePickerCalendar({
       disabled: date =>
         (focus === START_DATE &&
           endDate &&
-          ((differenceInDays(startOfDay(endDate), date) < minimumLength && (!startDate || !isAfter(date, startOfDay(endDate)))) ||
+          ((differenceInDays(startOfDay(endDate), date) < minimumLength && !startDate) ||
             (!startDate && maximumLength && differenceInDays(startOfDay(endDate), date) > maximumLength))) ||
         (focus === END_DATE &&
           startDate &&
-          ((differenceInDays(date, startOfDay(startDate)) < minimumLength && (!endDate || !isBefore(date, startOfDay(startDate)))) ||
+          ((differenceInDays(date, startOfDay(startDate)) < minimumLength && !endDate) ||
             (!endDate && maximumLength && differenceInDays(date, startOfDay(startDate)) > maximumLength)))
     },
     receivedModifiers
@@ -78,20 +78,25 @@ export default function DateRangePickerCalendar({
 
       if (invalidEndDate) {
         onEndDateChange(null)
+        onStartDateChange(startDate ? setTime(date, startDate) : date)
+        onFocusChange(END_DATE)
+      } else {
+        onStartDateChange(startDate ? setTime(date, startDate) : date)
+        onFocusChange(END_DATE)
       }
-
-      onStartDateChange(startDate ? setTime(date, startDate) : date)
-      onFocusChange(END_DATE)
     } else if (focus === END_DATE) {
       const invalidStartDate =
         startDate && !isRangeLengthValid({ startDate, endDate: date }, { minimumLength, maximumLength })
 
       if (invalidStartDate) {
-        onStartDateChange(null)
+         onEndDateChange(null)
+         onStartDateChange(startDate ? setTime(date, startDate) : date)
+         onFocusChange(END_DATE)
+      } else {
+        onEndDateChange(endDate ? setTime(date, endDate) : date)
+        onFocusChange(invalidStartDate || !startDate ? START_DATE : null)
       }
 
-      onEndDateChange(endDate ? setTime(date, endDate) : date)
-      onFocusChange(invalidStartDate || !startDate ? START_DATE : null)
     }
   }
 
