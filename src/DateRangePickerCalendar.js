@@ -89,14 +89,13 @@ export default function DateRangePickerCalendar({
         startDate && !isRangeLengthValid({ startDate, endDate: date }, { minimumLength, maximumLength })
 
       if (invalidStartDate) {
-         onEndDateChange(null)
-         onStartDateChange(startDate ? setTime(date, startDate) : date)
-         onFocusChange(END_DATE)
+        onEndDateChange(null)
+        onStartDateChange(startDate ? setTime(date, startDate) : date)
+        onFocusChange(END_DATE)
       } else {
         onEndDateChange(endDate ? setTime(date, endDate) : date)
         onFocusChange(invalidStartDate || !startDate ? START_DATE : null)
       }
-
     }
   }
 
