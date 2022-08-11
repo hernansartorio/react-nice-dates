@@ -53,6 +53,7 @@ export default function CalendarDay({
       onMouseLeave={handleMouseLeave}
       onTouchEnd={handleClick}
       style={{ height }}
+      data-date-string={format(date, 'yyyy-MM-dd')}
     >
       {dayOfMonth === 1 && (
         <span className='nice-dates-day_month'>{format(date, 'LLL', { locale })}</span>
